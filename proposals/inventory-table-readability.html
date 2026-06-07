@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorschlag — Inventar-Tabelle /inventory/all · /inventory/my</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 38px 30px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .head { margin-bottom: 26px; }
+  .head .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .head .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  .head h1 { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 25px; margin: 13px 0 8px; }
+  .head p { font-weight: 300; max-width: 86ch; margin: 0; line-height: 1.5; }
+  .block { margin-top: 30px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; padding: 5px 12px; margin-bottom: 14px; font-family: var(--font-body); }
+  .tag.before { color: var(--color-danger); border: 1px solid var(--color-danger); background: rgba(163,0,10,0.12); }
+  .tag.after { color: var(--color-success); border: 1px solid var(--color-success); background: rgba(35,158,51,0.12); }
+  .ann { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 7px 22px; }
+  @media (max-width: 800px){ .ann { grid-template-columns: 1fr; } }
+  .ann li { display: flex; gap: 10px; font-weight: 300; font-size: 13.5px; align-items: flex-start; }
+  .ann li::before { content: ''; width: 7px; height: 7px; margin-top: 7px; flex: none; }
+  .before-notes li::before { background: var(--color-danger); }
+  .after-notes li::before { background: var(--color-success); }
+  .ann b { color: var(--color-white); font-weight: 700; }
+  .foot { margin-top: 32px; color: var(--color-gray-2); font-family: var(--font-mono); font-size: 12px; }
+
+  /* ============ BEFORE — faithful recreation ============ */
+  .b-tbl { width: 100%; border-collapse: collapse; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .b-tbl th { text-align: left; padding: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-primary); background: var(--color-gray-4); border-bottom: 2px solid var(--color-primary); }
+  .b-tbl td { padding: 1rem; border-bottom: 1px solid var(--color-gray-3); color: var(--color-gray-1); }
+  .b-grp td { background: rgba(255,255,255,0.05); font-weight: bold; }
+  .b-tog { color: var(--color-primary); }
+  .b-sub th { background: var(--color-gray-4); border-bottom: 2px solid var(--color-primary); }
+  .b-entry th { background: var(--color-gray-4); }
+  .b-nest { padding: 0 !important; }
+  .b-nest table { width: 100%; border-collapse: collapse; }
+  .b-act { color: var(--color-primary); text-transform: uppercase; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; }
+  .b-sel { background: var(--color-surface-input); border: 1px solid var(--color-primary); color: var(--color-gray-1); padding: 0.55rem 0.75rem; min-width: 180px; }
+
+  /* ============ AFTER — consolidated tree table ============ */
+  .a-tbl { border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .trow { display: grid; grid-template-columns: minmax(210px,1.5fr) minmax(220px,1.7fr) 132px 124px 172px;
+    align-items: center; border-bottom: 1px solid var(--color-gray-3); }
+  .a-head { position: sticky; top: 0; z-index: 2; }
+  .a-head .tc { padding: 0.65rem 0.8rem; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--color-gray-1); font-weight: 700; background: var(--color-surface-input); border-bottom: 2px solid var(--color-primary); }
+  .tc { padding: 0.5rem 0.8rem; font-size: 0.86rem; min-width: 0; }
+  .tc.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tc.act { display: flex; gap: 0.4rem; justify-content: flex-end; padding-left: 1.5rem; }
+  .name { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .name .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chev { color: var(--color-primary); font-size: 0.7rem; width: 14px; flex: none; transition: transform 0.15s; }
+  .chev.open { transform: rotate(90deg); }
+
+  /* depth rails + indentation */
+  .lvl-mat { background: var(--color-surface-input); border-left: 4px solid var(--color-primary); }
+  .lvl-mat .nm { font-family: var(--font-body); font-weight: 700; color: var(--color-white); text-transform: none; font-size: 0.95rem; }
+  .lvl-stack { border-left: 4px solid transparent; box-shadow: inset 18px 0 0 -17px var(--color-gray-2); }
+  .lvl-stack .name { padding-left: 1.5rem; }
+  .lvl-stack .nm { color: var(--color-gray-1); font-weight: 700; }
+  .lvl-stack:hover { background: rgba(255,255,255,0.025); }
+  .lvl-entry { background: rgba(0,0,0,0.35); border-left: 4px solid transparent; }
+  .lvl-entry .name { padding-left: 3rem; color: var(--color-gray-2); }
+  .lvl-entry .nm { color: var(--color-gray-2); font-size: 0.82rem; }
+
+  .badge-sq { display: inline-flex; align-items: center; padding: 0.06rem 0.5rem; border: 1px solid var(--color-primary);
+    border-radius: 999px; color: var(--color-primary); font-size: 0.66rem; font-weight: 700; }
+  .badge-sq.ext { color: var(--color-secondary); border-color: var(--color-secondary); }
+  .ctx { color: var(--color-gray-1); display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .ctx .loc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .muted { color: var(--color-gray-2); }
+
+  /* quality gauge */
+  .q { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 3px; width: 100%; }
+  .q .qv { font-variant-numeric: tabular-nums; }
+  .q .qv .max { color: var(--color-gray-2); font-size: 0.74rem; }
+  .gauge { width: 64px; height: 3px; background: var(--color-gray-3); position: relative; }
+  .gauge > i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--color-primary); }
+  .scu { font-variant-numeric: tabular-nums; color: var(--color-white); }
+  .scu .u { color: var(--color-gray-2); font-size: 0.74rem; }
+  .a-sel { background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1);
+    padding: 0.3rem 0.5rem; font-size: 0.78rem; width: 100%; max-width: 150px; }
+  .a-sel.set { border-color: var(--color-gray-2); color: var(--color-white); }
+  .btn-xs { min-height: 32px; padding: 0.25rem 0.55rem; font-size: 0.68rem; }
+  .entry-ctx { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+
+  /* entry row: wide labelled selects spanning the freed-up name+context+quality area */
+  .lvl-entry .entry-main { grid-column: 1 / 4; display: flex; align-items: center; gap: 0.85rem;
+    padding: 0.4rem 0.8rem 0.4rem 3rem; min-width: 0; }
+  .entry-main .etag { color: var(--color-gray-2); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; flex: none; }
+  .fieldset { display: flex; gap: 0.85rem; flex: 1; min-width: 0; }
+  .fld { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .fld .cap { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--color-gray-2); }
+  .a-sel2 { background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1);
+    padding: 0.34rem 0.55rem; font-size: 0.82rem; width: 100%; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .a-sel2.set { border-color: var(--color-gray-2); color: var(--color-white); }
+
+  /* note: its own indented annotation row with room for the full text */
+  .note-row { background: rgba(0,0,0,0.35); border-bottom: 1px solid var(--color-gray-3); }
+  .note-box { margin: 0 0.8rem 0.55rem 3rem; background: var(--color-surface-input);
+    border: 1px solid var(--color-gray-3); border-left: 3px solid var(--color-primary);
+    padding: 0.5rem 0.8rem; display: flex; gap: 0.7rem; align-items: baseline; }
+  .note-box .note-label { color: var(--color-primary); font-size: 0.6rem; text-transform: uppercase;
+    letter-spacing: 0.09em; font-weight: 700; flex: none; }
+  .note-box .note-text { color: var(--color-gray-1); font-size: 0.84rem; line-height: 1.45;
+    max-width: 80ch; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Vorschlag · /inventory/all · /inventory/my</div>
+    <h1>Inventar-Tabelle lesbarer machen</h1>
+    <p>Die verschachtelte Material → Nutzer/Stack → Einträge-Tabelle wiederholt heute pro Ebene einen eigenen Großbuchstaben-Kopf (bei mehreren offenen Stacks mehrfach), hat keine Einrückung, linksbündige Zahlen und sehr geringe Dichte. Vorschlag: <b style="color:var(--color-gray-1)">ein</b> Spaltenkopf, klare Tiefen-Einrückung, rechtsbündige tabellarische Zahlen mit Qualitäts-Gauge.</p>
+  </div>
+
+  <!-- ===================== BEFORE ===================== -->
+  <div class="block">
+    <span class="tag before">Vorher · Ist-Zustand</span>
+    <table class="b-tbl">
+      <thead><tr><th style="width:40px"></th><th>Material</th><th>Ø Qualität</th><th>Max. Qualität</th><th>Gesamtmenge</th></tr></thead>
+      <tbody>
+        <tr class="b-grp"><td><span class="b-tog">▼</span></td><td>Agricium</td><td>639,12</td><td>796</td><td>10,049 SCU</td></tr>
+        <tr><td class="b-nest" colspan="5">
+          <table>
+            <thead class="b-sub"><tr><th style="width:40px"></th><th>Nutzer</th><th>Staffel</th><th>Standort</th><th>Qualität</th><th>Gesamtmenge</th><th>Einträge</th></tr></thead>
+            <tbody>
+              <tr><td><span class="b-tog">▼</span></td><td>Lenoro</td><td><span class="badge-sq">IRI</span></td><td>CRU-L1 Ambitious Dream Station</td><td>796</td><td>0,121 SCU</td><td>1</td></tr>
+              <tr><td class="b-nest" colspan="7">
+                <table>
+                  <thead class="b-entry"><tr><th style="width:40px"></th><th>Menge</th><th>Auftrag</th><th>Einsatz zuordnen (optional)</th><th colspan="2">Aktionen</th></tr></thead>
+                  <tbody><tr><td></td><td>0,121 SCU</td><td><select class="b-sel"><option>-- Kein Auftrag --</option></select></td><td><select class="b-sel"><option>-- Kein Einsatz --</option></select></td><td class="b-act">Ausbuchen</td><td class="b-act">Notiz hinzufügen</td></tr></tbody>
+                </table>
+              </td></tr>
+              <tr><td><span class="b-tog">▼</span></td><td>P6</td><td><span class="badge-sq">IRI</span></td><td>Levski</td><td>796</td><td>1,786 SCU</td><td>1</td></tr>
+              <tr><td class="b-nest" colspan="7">
+                <table>
+                  <thead class="b-entry"><tr><th style="width:40px"></th><th>Menge</th><th>Auftrag</th><th>Einsatz zuordnen (optional)</th><th colspan="2">Aktionen</th></tr></thead>
+                  <tbody><tr><td></td><td>1,786 SCU</td><td><select class="b-sel"><option>-- Kein Auftrag --</option></select></td><td><select class="b-sel"><option>-- Kein Einsatz --</option></select></td><td class="b-act">Ausbuchen</td><td class="b-act">Notiz hinzufügen</td></tr>
+                  <tr><td></td><td colspan="5" style="color:var(--color-gray-1);font-size:0.92rem;">Notiz: Event vom 05.05. Gehört weedyhimself. Zurückgelegt.</td></tr></tbody>
+                </table>
+              </td></tr>
+              <tr><td><span class="b-tog" style="display:inline-block;transform:rotate(0)">▶</span></td><td>EndRageMusic</td><td><span class="badge-sq ext">AGN</span></td><td>Rod's Fuel 'N Supplies</td><td>588</td><td>0,392 SCU</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </td></tr>
+        <tr class="b-grp"><td><span class="b-tog">▶</span></td><td>Aluminum</td><td>919,00</td><td>919</td><td>0,680 SCU</td></tr>
+        <tr class="b-grp"><td><span class="b-tog">▶</span></td><td>Aphorite</td><td>774,60</td><td>861</td><td>40 Stück</td></tr>
+      </tbody>
+    </table>
+    <ul class="ann before-notes">
+      <li><b>Drei Kopfzeilen-Sätze</b> übereinander; der Einträge-Kopf wiederholt sich pro offenem Stack.</li>
+      <li><b>Keine Einrückung</b> — Material, Nutzer und Eintrag starten am selben linken Rand.</li>
+      <li><b>Linksbündige Zahlen</b> ohne tabellarische Ziffern → Qualität/Mengen schwer vergleichbar.</li>
+      <li><b>Alles orange</b> in den Köpfen → kein Fokus; sehr geringe Dichte (1rem-Padding).</li>
+      <li><b>Notiz</b> hängt formlos unter dem Eintrag, ohne klare Abgrenzung oder Label.</li>
+    </ul>
+  </div>
+
+  <!-- ===================== AFTER ===================== -->
+  <div class="block">
+    <span class="tag after">Nachher · Vorschlag</span>
+    <div class="a-tbl">
+      <div class="trow a-head">
+        <div class="tc">Bestand</div>
+        <div class="tc">Kontext / Zuordnung</div>
+        <div class="tc num">Qualität</div>
+        <div class="tc num">Menge</div>
+        <div class="tc" style="text-align:right">Aktion</div>
+      </div>
+
+      <!-- Material group -->
+      <div class="trow lvl-mat">
+        <div class="tc name"><span class="chev open">▶</span><span class="nm">Agricium</span></div>
+        <div class="tc muted">3 Nutzer · 5 Stacks</div>
+        <div class="tc num"><span class="q"><span class="qv">639 <span class="max">/ 796</span></span><span class="gauge"><i style="width:64%"></i></span></span></div>
+        <div class="tc num scu">10.049 <span class="u">SCU</span></div>
+        <div class="tc"></div>
+      </div>
+
+      <!-- Stack 1 -->
+      <div class="trow lvl-stack">
+        <div class="tc name"><span class="chev open">▶</span><span class="nm">Lenoro</span></div>
+        <div class="tc ctx"><span class="badge-sq">IRI</span><span class="loc">CRU-L1 Ambitious Dream Station</span></div>
+        <div class="tc num"><span class="q"><span class="qv">796</span><span class="gauge"><i style="width:80%"></i></span></span></div>
+        <div class="tc num scu">0,121 <span class="u">SCU</span></div>
+        <div class="tc num muted" style="font-size:0.78rem">1 Eintrag</div>
+      </div>
+      <!-- Entry under stack 1 (no note) -->
+      <div class="trow lvl-entry">
+        <div class="entry-main">
+          <span class="etag">Eintrag</span>
+          <div class="fieldset">
+            <div class="fld"><span class="cap">Auftrag</span><select class="a-sel2"><option>Kein Auftrag</option></select></div>
+            <div class="fld"><span class="cap">Einsatz</span><select class="a-sel2"><option>Kein Einsatz</option></select></div>
+          </div>
+        </div>
+        <div class="tc num scu">0,121 <span class="u">SCU</span></div>
+        <div class="tc act"><button class="btn btn-outline btn-xs">Ausbuchen</button><button class="btn btn-ghost btn-xs">Notiz</button></div>
+      </div>
+
+      <!-- Stack 2 -->
+      <div class="trow lvl-stack">
+        <div class="tc name"><span class="chev open">▶</span><span class="nm">P6</span></div>
+        <div class="tc ctx"><span class="badge-sq">IRI</span><span class="loc">Levski</span></div>
+        <div class="tc num"><span class="q"><span class="qv">796</span><span class="gauge"><i style="width:80%"></i></span></span></div>
+        <div class="tc num scu">1,786 <span class="u">SCU</span></div>
+        <div class="tc num muted" style="font-size:0.78rem">1 Eintrag</div>
+      </div>
+      <!-- Entry under stack 2 (with a note) -->
+      <div class="trow lvl-entry">
+        <div class="entry-main">
+          <span class="etag">Eintrag</span>
+          <div class="fieldset">
+            <div class="fld"><span class="cap">Auftrag</span><select class="a-sel2 set"><option>#1042 — Quantanium-Konvoi ARC-L1</option></select></div>
+            <div class="fld"><span class="cap">Einsatz</span><select class="a-sel2"><option>Kein Einsatz</option></select></div>
+          </div>
+        </div>
+        <div class="tc num scu">1,786 <span class="u">SCU</span></div>
+        <div class="tc act"><button class="btn btn-outline btn-xs">Ausbuchen</button><button class="btn btn-outline btn-xs">Notiz</button></div>
+      </div>
+      <div class="note-row">
+        <div class="note-box"><span class="note-label">Notiz</span><span class="note-text">Event vom 05.05. Gehört weedyhimself. Zurückgelegt.</span></div>
+      </div>
+
+      <!-- Stack 3 collapsed -->
+      <div class="trow lvl-stack">
+        <div class="tc name"><span class="chev">▶</span><span class="nm">EndRageMusic</span></div>
+        <div class="tc ctx"><span class="badge-sq ext">AGN</span><span class="loc">Rod's Fuel 'N Supplies</span></div>
+        <div class="tc num"><span class="q"><span class="qv">588</span><span class="gauge"><i style="width:59%"></i></span></span></div>
+        <div class="tc num scu">0,392 <span class="u">SCU</span></div>
+        <div class="tc num muted" style="font-size:0.78rem">1 Eintrag</div>
+      </div>
+
+      <!-- Material 2 collapsed -->
+      <div class="trow lvl-mat">
+        <div class="tc name"><span class="chev">▶</span><span class="nm">Aluminum</span></div>
+        <div class="tc muted">1 Nutzer · 1 Stack</div>
+        <div class="tc num"><span class="q"><span class="qv">919 <span class="max">/ 919</span></span><span class="gauge"><i style="width:92%"></i></span></span></div>
+        <div class="tc num scu">0,680 <span class="u">SCU</span></div>
+        <div class="tc"></div>
+      </div>
+      <div class="trow lvl-mat" style="border-bottom:none">
+        <div class="tc name"><span class="chev">▶</span><span class="nm">Aphorite</span></div>
+        <div class="tc muted">2 Nutzer · 3 Stacks</div>
+        <div class="tc num"><span class="q"><span class="qv">775 <span class="max">/ 861</span></span><span class="gauge"><i style="width:77%"></i></span></span></div>
+        <div class="tc num scu">40 <span class="u">Stück</span></div>
+        <div class="tc"></div>
+      </div>
+    </div>
+    <ul class="ann after-notes">
+      <li><b>Ein</b> Spaltenkopf (sticky) für alle Ebenen statt drei wiederholter Köpfe.</li>
+      <li><b>Tiefen-Einrückung + Schienen</b>: Material (Orange-Balken) → Nutzer → Eintrag klar gestaffelt.</li>
+      <li><b>Rechtsbündige Tabellenziffern</b> + Qualitäts-Gauge (0–1000) → Werte auf einen Blick vergleichbar.</li>
+      <li><b>Höhere Dichte</b> (0,5rem), Zebra-Hover; Köpfe hellgrau, Orange nur für Identität/Akzent.</li>
+      <li><b>Aktionen</b>: „Ausbuchen" als Outline, „Notiz" als Ghost — statt zweier orange Textlinks.</li>
+      <li><b>Eintrag ohne Wiederholungs-Kopf</b>: Auftrag/Einsatz als breite, beschriftete Selects im freigewordenen Bereich — lange Namen bleiben lesbar.</li>
+      <li><b>Notiz</b> als eigene eingerückte Zeile (Orange-Label + Surface-Box, bis 80ch) mit Platz für den vollen Text; „Notiz"-Button wird Outline, wenn eine hinterlegt ist.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Gilt für /inventory/all (mit Staffel-Spalte) und /inventory/my (ohne). Drei <code>&lt;thead&gt;</code>-Sätze → ein konsolidierter Tree-Table-Kopf. Kosmetisches Mock; Detailbefunde siehe inventory-table-audit.md.</p>
+</div>
+</body>
+</html>

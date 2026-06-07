@@ -1,0 +1,198 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "slides/**",
+              "ui_kits/basetool/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Audiowide|Lato))/i]",
+        "message": "Font not provided by the design system. Available: Audiowide, Lato."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--action-emphasis",
+      "--action-neutral",
+      "--action-primary",
+      "--border-accent",
+      "--border-hairline",
+      "--border-heading",
+      "--color-accent-dark",
+      "--color-accent-light",
+      "--color-bg-black",
+      "--color-bg-dark-gray",
+      "--color-danger",
+      "--color-danger-hover",
+      "--color-dept-combat",
+      "--color-dept-forschung",
+      "--color-dept-marine",
+      "--color-dept-marinekorps",
+      "--color-dept-profit",
+      "--color-dept-raumueberlegenheit",
+      "--color-dept-research",
+      "--color-dept-search-rescue",
+      "--color-dept-sub-radar",
+      "--color-gray-1",
+      "--color-gray-2",
+      "--color-gray-3",
+      "--color-gray-4",
+      "--color-info",
+      "--color-primary",
+      "--color-secondary",
+      "--color-success",
+      "--color-success-hover",
+      "--color-surface-input",
+      "--color-warning",
+      "--color-white",
+      "--content-max",
+      "--data-fg",
+      "--font-body",
+      "--font-headline",
+      "--font-mono",
+      "--fs-2xs",
+      "--fs-body",
+      "--fs-h1",
+      "--fs-h2",
+      "--fs-h3",
+      "--fs-sm",
+      "--fs-xs",
+      "--fw-black",
+      "--fw-bold",
+      "--fw-regular",
+      "--fw-thin",
+      "--glow-danger-lg",
+      "--glow-primary",
+      "--glow-primary-lg",
+      "--lh-body",
+      "--measure",
+      "--radius-none",
+      "--radius-pill",
+      "--shadow-drawer",
+      "--shadow-dropdown",
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-6",
+      "--space-8",
+      "--touch-target",
+      "--tracking-display",
+      "--tracking-overline"
+    ],
+    "tokenKinds": {
+      "--color-primary": "color",
+      "--color-white": "color",
+      "--color-bg-black": "color",
+      "--color-accent-light": "color",
+      "--color-accent-dark": "color",
+      "--color-gray-1": "color",
+      "--color-gray-2": "color",
+      "--color-gray-3": "color",
+      "--color-gray-4": "color",
+      "--color-bg-dark-gray": "color",
+      "--color-surface-input": "color",
+      "--color-dept-raumueberlegenheit": "color",
+      "--color-dept-forschung": "color",
+      "--color-dept-sub-radar": "color",
+      "--color-dept-marinekorps": "color",
+      "--color-dept-profit": "color",
+      "--color-dept-search-rescue": "color",
+      "--color-dept-combat": "color",
+      "--color-dept-research": "color",
+      "--color-dept-marine": "color",
+      "--color-danger": "color",
+      "--color-success": "color",
+      "--color-warning": "color",
+      "--color-info": "color",
+      "--color-secondary": "color",
+      "--action-primary": "color",
+      "--action-emphasis": "color",
+      "--action-neutral": "color",
+      "--data-fg": "color",
+      "--color-danger-hover": "color",
+      "--color-success-hover": "color",
+      "--font-headline": "font",
+      "--font-body": "font",
+      "--font-mono": "font",
+      "--fs-h1": "spacing",
+      "--fs-h2": "spacing",
+      "--fs-h3": "spacing",
+      "--fs-body": "spacing",
+      "--fs-sm": "spacing",
+      "--fs-xs": "spacing",
+      "--fs-2xs": "spacing",
+      "--fw-thin": "font",
+      "--fw-regular": "font",
+      "--fw-bold": "font",
+      "--fw-black": "font",
+      "--tracking-display": "font",
+      "--tracking-overline": "font",
+      "--lh-body": "font",
+      "--radius-none": "radius",
+      "--radius-pill": "radius",
+      "--border-hairline": "color",
+      "--border-accent": "color",
+      "--border-heading": "color",
+      "--glow-primary": "shadow",
+      "--glow-primary-lg": "shadow",
+      "--glow-danger-lg": "shadow",
+      "--shadow-drawer": "shadow",
+      "--shadow-dropdown": "shadow",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-6": "spacing",
+      "--space-8": "spacing",
+      "--touch-target": "spacing",
+      "--content-max": "spacing",
+      "--measure": "spacing"
+    },
+    "fontFamilies": [
+      "Audiowide",
+      "Lato"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .pv-label { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Tree table — nested data, one sticky header, indentation, gauge, conditional note</p>
+  <div class="tree-table">
+    <div class="tree-row tree-head">
+      <div class="tree-cell">Bestand</div>
+      <div class="tree-cell">Kontext / Zuordnung</div>
+      <div class="tree-cell tree-cell--num">Qualität</div>
+      <div class="tree-cell tree-cell--num">Menge</div>
+      <div class="tree-cell" style="text-align:right">Aktion</div>
+    </div>
+
+    <div class="tree-row tree-row--group">
+      <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">Agricium</span></div>
+      <div class="tree-cell" style="color:var(--color-gray-2)">3 Nutzer · 5 Stacks</div>
+      <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">639 <span class="tree-gauge-max">/ 796</span></span><span class="tree-gauge-track"><span style="width:64%"></span></span></span></div>
+      <div class="tree-cell tree-cell--num tree-amount">10.049 <span class="tree-unit">SCU</span></div>
+      <div class="tree-cell"></div>
+    </div>
+
+    <div class="tree-row tree-row--mid">
+      <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">P6</span></div>
+      <div class="tree-cell" style="display:flex;gap:.5rem;align-items:center;min-width:0"><span class="squadron-badge">IRI</span><span class="tree-label">Levski</span></div>
+      <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">796</span><span class="tree-gauge-track"><span style="width:80%"></span></span></span></div>
+      <div class="tree-cell tree-cell--num tree-amount">1,786 <span class="tree-unit">SCU</span></div>
+      <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">1 Eintrag</div>
+    </div>
+
+    <div class="tree-row tree-row--leaf">
+      <div class="tree-leaf-main">
+        <span class="tree-leaf-tag">Eintrag</span>
+        <div class="tree-fieldset">
+          <div class="tree-field"><span class="tree-field-cap">Auftrag</span><select class="set"><option>#1042 — Quantanium-Konvoi ARC-L1</option></select></div>
+          <div class="tree-field"><span class="tree-field-cap">Einsatz</span><select><option>Kein Einsatz</option></select></div>
+        </div>
+      </div>
+      <div class="tree-cell tree-cell--num tree-amount">1,786 <span class="tree-unit">SCU</span></div>
+      <div class="tree-cell tree-cell--actions"><button class="btn btn-outline btn-xs">Ausbuchen</button><button class="btn btn-outline btn-xs">Notiz</button></div>
+    </div>
+    <div class="tree-note">
+      <div class="tree-note-box"><span class="tree-note-label">Notiz</span><span class="tree-note-text">Event vom 05.05. Gehört weedyhimself. Zurückgelegt.</span></div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.tree-table · .tree-row--group/--mid/--leaf · sticky .tree-head · .tree-gauge · .tree-note (only when present) · .btn-xs</p>
+</body>
+</html>

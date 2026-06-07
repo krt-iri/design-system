@@ -1,0 +1,17 @@
+/* ============================================================================
+   DAS KARTELL — Profit Basetool · Design System entry point
+   ----------------------------------------------------------------------------
+   Single stylesheet for consumers. Link THIS one file and you get the full
+   system: design tokens + @font-face (colors_and_type.css) and the component
+   layer (krt-components.css).
+
+       <link rel="stylesheet" href="styles.css">
+
+   Order matters: tokens/fonts first, components second (they consume the
+   tokens). Surface-specific layers (preview/_card.css, ui_kits/basetool/app.css,
+   keycloak/krt-keycloak-tokens.css) are NOT imported here — pull those in only
+   where that surface is rendered.
+   ============================================================================ */
+
+@import url('colors_and_type.css');
+@import url('krt-components.css');
