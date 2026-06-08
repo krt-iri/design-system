@@ -240,9 +240,11 @@ tbody tr:hover { background-color: var(--color-gray-3); }
 .tree-row:last-child { border-bottom: none; }
 .tree-cell { padding: 0.5rem 0.8rem; font-size: 0.86rem; min-width: 0; }
 .tree-cell--num { text-align: right; font-variant-numeric: tabular-nums; }
-.tree-cell--actions { display: flex; gap: 0.4rem; justify-content: flex-end; padding-left: 1.5rem; }
+.tree-cell--actions { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; padding-left: 1.5rem; }
 /* ^ padding-left keeps a clear gutter between the amount column and the action
-   buttons so the value + buttons never collide. */
+   buttons so the value + buttons never collide; flex-wrap is a safety net so an
+   unexpectedly wide action set wraps onto a second line instead of overflowing
+   left across the right-aligned amount. */
 
 /* Sticky single header */
 .tree-head { position: sticky; top: 0; z-index: 2; }
@@ -301,8 +303,29 @@ tbody tr:hover { background-color: var(--color-gray-3); }
 .tree-note-box .tree-note-label { color: var(--color-primary); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.09em; font-weight: var(--fw-bold); flex: none; }
 .tree-note-box .tree-note-text { color: var(--color-gray-1); font-size: 0.84rem; line-height: 1.45; max-width: 80ch; overflow-wrap: anywhere; }
 
+/* Tablet and below (four device classes): collapse the leaf row's multi-column
+   grid so the amount + per-entry actions reflow onto their own line beneath the
+   wide Auftrag/Einsatz controls, instead of competing for a sliver of width and
+   overlapping the value column. Group/mid/head rows keep the shared --tree-cols
+   template (wide tables scroll horizontally). */
+@media (max-width: 1024px) {
+    .tree-row--leaf { grid-template-columns: 1fr auto; row-gap: 0.2rem; }
+    .tree-row--leaf .tree-leaf-main { grid-column: 1 / -1; }
+    .tree-row--leaf .tree-amount { grid-column: 1; padding-left: 3rem; text-align: left; }
+    .tree-row--leaf .tree-cell--actions { grid-column: 2; }
+}
+
 /* Compact action button size for dense rows. */
 .btn-xs { min-height: 32px; padding: 0.25rem 0.55rem; font-size: 0.68rem; }
+
+/* Icon-only square action button: keeps a dense action column from crowding the
+   value beside it. Accessible name comes from aria-label/title; the glyph is
+   decorative (aria-hidden). Pair with .btn-xs for the 32px dense-row size. */
+.btn-icon { gap: 0; padding: 0.25rem; min-width: 32px; }
+.btn-icon .krt-icon { width: 1.05rem; height: 1.05rem; }
+/* Decorative button glyphs never intercept clicks — the click lands on the host
+   button/link, not the inner svg/use (keeps event.target-based handlers working). */
+.btn .krt-icon { pointer-events: none; }
 
 
 /* --------------------------------------------------------- FORMS / INPUTS -- */

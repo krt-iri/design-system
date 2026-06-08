@@ -153,14 +153,30 @@ nesting `<table>`s that each repeat their own `<thead>`. Rules:
 - **Leaf controls** (e.g. Auftrag/Einsatz selects) sit in `.tree-leaf-main`
   which spans the freed-up name+context+quality columns, so long labels get real
   width while amount + actions stay column-aligned.
-- **Action buttons** use `.btn-xs`; `.tree-cell--actions` has a left gutter so the
-  amount and buttons never collide. One emphasised action per row
-  (outline/ghost/quiet).
+- **Action buttons** use `.btn-xs`; `.tree-cell--actions` has a left gutter and
+  `flex-wrap` so the amount and buttons never collide. Keep the action set narrow:
+  verbose row actions (here the emphasised "Ausbuchen" and the state-flipping
+  "Notiz") are icon-only `.btn-icon` squares carrying their meaning in
+  `aria-label`/`title`, not wide text buttons that overflow the value column.
+  Still one emphasised action per row (outline) with the rest ghost/quiet.
 - **Notes render only when a note exists** — an indented `.tree-note` block with
   room for the full text (~80ch), orange label + surface box.
+- **Tablet and below** (`max-width: 1024px`): the leaf row collapses its
+  multi-column grid so the amount + actions reflow onto their own line beneath the
+  Auftrag/Einsatz controls; group/mid/head rows keep the shared template and the
+  table scrolls horizontally on the smallest class.
 
 Live before/after: [`proposals/inventory-table-readability.html`](proposals/inventory-table-readability.html);
 specimen: `preview/components-tree-table.html`; audit: `proposals/inventory-table-audit.md`.
+
+### Action icons (CRUD)
+
+The recurring row/form actions share fixed sprite glyphs: **delete / remove → `krt-icon-trash`**,
+**edit → `krt-icon-edit`**, **save → `krt-icon-save`** (inventory book-out → `krt-icon-bookout`).
+In dense rows (table / tree / compact clusters) they are icon-only `.btn-icon` squares with the
+label in `title` / `aria-label`; in forms and dialogs they are icon + text. `.btn .krt-icon` sets
+`pointer-events: none` so the click lands on the button, not the glyph. Keep the danger styling
+(`btn-quiet-danger` / `btn-outline-danger`) on delete. Specimen: `preview/brand-iconography.html`.
 
 ---
 
