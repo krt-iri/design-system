@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
+  .ic { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px;
+    border: 1px solid var(--color-gray-3); background: var(--color-surface-input); }
+  .ic.new { border-color: var(--color-primary); }
+  .ic svg { width: 24px; height: 24px; color: var(--color-gray-1); }
+  .ic.new svg { color: var(--color-primary); }
+  .ic .nm { font-family: var(--font-mono); font-size: 0.56rem; color: var(--color-gray-2); text-align: center; line-height: 1.2; }
+  .sub { font-family: var(--font-body); font-weight: 700; font-size: 0.66rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-gray-2); margin: 14px 0 8px; }
+  .sub:first-of-type { margin-top: 4px; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Button icon set — 24×24, stroke-2, round, currentColor</p>
+
+  <div class="sub">Vorhanden im Repo</div>
+  <div class="grid" id="have"></div>
+
+  <div class="sub" style="color:var(--color-primary);">Neu — Erweiterung für Buttons</div>
+  <div class="grid" id="new"></div>
+
+  <p class="pv-mono" style="margin-top:14px;">Ein handkuratiertes Set (kein CDN). Inheritiert Textfarbe → fügt sich in jede Button-Variante. Icon-only-Aktionen tragen <code>aria-label</code> + <code>title</code>.</p>
+
+  <!-- sprite -->
+  <svg style="display:none">
+    <use-marker/>
+  </svg>
+  <script>
+    const have = ["close","chevron-down","chevron-up","chevron-left","chevron-right","warning","success","info","plus","minus","search","filter","edit","trash","bookout","save"];
+    const neu  = ["arrow-left","arrow-right","check","login","logout","user-plus","external-link","clock","map-pin","filter-off","eye","download","upload","clipboard-check","list"];
+    async function build() {
+      const res = await fetch("../assets/krt-icons.svg");
+      const txt = await res.text();
+      const doc = new DOMParser().parseFromString(txt, "image/svg+xml");
+      const sym = {};
+      doc.querySelectorAll("symbol").forEach(s => sym[s.id.replace("krt-icon-","")] = s);
+      const make = (name, isNew) => {
+        const s = sym[name];
+        const inner = s ? s.innerHTML : "";
+        const vb = s ? s.getAttribute("viewBox") : "0 0 24 24";
+        return `<div class="ic${isNew?' new':''}"><svg viewBox="${vb}">${inner}</svg><span class="nm">${name}</span></div>`;
+      };
+      document.getElementById("have").innerHTML = have.map(n => make(n,false)).join("");
+      document.getElementById("new").innerHTML = neu.map(n => make(n,true)).join("");
+    }
+    build();
+  </script>
+</body>
+</html>

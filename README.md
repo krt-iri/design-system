@@ -169,6 +169,7 @@ nesting `<table>`s that each repeat their own `<thead>`. Rules:
 Live before/after: [`proposals/inventory-table-readability.html`](proposals/inventory-table-readability.html);
 specimen: `preview/components-tree-table.html`; audit: `proposals/inventory-table-audit.md`.
 
+<<<<<<< Updated upstream
 ### Action icons (CRUD)
 
 The recurring row/form actions share fixed sprite glyphs: **delete / remove → `krt-icon-trash`**,
@@ -177,6 +178,26 @@ In dense rows (table / tree / compact clusters) they are icon-only `.btn-icon` s
 label in `title` / `aria-label`; in forms and dialogs they are icon + text. `.btn .krt-icon` sets
 `pointer-events: none` so the click lands on the button, not the glyph. Keep the danger styling
 (`btn-quiet-danger` / `btn-outline-danger`) on delete. Specimen: `preview/brand-iconography.html`.
+=======
+### Button icons
+
+The app uses **one hand-curated SVG sprite** (`assets/krt-icons.svg`; in the repo
+`fragments/icons.html`) — no icon library (CSP forbids CDNs). Style contract:
+24×24, stroke-only, `stroke-width:2`, round caps, `fill:none`, `currentColor` (so an
+icon inherits the button's text colour). Two usage rules:
+
+- **Icon + Text** (default) for primary, rare or ambiguous actions — icon left of
+  the label, 1em, same colour (Speichern, Anmelden, Öffnen, Zurück, …).
+- **Icon-only** (`.btn-icon`) for *repeated* row actions whose meaning is universal
+  (edit, trash, check-in/login, check-out/logout, bookout, close) — saves ~50–60%
+  of the action column in dense tables. **Always** carries `aria-label` + `title`.
+
+Full set + guidance: specimen `preview/components-icon-set.html` and
+`preview/brand-iconography.html`; rules + action→icon dictionary in
+[`proposals/button-icons-guidelines.md`](proposals/button-icons-guidelines.md);
+before/after `proposals/button-icons-readability.html`; repo handoff
+`proposals/button-icons-claude-code-auftrag.md`.
+>>>>>>> Stashed changes
 
 ---
 
@@ -356,7 +377,7 @@ Root manifest:
 | `fonts/` | Audiowide (display) + Lato (Thin→Black, each + italic) — self-hosted WOFF2 with TTF fallback. |
 | `assets/` | `krt.webp` (mark), `krt-favicon.webp`, `Kartelllogo.jpg` (lockup), `honeycomb.svg` + `honeycomb-bg.svg` (Wabenmuster). |
 | `preview/` | 23 Design System specimen cards (type, color, spacing, components, brand — incl. the rank ladder, honeycomb pattern, scrollbars and background/texture treatments). |
-| `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full `template-audit.md`, and `claude-code-auftrag.md` (project-wide unification order for the real repo). |de-code-auftrag.md` (project-wide unification order for the real repo). |
+| `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full template audits (`template-audit.md`, `template-audit-full.md`), the UX/usability review, and the MASTER + per-topic `claude-code-auftrag.md` unification orders for the real repo. |de-code-auftrag.md` (project-wide unification order for the real repo). |
 | `slides/` | HUD slide template (deck-stage) — title, section, content, stats, comparison, quote, closing. |
 | `ui_kits/basetool/` | Interactive recreation of the Profit Basetool app — see its own README. |
 

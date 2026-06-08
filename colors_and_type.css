@@ -181,6 +181,18 @@
     --color-secondary: #FFD23F;                       /* cross-squadron / foreign-link highlight */
 
     /* ------------------------------------------------------------------ */
+    /* ACCESSIBLE TEXT TINTS — for status/semantic colour used as TEXT.    */
+    /* The canonical danger/info hues are dark (Sub-Radar #A3000A ≈ 2.3:1, */
+    /* Forschung #355DDC ≈ 3.6:1 on black) — fine as fills with white text */
+    /* or as borders, but they FAIL WCAG as small text on the dark canvas. */
+    /* Use these lightened variants whenever the colour is the text itself  */
+    /* (.text-danger, .status-*, price up/down); keep the canonical hues    */
+    /* for fills, borders and the brand Bereichsfarben tags.               */
+    --color-danger-text:  #F2564B;  /* ≈ 5.3:1 on black */
+    --color-info-text:    #6C93EF;  /* ≈ 6.1:1 on black */
+    --color-success-text: #2EBC3D;  /* ≈ 5.6:1 on black (slightly lifted) */
+
+    /* ------------------------------------------------------------------ */
     /* ACTION HIERARCHY — how the orange accent is allocated.              */
     /* Rule: the filled orange CTA marks the ONE primary action per        */
     /* context. Orange is for ACTION + IDENTITY (logo, badges, headings),  */
@@ -308,3 +320,33 @@ label {
 ::selection { background: var(--color-primary); color: var(--color-bg-black); }
 
 *, *::before, *::after { box-sizing: border-box; }
+
+/* ----------------------------------------------------------------------------
+   ACCESSIBILITY DEFAULTS
+   A visible keyboard-focus ring for EVERY interactive element (the app only
+   styled input focus before, leaving buttons/links/badges with no visible
+   focus for keyboard users). :focus-visible only shows for keyboard/AT, not
+   mouse clicks, so it doesn't add noise for pointer users. Components may
+   override with their own focus treatment.
+   ---------------------------------------------------------------------------- */
+:where(a, button, [role="button"], [tabindex], summary,
+       input, select, textarea, .btn, .btn-icon):focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+/* On a filled orange CTA the orange-on-orange ring would vanish — switch to a
+   white ring there for contrast. */
+.btn--cta:focus-visible, .btn:not([class*="btn-"]):focus-visible {
+    outline-color: var(--color-white);
+}
+
+/* Respect reduced-motion: neutralise transitions/animations for users who ask
+   for it (vestibular safety). The app uses slide-in drawers + toast motion. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}

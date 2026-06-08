@@ -13,7 +13,9 @@ Labels/Datenwerte, semantische Statusfarben).
 Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
 - `colors_and_type.css`, `krt-components.css`, README → „Action hierarchy".
 - App-Details: `proposals/claude-code-auftrag.md` (+ Vorher/Nachher-Mocks
-  `proposals/*-button-hierarchy.html`, `proposals/template-audit.md`).
+  `proposals/*-button-hierarchy.html`, `proposals/template-audit.md`,
+  Gesamt-Template-Audit `proposals/template-audit-full.md`,
+  UX/Usability-Review `proposals/ux-usability-review.md`).
 - Keycloak-Details: `keycloak/claude-code-auftrag.md`, `keycloak/README.md`,
   `keycloak/conformity-audit.md`, `keycloak/krt-keycloak-tokens.css`,
   `keycloak/keycloak-login-target.html`.
@@ -84,9 +86,19 @@ Lager-Links Outline), `inventory-my`/`inventory-admin` (Erfassen → CTA, Bulk/Z
 Einrückung, Qualitäts-Gauge, breite beschriftete Selects, bedingte Notiz). Mock:
 `proposals/inventory-table-readability.html`.
 
-## PHASE 5 — App: Konsolidierung
+## PHASE 5 — App: Konsolidierung + neue Bausteine
 Toast vereinheitlichen (`.notification-toast`), kanonische Tabellen-Klasse,
 `var(--color-text)` → `--color-gray-1`, redundante Inline-Styles entfernen.
+Zusätzlich app-weit auf die neuen DS-Bausteine umstellen (Audit:
+`proposals/template-audit-full.md`):
+- **Pagination** (`fragments/pagination.html`) → `.pagination` (Chevron-Icons,
+  echtes Disabled via `pointer-events`, `aria-current="page"`). Specimen:
+  `preview/components-pagination.html`.
+- **Inline-Fehlertext** (profile, mission-/operation-/orders-/refinery-detail,
+  admin/*) → `.field-error` (barrierefreier `--color-danger-text` + Warn-Glyph);
+  Fehlerfeld zusätzlich rot umranden.
+- **„Label : Wert"-Detailblöcke** (profile `.profile-row`, Detail-Köpfe,
+  Organisation/Finanzen) → `.kv-list`. Specimen: `preview/components-detail-list.html`.
 
 ## PHASE 6 — Keycloak-Theme
 Vollständig nach `keycloak/claude-code-auftrag.md`:

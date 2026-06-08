@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Detail list & field error" subtitle="kv-list readouts + accessible inline error" viewport="700x230" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 22px 20px; }
+  .cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; align-items: start; }
+  .surface { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 16px; }
+  .krt-icon { width: 1.05em; height: 1.05em; fill: none; vertical-align: -0.15em; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Key-value detail list &amp; accessible field error</p>
+  <div class="cols">
+    <div class="surface">
+      <dl class="kv-list kv-ruled">
+        <dt>Einsatzleiter</dt><dd>cmdr.valk</dd>
+        <dt>Flottenfunk</dt><dd>123.450</dd>
+        <dt>Status</dt><dd>Geplant · 29.05.2026 19:00</dd>
+        <dt>Beitritt</dt><dd>01.03.2024</dd>
+      </dl>
+    </div>
+    <div class="surface">
+      <label class="form-label-sm">Anzeigename</label>
+      <input type="text" value="weedy" style="width:100%; border-color:var(--color-danger);">
+      <p class="field-error"><svg class="krt-icon" style="color:var(--color-danger-text)"><use href="#krt-icon-warning"/></svg> Name bereits vergeben — bitte einen anderen wählen.</p>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.kv-list (Label neutral · Wert hell, --data-fg) · .field-error nutzt --color-danger-text (lesbar auf Schwarz) + Warn-Glyph.</p>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="krt-icon-warning" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v5M12 18v0.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+</body>
+</html>

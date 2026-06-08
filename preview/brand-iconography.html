@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<!-- @dsCard group="Brand" name="Iconography" subtitle="In-house 24px line sprite" viewport="700x230" -->
+<!-- @dsCard group="Brand" name="Iconography" subtitle="In-house 24px line sprite" viewport="700x300" -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="_card.css">
 <style>
-  .icons { display:flex; gap:20px; flex-wrap:wrap; color:var(--color-primary); }
+  .surface { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 16px; }
+  .icons { display:grid; grid-template-columns:repeat(8, 1fr); gap:14px 10px; }
   .icons .i { display:flex; flex-direction:column; align-items:center; gap:6px; }
-  .icons .krt-icon { width:26px; height:26px; }
-  .icons .lbl { font-family:var(--font-mono); font-size:.58rem; color:var(--color-gray-2); }
+  .icons .krt-icon { width:24px; height:24px; color:var(--color-primary); fill:none; }
+  .icons .lbl { font-family:var(--font-mono); font-size:.54rem; color:var(--color-gray-2); text-align:center; line-height:1.2; }
+  .sech { font-family:var(--font-body); font-weight:700; font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; color:var(--color-gray-2); margin:0 0 10px; }
+  .sech.new { color:var(--color-primary); margin-top:18px; }
 </style>
 </head>
 <body>
   <p class="pv-label">Iconography — hand-curated 24px line sprite, currentColor</p>
+<<<<<<< Updated upstream
   <svg class="krt-icon-sprite" aria-hidden="true">
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
@@ -40,7 +44,31 @@
     <div class="i"><svg class="krt-icon"><use href="#i-ok"/></svg><span class="lbl">success</span></div>
     <div class="i"><svg class="krt-icon"><use href="#i-info"/></svg><span class="lbl">info</span></div>
     <div class="i"><svg class="krt-icon"><use href="#i-close"/></svg><span class="lbl">close</span></div>
+=======
+  <div class="surface">
+    <p class="sech">Core set</p>
+    <div class="icons" id="core"></div>
+    <p class="sech new">Button expansion (2026-06)</p>
+    <div class="icons" id="ext"></div>
+>>>>>>> Stashed changes
   </div>
-  <p class="pv-mono" style="margin-top:16px;">No icon library — a small in-house sprite (CSP forbids CDNs). 2px stroke, square caps, inherits text color.</p>
+  <p class="pv-mono" style="margin-top:14px;">No icon library — one in-house sprite (CSP forbids CDNs). 24×24, 2px stroke, round caps, inherits text color. Icon-only actions carry aria-label + title.</p>
+
+  <script>
+    const core = ["close","chevron-down","chevron-up","chevron-left","chevron-right","warning","success","info","plus","minus","search","filter","edit","trash","bookout","save"];
+    const ext  = ["arrow-left","arrow-right","check","login","logout","user-plus","external-link","clock","map-pin","filter-off","eye","download","upload","clipboard-check","list"];
+    (async () => {
+      const txt = await (await fetch("../assets/krt-icons.svg")).text();
+      const doc = new DOMParser().parseFromString(txt, "image/svg+xml");
+      const sym = {};
+      doc.querySelectorAll("symbol").forEach(s => sym[s.id.replace("krt-icon-","")] = s);
+      const cell = (n) => {
+        const s = sym[n]; const vb = s ? s.getAttribute("viewBox") : "0 0 24 24";
+        return `<div class="i"><svg class="krt-icon" viewBox="${vb}">${s ? s.innerHTML : ""}</svg><span class="lbl">${n}</span></div>`;
+      };
+      document.getElementById("core").innerHTML = core.map(cell).join("");
+      document.getElementById("ext").innerHTML = ext.map(cell).join("");
+    })();
+  </script>
 </body>
 </html>

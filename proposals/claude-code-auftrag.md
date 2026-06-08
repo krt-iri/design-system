@@ -20,7 +20,7 @@ Dieses Skill (`.claude/skills/das-kartell-design/`):
    (Neu/Erstellen/Speichern/Anmelden). Alles andere demoten.
 2. Orange ist für **Aktion + Identität** (Logo, Badges, Headlines) — **nie** für
    Formular-Labels, Tabellentext oder reine Datenwerte.
-3. Quadratische Ecken, HUD-Idiom, 44px Touch-Targets, Lato für Text / Ethnocentric
+3. Quadratische Ecken, HUD-Idiom, 44px Touch-Targets, Lato für Text / Audiowide
    nur für echte Headlines — wie gehabt.
 
 ## Button-Leiter (verbindlich)
@@ -124,7 +124,7 @@ Pro Seite gilt sie als vereinheitlicht, wenn:
 2. Kein Formular-Label und kein reiner Datenwert orange ist.
 3. Wiederholte Zeilenaktionen ruhig (ghost/quiet) sind — keine Orange-Kaskade.
 4. Keine Inline-Stile mehr Tokens/Komponenten des Systems überschreiben.
-5. Schrift: Ethnocentric nur in echten Headlines, sonst Lato.
+5. Schrift: Audiowide nur in echten Headlines, sonst Lato.
 6. `./gradlew check` grün; Optik deckt sich mit `ui_kits/basetool/` + den Mocks.
 
 > Reihenfolge nach Wirkung/Risiko: **2 → 3 → 4 → 5 → 6**. Schritt 1 ist Voraussetzung.

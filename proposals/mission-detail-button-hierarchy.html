@@ -52,6 +52,8 @@
   .btn-quiet-danger { background: transparent; color: var(--color-gray-2); border: 1px solid var(--color-gray-3); }
   .btn-quiet-danger:hover { color: var(--color-danger); border-color: var(--color-danger); background: rgba(163,0,10,0.12); }
   .btn-sm2 { min-height: 36px; padding: 0.35rem 0.7rem; font-size: 0.72rem; }
+  .krt-icon { width: 1.05em; height: 1.05em; fill: none; vertical-align: -0.16em; }
+  .btn-icononly { padding: 0.35rem; min-width: 34px; }
 
   .anmelden-pin { position: relative; }
   .pin { position: absolute; top: -10px; right: -10px; width: 22px; height: 22px; border-radius: 999px; background: var(--color-success); color: #fff; font-family: var(--font-body); font-weight: 900; font-size: 12px; display: flex; align-items: center; justify-content: center; }
@@ -134,14 +136,14 @@
         <button class="ph"><h2>Teilnehmer <span class="count">12/18</span></h2><span class="chev"></span></button>
         <div class="hud-box">
           <div class="toolbar">
-            <span class="anmelden-pin"><button class="btn btn--cta">＋ Anmelden</button></span>
+            <span class="anmelden-pin"><button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-user-plus"/></svg> Anmelden</button></span>
           </div>
           <table>
             <thead><tr><th>Benutzer</th><th>Org</th><th>Aufgabe</th><th style="text-align:right;">Aktion</th></tr></thead>
             <tbody>
-              <tr><td>cmdr.valk</td><td><span class="squadron-badge">IRI</span></td><td>Pilot</td><td><div class="act"><button class="btn btn-success btn-sm2">Check-In</button><button class="btn-ghost btn btn-sm2">Edit</button><button class="btn-quiet-danger btn btn-sm2">Delete</button></div></td></tr>
-              <tr><td>mara.k</td><td><span class="squadron-badge">IRI</span></td><td>Gunner</td><td><div class="act"><button class="btn-ghost btn btn-sm2">Check-Out</button><button class="btn-ghost btn btn-sm2">Edit</button><button class="btn-quiet-danger btn btn-sm2">Delete</button></div></td></tr>
-              <tr><td>hex_07</td><td><span class="squadron-badge squadron-badge-muted">—</span></td><td>Medic</td><td><div class="act"><button class="btn-ghost btn btn-sm2">Edit</button><button class="btn-quiet-danger btn btn-sm2">Delete</button></div></td></tr>
+              <tr><td>cmdr.valk</td><td><span class="squadron-badge">IRI</span></td><td>Pilot</td><td><div class="act"><button class="btn btn-success btn-icononly" title="Check-In" aria-label="Check-In"><svg class="krt-icon"><use href="#krt-icon-login"/></svg></button><button class="btn-ghost btn btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn-quiet-danger btn btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td>mara.k</td><td><span class="squadron-badge">IRI</span></td><td>Gunner</td><td><div class="act"><button class="btn-ghost btn btn-icononly" title="Check-Out" aria-label="Check-Out"><svg class="krt-icon"><use href="#krt-icon-logout"/></svg></button><button class="btn-ghost btn btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn-quiet-danger btn btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td>hex_07</td><td><span class="squadron-badge squadron-badge-muted">—</span></td><td>Medic</td><td><div class="act"><button class="btn-ghost btn btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn-quiet-danger btn btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -191,8 +193,8 @@
             <div class="btnbar" style="justify-content:flex-end;">
               <button class="btn btn-quiet-danger">Delete</button>
               <span style="margin-right:auto;"></span>
-              <button class="btn btn-ghost">Zurück</button>
-              <button class="btn btn--cta">Speichern</button>
+              <button class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg> Zurück</button>
+              <button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg> Speichern</button>
             </div>
           </div>
         </div>
@@ -235,14 +237,14 @@
         <div class="panel after-panel">
           <button class="ph"><h2>Einheiten</h2><span class="chev"></span></button>
           <div class="hud-box">
-            <div class="toolbar"><button class="btn btn--cta">＋ Hinzufügen</button></div>
+            <div class="toolbar"><button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Hinzufügen</button></div>
             <div class="unitbox" style="margin-bottom:0.75rem;">
               <div class="uh"><span class="uname">Schwarze Witwe — Constellation</span>
-                <div class="act"><button class="btn btn-outline btn-sm2">Crew zuweisen</button><button class="btn btn-ghost btn-sm2">Edit</button><button class="btn btn-quiet-danger btn-sm2">Delete</button></div></div>
+                <div class="act"><button class="btn btn-outline btn-sm2"><svg class="krt-icon"><use href="#krt-icon-user-plus"/></svg> Crew zuweisen</button><button class="btn btn-ghost btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></div>
             </div>
             <div class="unitbox">
               <div class="uh"><span class="uname">Eisenfaust — Hammerhead</span>
-                <div class="act"><button class="btn btn-outline btn-sm2">Crew zuweisen</button><button class="btn btn-ghost btn-sm2">Edit</button><button class="btn btn-quiet-danger btn-sm2">Delete</button></div></div>
+                <div class="act"><button class="btn btn-outline btn-sm2"><svg class="krt-icon"><use href="#krt-icon-user-plus"/></svg> Crew zuweisen</button><button class="btn btn-ghost btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></div>
             </div>
           </div>
         </div>
@@ -279,8 +281,8 @@
           <button class="ph"><h2>Organisation</h2><span class="chev"></span></button>
           <div class="hud-box">
             <div class="kv"><span class="key">Einsatzleiter</span><span class="val-chip">cmdr.valk</span></div>
-            <div class="kv"><span class="key">Flottenfunk</span><span style="display:flex;gap:0.5rem;align-items:center;"><span class="val-chip">123.450</span><button class="btn btn-ghost btn-sm2">Edit</button></span></div>
-            <div class="kv" style="border:none;"><span class="key">Bodenfunk</span><span style="display:flex;gap:0.5rem;align-items:center;"><span class="val-chip">88.200</span><button class="btn btn-ghost btn-sm2">Edit</button></span></div>
+            <div class="kv"><span class="key">Flottenfunk</span><span style="display:flex;gap:0.5rem;align-items:center;"><span class="val-chip">123.450</span><button class="btn btn-ghost btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button></span></div>
+            <div class="kv" style="border:none;"><span class="key">Bodenfunk</span><span style="display:flex;gap:0.5rem;align-items:center;"><span class="val-chip">88.200</span><button class="btn btn-ghost btn-icononly" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button></span></div>
           </div>
         </div>
         <ul class="ann after-notes">
@@ -327,5 +329,21 @@
     </div>
   </div>
 </div>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="krt-icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="krt-icon-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="krt-icon-user-plus" viewBox="0 0 24 24"><path d="M15 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="krt-icon-login" viewBox="0 0 24 24"><path d="M14 4h6v16h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M3 12h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M11 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-logout" viewBox="0 0 24 24"><path d="M10 4H4v16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M21 12H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="krt-icon-clipboard-check" viewBox="0 0 24 24"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 3h6v3H9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 13l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-bookout" viewBox="0 0 24 24"><path d="M11 5H6v14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 12h11m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-filter-off" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
 </body>
 </html>

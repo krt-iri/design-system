@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Pagination" subtitle="Chevron icons, true disabled, aria-current" viewport="700x150" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 24px 20px; }
+  .surface { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 18px; }
+  .krt-icon { width: 1.1em; height: 1.1em; fill: none; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Pagination — chevrons, echtes Disabled, aktive Seite</p>
+  <div class="surface">
+    <div class="pagination">
+      <a class="page-btn disabled" aria-label="Erste Seite"><svg class="krt-icon"><use href="#krt-icon-chevron-left"/></svg><svg class="krt-icon" style="margin-left:-6px"><use href="#krt-icon-chevron-left"/></svg></a>
+      <a class="page-btn disabled" aria-label="Zurück"><svg class="krt-icon"><use href="#krt-icon-chevron-left"/></svg></a>
+      <span class="page-status"><b>1</b>&nbsp;/&nbsp;8</span>
+      <a class="page-btn" aria-label="Weiter" href="#"><svg class="krt-icon"><use href="#krt-icon-chevron-right"/></svg></a>
+      <a class="page-btn" aria-label="Letzte Seite" href="#"><svg class="krt-icon"><use href="#krt-icon-chevron-right"/></svg><svg class="krt-icon" style="margin-left:-6px"><use href="#krt-icon-chevron-right"/></svg></a>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.pagination · .page-btn (.disabled = pointer-events:none) · .page-status · aria-current="page" markiert die aktive Seite.</p>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="krt-icon-chevron-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+    <symbol id="krt-icon-chevron-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  </svg>
+</body>
+</html>

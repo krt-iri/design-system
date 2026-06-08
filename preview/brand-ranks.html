@@ -11,10 +11,12 @@
   .tier li { display:flex; gap:8px; align-items:baseline; font-size:.78rem; color:var(--color-gray-1); }
   .tier li::before { counter-increment:r; content:counter(r); font-family:var(--font-mono); font-size:.58rem; color:var(--color-gray-2); width:14px; flex:none; text-align:right; }
   .tier li.top { color:var(--color-accent-light); font-weight:700; }
+  .surface { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 16px; }
 </style>
 </head>
 <body>
   <p class="pv-label">Rank ladder — naval structure (Manual p.17)</p>
+  <div class="surface">
   <div class="ranks">
     <div class="tier">
       <div class="th">Enlisted</div>
@@ -38,6 +40,7 @@
         <li class="top">Space Marshal</li>
       </ol>
     </div>
+  </div>
   </div>
   <p class="pv-mono" style="margin-top:14px;">Three tiers, junior → senior. Space Marshal (bracketed in the manual) is the leadership rank. Surfaces as <code>profile.rank</code> in-app.</p>
 </body>

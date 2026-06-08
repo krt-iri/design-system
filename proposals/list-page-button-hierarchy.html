@@ -28,6 +28,8 @@
   .filterbar input { width: 100%; }
   .act { display: flex; gap: 0.4rem; justify-content: flex-end; }
   .btn-sm2 { min-height: 36px; padding: 0.35rem 0.7rem; font-size: 0.72rem; }
+  .krt-icon { width: 1.05em; height: 1.05em; fill: none; vertical-align: -0.16em; }
+  .btn-icononly { padding: 0.35rem; min-width: 34px; }
   table { width: 100%; border-collapse: collapse; margin: 0; }
   th, td { padding: 0.7rem 0.8rem; font-size: 0.85rem; }
 
@@ -91,21 +93,21 @@
         <div class="greeting" style="margin-bottom:1rem;">
           <div class="page-head">
             <h2>Aufträge</h2>
-            <button class="btn btn--cta">＋ Neuer Auftrag</button>
+            <button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Neuer Auftrag</button>
           </div>
         </div>
         <div class="hud-box">
           <div class="filterbar">
             <div class="fg grow"><label class="form-label-sm" style="margin-bottom:4px;">Suche</label><input type="text" placeholder="Name…"></div>
-            <button class="btn btn-ghost">Filtern</button>
-            <button class="btn btn-ghost">Reset</button>
+            <button class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-filter"/></svg> Filtern</button>
+            <button class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-filter-off"/></svg> Reset</button>
           </div>
           <table>
             <thead><tr><th>Name</th><th>Status</th><th>Start</th><th style="text-align:right;">Aktion</th></tr></thead>
             <tbody>
-              <tr><td>Tiefschlag-Konvoi</td><td><span class="status-pill status-active">ACTIVE</span></td><td>29.05. 19:00</td><td><div class="act"><button class="btn btn-ghost btn-sm2">Details</button><button class="btn btn-quiet-danger btn-sm2">Delete</button></div></td></tr>
-              <tr><td>Aaron-Halo-Sweep</td><td><span class="status-pill status-planned">PLANNED</span></td><td>31.05. 21:00</td><td><div class="act"><button class="btn btn-ghost btn-sm2">Details</button><button class="btn btn-quiet-danger btn-sm2">Delete</button></div></td></tr>
-              <tr><td>Daymar-Bergung</td><td><span class="status-pill status-completed">COMPLETED</span></td><td>24.05. 19:00</td><td><div class="act"><button class="btn btn-ghost btn-sm2">Details</button><button class="btn btn-quiet-danger btn-sm2">Delete</button></div></td></tr>
+              <tr><td>Tiefschlag-Konvoi</td><td><span class="status-pill status-active">ACTIVE</span></td><td>29.05. 19:00</td><td><div class="act"><button class="btn btn-ghost btn-icononly" title="Details" aria-label="Details"><svg class="krt-icon"><use href="#krt-icon-eye"/></svg></button><button class="btn btn-quiet-danger btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td>Aaron-Halo-Sweep</td><td><span class="status-pill status-planned">PLANNED</span></td><td>31.05. 21:00</td><td><div class="act"><button class="btn btn-ghost btn-icononly" title="Details" aria-label="Details"><svg class="krt-icon"><use href="#krt-icon-eye"/></svg></button><button class="btn btn-quiet-danger btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td>Daymar-Bergung</td><td><span class="status-pill status-completed">COMPLETED</span></td><td>24.05. 19:00</td><td><div class="act"><button class="btn btn-ghost btn-icononly" title="Details" aria-label="Details"><svg class="krt-icon"><use href="#krt-icon-eye"/></svg></button><button class="btn btn-quiet-danger btn-icononly" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -120,5 +122,12 @@
 
   <p class="foot">Modell für /missions · /operations · /orders · /refinery-orders. „Details"/„Open" → <code>.btn-ghost</code>, „Neu" → <code>.btn--cta</code>, „Delete" → <code>.btn-quiet-danger</code>.</p>
 </div>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="krt-icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="krt-icon-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="krt-icon-filter-off" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="krt-icon-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="krt-icon-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
 </body>
 </html>

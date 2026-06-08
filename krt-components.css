@@ -82,7 +82,7 @@
 }
 .btn-quiet-danger:hover {
     background-color: rgba(163, 0, 10, 0.12);
-    color: var(--color-danger);
+    color: var(--color-danger-text);
     border-color: var(--color-danger);
 }
 
@@ -98,7 +98,7 @@
 .btn-outline-danger {
     background-color: rgba(163, 0, 10, 0.1);
     border: 1px solid var(--color-danger);
-    color: var(--color-danger);
+    color: var(--color-danger-text);
 }
 .btn-outline-danger:hover { background-color: rgba(163, 0, 10, 0.2); }
 
@@ -407,18 +407,23 @@ input[type="radio"]:checked::after {
 /* ---------------------------------------------------------- BADGES/CHIPS -- */
 /* Pills are the ONLY rounded element in the system. */
 .squadron-badge {
+    /* Ring drawn with an inset box-shadow rather than a border: at the pill's
+       999px corners a 1px border anti-aliases thinner than the straight edges,
+       so the outline looks uneven. An inset shadow keeps a uniform 1px all the
+       way round. --ring lets the modifiers recolour it. */
+    --ring: var(--color-primary);
     display: inline-flex; align-items: center;
-    padding: 0.15rem 0.5rem;
-    border: 1px solid var(--color-primary);
+    padding: calc(0.15rem + 1px) calc(0.5rem + 1px);
+    box-shadow: inset 0 0 0 1px var(--ring);
     border-radius: var(--radius-pill);
     color: var(--color-primary);
     font-family: var(--font-body);
     font-size: 0.75rem; font-weight: var(--fw-bold); line-height: 1.2;
     white-space: nowrap;
 }
-.squadron-badge-muted   { color: var(--color-gray-1); border-color: var(--color-gray-2); }
-.squadron-badge-foreign { color: var(--color-secondary); border-color: var(--color-secondary); }
-.squadron-badge-sk      { color: var(--color-gray-1); border-color: var(--color-gray-2); background-color: rgba(255,255,255,0.04); }
+.squadron-badge-muted   { color: var(--color-gray-1); --ring: var(--color-gray-2); }
+.squadron-badge-foreign { color: var(--color-secondary); --ring: var(--color-secondary); }
+.squadron-badge-sk      { color: var(--color-gray-1); --ring: var(--color-gray-2); background-color: rgba(255,255,255,0.04); }
 
 /* Department tag — small square chip tinted by department color. */
 .dept-tag {
@@ -436,14 +441,15 @@ input[type="radio"]:checked::after {
     font-size: 0.7rem; letter-spacing: 0.08em;
 }
 .status-pill::before { content: ''; width: 8px; height: 8px; background: currentColor; }
-.status-planned   { color: var(--color-info); }
-.status-active    { color: var(--color-success); }
-.status-completed { color: var(--color-gray-2); }
-.status-cancelled { color: var(--color-danger); }
+.status-planned   { color: var(--color-info-text); }
+.status-active    { color: var(--color-success-text); }
+.status-completed { color: var(--color-gray-1); }
+.status-cancelled { color: var(--color-danger-text); }
 
-/* Text color helpers */
-.text-danger  { color: var(--color-danger)  !important; }
-.text-success { color: var(--color-success) !important; }
+/* Text color helpers — use the accessible tints so semantic colour is legible
+   as text on the dark canvas (the canonical hues are reserved for fills). */
+.text-danger  { color: var(--color-danger-text)  !important; }
+.text-success { color: var(--color-success-text) !important; }
 .text-warning { color: var(--color-warning) !important; }
 .text-muted   { color: var(--color-gray-2)  !important; }
 .text-primary { color: var(--color-primary); }
@@ -474,7 +480,72 @@ input[type="radio"]:checked::after {
 .notification-toast.error-toast { border-color: var(--color-danger); box-shadow: var(--glow-danger-lg); }
 .notification-toast.error-toast::before { border-top-color: var(--color-danger); border-left-color: var(--color-danger); }
 .notification-toast.error-toast::after  { border-bottom-color: var(--color-danger); border-right-color: var(--color-danger); }
-.notification-toast.error-toast h4 { color: var(--color-danger); }
+.notification-toast.error-toast h4 { color: var(--color-danger-text); }
+
+
+/* ------------------------------------------------------------ PAGINATION -- */
+/* Square page-nav. Prev/next use chevron icons (not « » glyphs). Disabled
+   pages must be visually AND functionally disabled — an <a> can't be disabled,
+   so .disabled removes pointer-events + dims it. The current-page readout uses
+   tabular figures. Mark current with aria-current="page" in markup. */
+.pagination { display: flex; gap: 0.4rem; justify-content: center; align-items: stretch; margin-top: 1rem; }
+.pagination .page-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: var(--touch-target); min-height: var(--touch-target);
+    padding: 0 0.5rem;
+    background-color: var(--color-surface-input);
+    color: var(--color-gray-1);
+    border: var(--border-hairline);
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.pagination .page-btn .krt-icon { width: 1.1em; height: 1.1em; }
+.pagination .page-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.pagination .page-btn[aria-current="page"] {
+    background-color: var(--color-primary); color: var(--color-bg-black);
+    border-color: var(--color-primary); font-weight: var(--fw-bold);
+}
+.pagination .page-btn.disabled {
+    opacity: 0.4; pointer-events: none; cursor: default;
+}
+.pagination .page-status {
+    display: inline-flex; align-items: center; padding: 0 0.75rem;
+    color: var(--color-gray-1); font-variant-numeric: tabular-nums;
+}
+.pagination .page-status b { color: var(--color-primary); font-weight: var(--fw-bold); }
+
+/* ------------------------------------------------ KEY-VALUE DETAIL LIST --- */
+/* Read-only "label : value" rows (profile, detail panels, org/finance summaries).
+   Label is neutral uppercase; the VALUE is the bright thing (data, not action).
+   Built on a 2-col grid so colons/values align. Use instead of ad-hoc
+   flex rows with a fixed-width label. */
+.kv-list { display: grid; grid-template-columns: minmax(140px, max-content) 1fr; gap: 0.55rem 1.25rem; align-items: baseline; }
+.kv-list dt, .kv-list .kv-key {
+    color: var(--color-gray-2);
+    font-family: var(--font-body); font-weight: var(--fw-bold);
+    font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.04em;
+    margin: 0;
+}
+.kv-list dd, .kv-list .kv-val {
+    color: var(--data-fg); font-size: 1.05rem; margin: 0;
+    overflow-wrap: anywhere;
+}
+/* full-width row (e.g. a form/description spanning both columns) */
+.kv-list .kv-row-wide { grid-column: 1 / -1; }
+/* hairline separators between rows */
+.kv-list.kv-ruled dt, .kv-list.kv-ruled .kv-key,
+.kv-list.kv-ruled dd, .kv-list.kv-ruled .kv-val { padding-bottom: 0.55rem; border-bottom: var(--border-hairline); }
+
+/* ------------------------------------------------- INLINE FIELD ERROR ----- */
+/* Form validation text. Uses the accessible danger TEXT tint, not the dark
+   canonical red, with a warning glyph slot. Pair with the field getting a red
+   border. */
+.field-error {
+    color: var(--color-danger-text);
+    font-size: var(--fs-xs);
+    margin-top: 0.4rem;
+    display: flex; gap: 0.35rem; align-items: flex-start;
+}
 
 /* --------------------------------------------------------------- SCROLLBAR */
 /* HUD scrollbars — square, hairline-tracked, orange on hover. Works for BOTH

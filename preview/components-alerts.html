@@ -4,11 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="_card.css">
+<style>
+  .specimen-surface { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 16px; }
+</style>
 </head>
 <body>
   <p class="pv-label">Alerts — 20% tint fill + solid left border</p>
-  <div class="alert alert-success" style="margin-bottom:10px;">Ship successfully added.</div>
-  <div class="alert alert-warning" style="margin-bottom:10px;">These payout shares are preliminary until every mission has an actual time.</div>
-  <div class="alert alert-danger" style="margin-bottom:0;">The data was changed by another user. Please reload the page.</div>
+  <div class="specimen-surface">
+    <div class="alert alert-success" style="margin-bottom:10px;">Ship successfully added.</div>
+    <div class="alert alert-warning" style="margin-bottom:10px;">These payout shares are preliminary until every mission has an actual time.</div>
+    <div class="alert alert-danger" style="margin-bottom:0;">The data was changed by another user. Please reload the page.</div>
+  </div>
 </body>
 </html>

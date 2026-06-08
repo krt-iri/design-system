@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button-Icons — Vorher / Nachher</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 36px 28px 70px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .head { margin-bottom: 24px; }
+  .head .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .head .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  .head h1 { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 25px; margin: 13px 0 8px; }
+  .head p { font-weight: 300; max-width: 82ch; margin: 0; }
+
+  .block { margin-top: 30px; }
+  .block > h2 { font-family: var(--font-headline); color: var(--color-gray-1); text-transform: uppercase; letter-spacing: 0.04em; font-size: 15px; border-bottom: 1px solid var(--color-gray-3); padding-bottom: 7px; margin: 0 0 16px; }
+  .cols { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 980px) { .cols { grid-template-columns: 1fr 1fr; } }
+  .tag { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; font-size: 11px; padding: 4px 11px; margin-bottom: 12px; font-family: var(--font-body); }
+  .tag.b { color: var(--color-gray-1); border: 1px solid var(--color-gray-3); background: var(--color-surface-input); }
+  .tag.a { color: var(--color-success); border: 1px solid var(--color-success); background: rgba(35,158,51,0.12); }
+
+  .krt-icon { width: 1.1em; height: 1.1em; fill: none; vertical-align: -0.18em; }
+  .btn-icon { padding: 0.5rem; min-width: 38px; }
+  .btn-icon .krt-icon { width: 1.15em; height: 1.15em; }
+  .btn-xs { min-height: 34px; padding: 0.3rem 0.6rem; font-size: 0.72rem; }
+
+  /* faux table row */
+  .row { display: grid; grid-template-columns: minmax(120px,1.4fr) 96px 110px 1fr; align-items: center;
+    gap: 0.5rem; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .row.head { background: var(--color-surface-input); border-bottom: 2px solid var(--color-primary); }
+  .row.head > div { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-1); font-weight: 700; }
+  .row .nm { font-weight: 700; color: var(--color-white); }
+  .acts { display: flex; gap: 0.4rem; justify-content: flex-end; flex-wrap: wrap; }
+  .frame { border: 1px solid var(--color-gray-3); }
+  .toolbar { display: flex; gap: 0.6rem; flex-wrap: wrap; padding: 0.8rem; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .note { color: var(--color-gray-2); font-size: 12px; margin-top: 10px; }
+  .ann { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 8px; }
+  .ann li { display: flex; gap: 10px; font-weight: 300; font-size: 13px; align-items: flex-start; }
+  .ann li::before { content: ''; width: 7px; height: 7px; margin-top: 6px; flex: none; }
+  .a-notes li::before { background: var(--color-success); }
+  .b-notes li::before { background: var(--color-gray-2); }
+  .ann b { color: var(--color-white); font-weight: 700; }
+  .foot { margin-top: 30px; color: var(--color-gray-2); font-family: var(--font-mono); font-size: 12px; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 8px; color: var(--color-gray-2); font-size: 12px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .krt-icon { color: var(--color-primary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Button-Icons · Profit Basetool</div>
+    <h1>Icon-only vs. Icon + Text</h1>
+    <p>Zwei Regeln, ein einheitliches Set: <b style="color:var(--color-gray-1)">wiederholte Zeilenaktionen</b> (in jeder Tabellenzeile gleich) werden <b style="color:var(--color-gray-1)">Icon-only</b> mit <code>aria-label</code>/Tooltip — das spart Platz in dichten Oberflächen. <b style="color:var(--color-gray-1)">Primäre &amp; seltene Aktionen</b> bleiben <b style="color:var(--color-gray-1)">Icon + Text</b> für Eindeutigkeit.</p>
+  </div>
+
+  <!-- ============ DENSE ROW ACTIONS ============ -->
+  <div class="block">
+    <h2>① Dichte Zeilenaktionen — Icon-only</h2>
+    <div class="cols">
+      <div>
+        <span class="tag b">Vorher · Text-Buttons</span>
+        <div class="frame">
+          <div class="row head"><div>Teilnehmer</div><div>Org</div><div>Status</div><div style="text-align:right">Aktion</div></div>
+          <div class="row"><span class="nm">cmdr.valk</span><span class="squadron-badge">IRI</span><span class="status-pill status-active">AKTIV</span>
+            <div class="acts"><button class="btn btn-ghost btn-xs">Check-Out</button><button class="btn btn-ghost btn-xs">Bearbeiten</button><button class="btn btn-quiet-danger btn-xs">Löschen</button></div></div>
+          <div class="row"><span class="nm">mara.k</span><span class="squadron-badge">IRI</span><span class="status-pill status-planned">OFFEN</span>
+            <div class="acts"><button class="btn btn-success btn-xs">Check-In</button><button class="btn btn-ghost btn-xs">Bearbeiten</button><button class="btn btn-quiet-danger btn-xs">Löschen</button></div></div>
+        </div>
+        <ul class="ann b-notes">
+          <li>Drei Wort-Buttons pro Zeile → die Aktion-Spalte braucht ~50% der Breite, Zeilen brechen um.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="tag a">Nachher · Icon-only</span>
+        <div class="frame">
+          <div class="row head"><div>Teilnehmer</div><div>Org</div><div>Status</div><div style="text-align:right">Aktion</div></div>
+          <div class="row"><span class="nm">cmdr.valk</span><span class="squadron-badge">IRI</span><span class="status-pill status-active">AKTIV</span>
+            <div class="acts">
+              <button class="btn btn-ghost btn-icon" title="Check-Out" aria-label="Check-Out"><svg class="krt-icon"><use href="#i-logout"/></svg></button>
+              <button class="btn btn-ghost btn-icon" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+              <button class="btn btn-quiet-danger btn-icon" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#i-trash"/></svg></button>
+            </div></div>
+          <div class="row"><span class="nm">mara.k</span><span class="squadron-badge">IRI</span><span class="status-pill status-planned">OFFEN</span>
+            <div class="acts">
+              <button class="btn btn-success btn-icon" title="Check-In" aria-label="Check-In"><svg class="krt-icon"><use href="#i-login"/></svg></button>
+              <button class="btn btn-ghost btn-icon" title="Bearbeiten" aria-label="Bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+              <button class="btn btn-quiet-danger btn-icon" title="Löschen" aria-label="Löschen"><svg class="krt-icon"><use href="#i-trash"/></svg></button>
+            </div></div>
+        </div>
+        <ul class="ann a-notes">
+          <li><b>~60% schmalere</b> Aktion-Spalte; Zeilen bleiben einzeilig, mehr Platz für Daten.</li>
+          <li>Jedes Icon trägt <code>title</code>+<code>aria-label</code> → Tooltip + Screenreader.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legend">
+      <span><svg class="krt-icon"><use href="#i-login"/></svg> login = Check-In</span>
+      <span><svg class="krt-icon"><use href="#i-logout"/></svg> logout = Check-Out</span>
+      <span><svg class="krt-icon"><use href="#i-edit"/></svg> edit = Bearbeiten</span>
+      <span><svg class="krt-icon"><use href="#i-trash"/></svg> trash = Löschen</span>
+    </div>
+  </div>
+
+  <!-- ============ PRIMARY / RARE ACTIONS ============ -->
+  <div class="block">
+    <h2>② Primäre &amp; seltene Aktionen — Icon + Text</h2>
+    <div class="cols">
+      <div>
+        <span class="tag b">Vorher · Text allein</span>
+        <div class="toolbar">
+          <button class="btn btn--cta">Anmelden</button>
+          <button class="btn btn-ghost">Hinzufügen</button>
+          <button class="btn btn-ghost">Zurück</button>
+        </div>
+        <div class="toolbar" style="margin-top:10px;">
+          <button class="btn btn--cta">Speichern</button>
+          <button class="btn btn-outline">Übergabe protokollieren</button>
+          <button class="btn btn-ghost">Öffnen</button>
+        </div>
+        <ul class="ann b-notes"><li>Funktioniert, aber das Auge muss jeden Button lesen; keine schnelle Wiedererkennung.</li></ul>
+      </div>
+      <div>
+        <span class="tag a">Nachher · Icon + Text</span>
+        <div class="toolbar">
+          <button class="btn btn--cta"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button>
+          <button class="btn btn-ghost"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button>
+          <button class="btn btn-ghost"><svg class="krt-icon"><use href="#i-arrow-left"/></svg> Zurück</button>
+        </div>
+        <div class="toolbar" style="margin-top:10px;">
+          <button class="btn btn--cta"><svg class="krt-icon"><use href="#i-save"/></svg> Speichern</button>
+          <button class="btn btn-outline"><svg class="krt-icon"><use href="#i-clipboard-check"/></svg> Übergabe protokollieren</button>
+          <button class="btn btn-ghost"><svg class="krt-icon"><use href="#i-external-link"/></svg> Öffnen</button>
+        </div>
+        <ul class="ann a-notes">
+          <li>Icon als <b>Anker</b> beschleunigt das Wiederfinden; Text bleibt für Eindeutigkeit.</li>
+          <li>Icon sitzt <b>links</b> vom Text, gleiche Größe (1em), erbt die Button-Farbe.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">Faustregel: Icon-only nur bei universell verständlichen, wiederholten Aktionen (edit/trash/check-in-out/bookout) — immer mit Label für A11y. Alles Primäre, Seltene oder Mehrdeutige: Icon + Text. Destruktive Einzelaktionen nie nur als Icon ohne Tooltip.</p>
+</div>
+
+<!-- inline sprite (subset used here) -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-login" viewBox="0 0 24 24"><path d="M14 4h6v16h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M3 12h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M11 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 4H4v16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M21 12H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M15 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 3h6v3H9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 13l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+</body>
+</html>
