@@ -34,7 +34,7 @@ Betroffene Dateien:
 
 ## TEIL A — Design-System im Repo aktualisieren
 
-1. **Tokens/Fonts**: `colors_and_type.css` übernehmen (Audiowide; semantische Tokens
+1. **Tokens/Fonts**: `colors_and_type.css` übernehmen (Lato-only; semantische Tokens
    `--color-danger/-success/-warning/-info`; `--color-surface-input`;
    neutrale `label`-Defaults; `@kind`-Annotationen an `--fw-*`/`--lh-body`).
 2. **Komponenten**: `krt-components.css` übernehmen — neu darin u. a.:

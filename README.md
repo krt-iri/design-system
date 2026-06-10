@@ -3,7 +3,7 @@
 A design system for the **Profit Basetool**, the squadron-management web app of the
 **„DAS KARTELL" / IRIDIUM** organization in *Star Citizen*. It captures the brand's
 dark, sci-fi "technical HUD" aesthetic — house orange on black, the angular
-*Audiowide* display face, *Lato* body text, square-cornered containers framed
+*Lato* typeface (one family for everything), square-cornered containers framed
 with corner brackets, and a department color system — so designers and agents can
 produce on-brand interfaces, mockups and assets.
 
@@ -153,21 +153,30 @@ nesting `<table>`s that each repeat their own `<thead>`. Rules:
 - **Leaf controls** (e.g. Auftrag/Einsatz selects) sit in `.tree-leaf-main`
   which spans the freed-up name+context+quality columns, so long labels get real
   width while amount + actions stay column-aligned.
-- **Action buttons** use `.btn-xs`; `.tree-cell--actions` has a left gutter and
-  `flex-wrap` so the amount and buttons never collide. Keep the action set narrow:
-  verbose row actions (here the emphasised "Ausbuchen" and the state-flipping
-  "Notiz") are icon-only `.btn-icon` squares carrying their meaning in
-  `aria-label`/`title`, not wide text buttons that overflow the value column.
-  Still one emphasised action per row (outline) with the rest ghost/quiet.
+- **Action buttons** use `.btn-xs`; `.tree-cell--actions` has a left gutter so the
+  amount and buttons never collide. One emphasised action per row
+  (outline/ghost/quiet).
 - **Notes render only when a note exists** — an indented `.tree-note` block with
   room for the full text (~80ch), orange label + surface box.
-- **Tablet and below** (`max-width: 1024px`): the leaf row collapses its
-  multi-column grid so the amount + actions reflow onto their own line beneath the
-  Auftrag/Einsatz controls; group/mid/head rows keep the shared template and the
-  table scrolls horizontally on the smallest class.
 
 Live before/after: [`proposals/inventory-table-readability.html`](proposals/inventory-table-readability.html);
 specimen: `preview/components-tree-table.html`; audit: `proposals/inventory-table-audit.md`.
+
+### Card & chip
+
+Two reusable building blocks (`krt-components.css`):
+
+- **`.card`** — a plain square surface (hairline border + dark fill), lighter than
+  the bracketed `.hud-box`. Variants: `--inset` (quieter nested fill), `--accent`
+  (orange top bar), `--flush` (no padding, wraps a table/list). Compose with
+  `.card-head` / `.card-title`, `.kv-list`, `.section-title`.
+- **`.chip`** — a **squared** inline data label (order kind, quality, claim, count) —
+  the counterpart to the rounded `.squadron-badge` pill. Tone variants
+  `--primary/--success/--danger/--warning/--info/--muted` (border + text take the
+  hue, faint tint fill), plus `--data` for "key: value" chips (e.g. a claim
+  `IRI: 1,200 SCU`).
+
+Specimen: `preview/components-card-chip.html`.
 
 ### Button icons
 
@@ -182,15 +191,7 @@ icon inherits the button's text colour). Two usage rules:
   (edit, trash, check-in/login, check-out/logout, bookout, close) — saves ~50–60%
   of the action column in dense tables. **Always** carries `aria-label` + `title`.
 
-The recurring CRUD actions share fixed sprite glyphs: **delete / remove →
-`krt-icon-trash`**, **edit → `krt-icon-edit`**, **save → `krt-icon-save`**
-(inventory book-out → `krt-icon-bookout`). In dense rows (table / tree / compact
-clusters) they are icon-only `.btn-icon` squares with the label in `title` /
-`aria-label`; in forms and dialogs they are icon + text. `.btn .krt-icon` sets
-`pointer-events: none` so the click lands on the button, not the glyph. Keep the
-danger styling (`btn-quiet-danger` / `btn-outline-danger`) on delete.
-
-Full set + guidance: specimens `preview/components-icon-set.html` and
+Full set + guidance: specimen `preview/components-icon-set.html` and
 `preview/brand-iconography.html`; rules + action→icon dictionary in
 [`proposals/button-icons-guidelines.md`](proposals/button-icons-guidelines.md);
 before/after `proposals/button-icons-readability.html`; repo handoff
@@ -209,7 +210,7 @@ See the [**index**](#index) at the bottom for the full manifest.
 - [`ui_kits/basetool/`](ui_kits/basetool/) — interactive recreation of the app.
 - [`assets/`](assets/) — logos & favicon, plus the honeycomb `Wabenmuster`
   (`honeycomb.svg` bold + `honeycomb-bg.svg` faint ambient).
-- [`fonts/`](fonts/) — Audiowide + Lato (self-hosted).
+- [`fonts/`](fonts/) — Lato (self-hosted).
 
 ---
 
@@ -227,7 +228,7 @@ How the product writes. Pulled from the real i18n strings.
 - **Person.** Addresses the user as **you** ("This entry is only visible to you").
   Confirmations are matter-of-fact: *"Ship successfully added."*, *"Successfully saved."*
 - **Casing.** Labels, table headers, nav, buttons and headings are **UPPERCASE**
-  (headings via Audiowide; UI labels via CSS `text-transform`). Sentence case for
+  (headings via Lato bold; UI labels via CSS `text-transform`). Sentence case for
   body/help text. Status enums shout: `PLANNED`, `ACTIVE`, `COMPLETED`, `CANCELLED`.
 - **Buttons.** Imperative verbs: *Add, Edit, Save, Delete, Cancel, Check out,
   Log Handover, Create New Order.* Destructive actions always confirm
@@ -253,9 +254,10 @@ Everything that makes a screen read as "Profit Basetool".
   `#D2D2D2`. One hero accent — house orange `#E77E23` — carries borders, headings,
   links, focus and primary actions. Color is used *sparingly and functionally*;
   department/semantic hues appear only as small tags, row tints and status.
-- **Type.** Display = **Audiowide**, uppercase only, letter-spacing `0.05em`
-  (a wide, rounded techno face). Body/UI = **Lato**, default weight **Light 300**, with
-  **Bold 700** for emphasis/labels. Headings are orange; body is gray-1.
+- **Type.** One typeface: **Lato**. Headlines are **uppercase, bold (700/900)** with
+  letter-spacing `0.05em` — distinguished by weight, not a separate display face.
+  Body/UI = Lato, default weight **Light 300**, with **Bold 700** for emphasis/labels.
+  Headings are orange; body is gray-1.
 - **Backgrounds.** Flat black/dark-gray. No photographic hero imagery in-app. A
   subtle technical **pattern/texture** (`images/pattern.svg`) exists in the brand
   kit for marketing surfaces. The `.greeting` banner uses a single left-to-right
@@ -355,9 +357,9 @@ From the project's own engineering guide (`CLAUDE.md` → *Frontend / UI rules*)
   `assets/Kartelllogo.jpg` (full lockup). Logo may appear **only** in orange,
   white or black. *(The repo's `design/logos/*.svg` exports embed raster data that
   did not survive import; the `.webp`/`.jpg` rasters here are the usable copies.)*
-- **Substitutions.** The display face was switched from the manual's *Ethnocentric*
-  to **Audiowide** (self-hosted WOFF2). *Lato* and the icon set are originals. No
-  Google Fonts or CDN fallbacks are required at runtime.
+- **Substitutions.** The system uses a single typeface, **Lato** (self-hosted WOFF2);
+  earlier display faces (Ethnocentric, then Audiowide) were both removed in favour of
+  Lato-only (2026-06). The icon set is original. No Google Fonts or CDN fallbacks at runtime.
 
 ---
 
@@ -371,7 +373,7 @@ Root manifest:
 | `SKILL.md` | Agent-Skills entry point (for use in Claude Code). |
 | `colors_and_type.css` | `@font-face` declarations + all color/type/shape tokens. |
 | `krt-components.css` | Component CSS layer built on the tokens. |
-| `fonts/` | Audiowide (display) + Lato (Thin→Black, each + italic) — self-hosted WOFF2 with TTF fallback. |
+| `fonts/` | Lato (Thin→Black, each + italic) — self-hosted WOFF2 with TTF fallback. The only typeface; headlines are Lato bold + uppercase. |
 | `assets/` | `krt.webp` (mark), `krt-favicon.webp`, `Kartelllogo.jpg` (lockup), `honeycomb.svg` + `honeycomb-bg.svg` (Wabenmuster). |
 | `preview/` | 23 Design System specimen cards (type, color, spacing, components, brand — incl. the rank ladder, honeycomb pattern, scrollbars and background/texture treatments). |
 | `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full template audits (`template-audit.md`, `template-audit-full.md`), the UX/usability review, and the MASTER + per-topic `claude-code-auftrag.md` unification orders for the real repo. |de-code-auftrag.md` (project-wide unification order for the real repo). |

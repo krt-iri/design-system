@@ -25,10 +25,11 @@ die System-Änderung wirkungslos.
 > **Aktion:** Repo-weit nach `label { ... color: var(--color-primary)` und
 > `.form-group label` suchen und diese Overrides löschen.
 
-### B — Ethnocentric (Display-Schrift) für Kleintext ⛔ (hoch, Lesbarkeit)
-`admin/locations.html` rendert 0,8-rem-**Labels in `--font-headline` (Ethnocentric)**.
-Die Display-Schrift ist für Versal-Überschriften gedacht und bei Kleingrößen schwer
-lesbar. → Labels/Datentexte immer **Lato**; Ethnocentric nur für echte Headlines.
+### B — Display-Schrift für Kleintext ⛔ (hoch, Lesbarkeit)
+`admin/locations.html` rendert 0,8-rem-**Labels in `--font-headline`**. Das System
+ist jetzt Lato-only, aber Labels dürfen nie als Versal-Headline-Stil gesetzt werden.
+→ Labels/Datentexte = normale Lato-Body; `--font-headline` (Lato bold + UPPERCASE)
+nur für echte Überschriften.
 
 ### C — CTA-Hierarchie noch nicht angewandt 🟠 (mittel)
 Pro View sollte **eine** gefüllte Orange-CTA dominieren; Neben-/Utility-Aktionen
@@ -55,8 +56,8 @@ demoten.
   das System kennt `--color-gray-1`. → Token-Namen vereinheitlichen.
 
 ### F — DRY/Inline-Stil-Wiederholung 🟡 (niedrig)
-- `material-collection.html` setzt `font-family:'Ethnocentric'...` inline auf das
-  `h1`, obwohl `h1` das bereits erbt. Redundante Inline-Styles entfernen.
+- `material-collection.html` setzt `font-family:'Ethnocentric'/'Audiowide'...` inline
+  auf das `h1`, obwohl `h1` das bereits erbt (jetzt Lato). Inline-Styles entfernen.
 - Wiederkehrende Inline-`style="min-height:44px; ..."` auf Buttons/Inputs → in
   System-Klassen ziehen (`.btn` hat bereits 44px Touch-Target).
 
@@ -115,6 +116,6 @@ der Filter-Button sind alle dasselbe gefüllte Orange `.btn` → kein klarer Pri
   destruktive Zeilenaktionen = `.btn-quiet-danger`.
 - **`.btn-primary` ist projektweit ein toter Klassenname** (nur `index.html` gefunden,
   aber prüfenswert) — entweder als Alias für `.btn--cta` definieren oder ersetzen.
-- **Label-Overrides** (Orange/Ethnocentric) sitzen in `mission-detail`,
+- **Label-Overrides** (Orange/Ethnocentric/Audiowide) sitzen in `mission-detail`,
   `operation-detail`, `refinery-orders-details`, `admin/locations` — repo-weit suchen
   und entfernen, damit die neutrale System-Regel greift.

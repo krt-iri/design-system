@@ -20,8 +20,8 @@ Dieses Skill (`.claude/skills/das-kartell-design/`):
    (Neu/Erstellen/Speichern/Anmelden). Alles andere demoten.
 2. Orange ist für **Aktion + Identität** (Logo, Badges, Headlines) — **nie** für
    Formular-Labels, Tabellentext oder reine Datenwerte.
-3. Quadratische Ecken, HUD-Idiom, 44px Touch-Targets, Lato für Text / Audiowide
-   nur für echte Headlines — wie gehabt.
+3. Quadratische Ecken, HUD-Idiom, 44px Touch-Targets, eine Schrift: Lato (Headlines
+   = bold + UPPERCASE) — wie gehabt.
 
 ## Button-Leiter (verbindlich)
 | Klasse | Einsatz |
@@ -63,8 +63,8 @@ Repo-weit nach diesen Mustern suchen und entfernen, damit die System-Defaults gr
   `font-family: var(--font-headline)` auf Labels → entfernen, Labels gehören in Lato).
 - Inline `style="color: var(--color-primary)"` / `var(--color-accent-light)` auf
   **Datentexten** (Namen, Frequenzen, Werte) → durch Klasse `.data-value` ersetzen.
-- Redundante Inline-`font-family:'Ethnocentric'`/`'Lato'` auf Elementen, die das
-  bereits erben (z. B. `material-collection.html` h1) → entfernen.
+- Redundante Inline-`font-family:'Ethnocentric'`/`'Audiowide'`/`'Lato'` auf Elementen,
+  die das bereits erben (z. B. `material-collection.html` h1) → entfernen (alles Lato).
 
 ## SCHRITT 3 — Listen-Seiten (eine Regel für alle)
 Betrifft: `missions.html`, `operations-index.html`, `orders-index.html`,
@@ -124,7 +124,7 @@ Pro Seite gilt sie als vereinheitlicht, wenn:
 2. Kein Formular-Label und kein reiner Datenwert orange ist.
 3. Wiederholte Zeilenaktionen ruhig (ghost/quiet) sind — keine Orange-Kaskade.
 4. Keine Inline-Stile mehr Tokens/Komponenten des Systems überschreiben.
-5. Schrift: Audiowide nur in echten Headlines, sonst Lato.
+5. Schrift: eine Familie Lato (Headlines = bold + UPPERCASE). Kein Audiowide/Ethnocentric.
 6. `./gradlew check` grün; Optik deckt sich mit `ui_kits/basetool/` + den Mocks.
 
 > Reihenfolge nach Wirkung/Risiko: **2 → 3 → 4 → 5 → 6**. Schritt 1 ist Voraussetzung.

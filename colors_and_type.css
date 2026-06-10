@@ -12,31 +12,14 @@
 
 /* ----------------------------------------------------------------------------
    FONTS
-   Two faces only:
-   - Audiowide — the wide, techy display face. Headlines ONLY, always
-     UPPERCASE, letter-spacing 0.05em. Never set body copy in it.
-     (Replaced Ethnocentric, 2026-06. Single weight, no italic — both the
-      old normal + italic slots map to the one Audiowide cut.)
-   - Lato — everything else. Default body weight is 300 (Light).
+   One face only:
+   - Lato — used for EVERYTHING (body, UI, and headlines). Default body weight
+     is 300 (Light). Headlines are distinguished by weight (700/900), UPPERCASE
+     and letter-spacing — NOT by a separate display face.
+     (History: Ethnocentric → Audiowide → consolidated to Lato-only, 2026-06.
+      Audiowide/Ethnocentric @font-face + files removed; --font-headline is kept
+      as an alias of Lato so existing var(--font-headline) references still work.)
    ---------------------------------------------------------------------------- */
-/* Audiowide — display. Single weight; use UPPERCASE for headlines. */
-@font-face {
-    font-family: 'Audiowide';
-    src: url('fonts/Audiowide-Regular.woff2') format('woff2'),
-         url('fonts/Audiowide-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-/* Audiowide has no italic — fall back to the regular cut for the italic slot. */
-@font-face {
-    font-family: 'Audiowide';
-    src: url('fonts/Audiowide-Regular.woff2') format('woff2'),
-         url('fonts/Audiowide-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-}
 
 /* Lato — body/UI. Full cut set: Thin 100 / Light 300 / Regular 400 / Bold 700 / Black 900, each + italic. */
 @font-face {
@@ -211,7 +194,10 @@
     /* ------------------------------------------------------------------ */
     /* TYPOGRAPHY tokens                                                   */
     /* ------------------------------------------------------------------ */
-    --font-headline: 'Audiowide', sans-serif;
+    /* Headlines use Lato too (no separate display face). Kept as a named
+       alias so existing var(--font-headline) references keep working; pair it
+       with --fw-bold/--fw-black + UPPERCASE + --tracking-display for emphasis. */
+    --font-headline: 'Lato', sans-serif;
     --font-body: 'Lato', sans-serif;
     /* The brand ships no monospace face, so "mono" contexts (version strings,
        IDs, hex codes, code) use the house font Lato with tabular figures for
@@ -232,7 +218,7 @@
     --fw-bold: 700;      /* @kind font */
     --fw-black: 900;     /* @kind font */
 
-    --tracking-display: 0.05em;  /* Audiowide display tracking */
+    --tracking-display: 0.05em;  /* headline tracking (Lato, uppercase) */
     --tracking-overline: 0.15em; /* admin chip, overlines */
     --lh-body: 1.5;   /* @kind font */
 
@@ -286,7 +272,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-primary);
     text-transform: uppercase;
     letter-spacing: var(--tracking-display);
-    font-weight: normal;
+    font-weight: var(--fw-bold);   /* Lato headlines need weight to read as headings */
     margin: 0 0 0.5em;
 }
 h1 { font-size: var(--fs-h1); }

@@ -13,7 +13,7 @@ Drop-in-Tokens: `krt-keycloak-tokens.css`. Vorgaben: `README.md` (dieser Ordner)
 (v5/v6/legacy, CSS-Variablen + Selektor-Fallback + Pseudo-Element-Reset), nutzt die
 KRT-Farben exakt, ist eckig, hat HUD-Eckklammern, WOFF2-Fonts mit `font-display:
 swap` und sogar Frontend-Klassen-Aliasse (`.btn`, `.btn-secondary`, `.btn-danger`).
-Die Befunde sind **Angleichungen an zwei neuere System-Entscheidungen** (Audiowide,
+Die Befunde sind **Angleichungen an zwei neuere System-Entscheidungen** (Lato-only,
 Semantik/Action-Hierarchie) plus ein paar UX-Feinheiten — keine groben Fehler.
 
 ---
@@ -27,7 +27,7 @@ Semantik/Action-Hierarchie) plus ein paar UX-Feinheiten — keine groben Fehler.
 | HUD-Eckklammern | ✅ | `.login-container::before/::after` (+ PF-Card-Fallback `:not(:has(.login-container))`) |
 | Dunkler Grund | ✅ | Hard-Reset entfernt PF-Grid/-Weiß/-Bild (v5/v6/legacy) |
 | Inputs | ✅ | schwarz, `1px gray-2` + `2px` Orange-Unterkante, Fokus-Glow orange |
-| Primär-Button | ✅ Form | orange Fläche, schwarzer Text, Audiowide*, uppercase, eckig |
+| Primär-Button | ✅ Form | orange Fläche, schwarzer Text, Lato bold*, uppercase, eckig |
 | Sekundär-Button | ✅ | transparent + Orange-Border, Hover → Orange-Fill |
 | Checkbox | ✅ | eckig, schwarz, Orange-Haken (schwarzer Tick) |
 | Labels | ✅ | `--color-gray-1` uppercase — **bereits neutral** (entspricht der neuen Regel!) |
@@ -36,7 +36,7 @@ Semantik/Action-Hierarchie) plus ein paar UX-Feinheiten — keine groben Fehler.
 | Locale-Dropdown | ✅ | dunkel, Hairline, Hover → Orange-Fill |
 | Klassen-Aliasse | ✅ | `.btn/.btn-secondary/.btn-danger` spiegeln Frontend |
 
-\* siehe Befund 1 — aktuell noch Ethnocentric statt Audiowide.
+\* siehe Befund 1 — Display-Font noch Ethnocentric statt Lato.
 
 ---
 
@@ -44,14 +44,14 @@ Semantik/Action-Hierarchie) plus ein paar UX-Feinheiten — keine groben Fehler.
 
 Priorität: 🔴 hoch · 🟠 mittel · 🟡 niedrig.
 
-### 🔴 1 — Display-Font noch Ethnocentric
+### 🔴 1 — Display-Font noch Ethnocentric (System ist jetzt Lato-only)
 Beide CSS-Dateien deklarieren `@font-face 'Ethnocentric'` und setzen
 `--font-headline: 'Ethnocentric'`; im Ordner liegen 6 Ethnocentric-Dateien. Das
-System wurde auf **Audiowide** umgestellt.
-→ **Fix:** `Audiowide-Regular.woff2/.ttf` in beide `resources/fonts/` legen,
-`@font-face` + `--font-headline` auf Audiowide ändern, Ethnocentric-Dateien
-entfernen. Drop-in: `krt-keycloak-tokens.css`. (Audiowide hat nur einen Schnitt,
-kein Italic — genügt für Headlines.)
+System nutzt inzwischen **nur noch Lato** (Headlines = Lato bold + UPPERCASE;
+früher Ethnocentric → Audiowide → Lato-only).
+→ **Fix:** `@font-face`-Block + `--font-headline` auf **Lato** stellen (Drop-in:
+`krt-keycloak-tokens.css`), die Ethnocentric-Dateien (und ggf. Audiowide)
+entfernen. Lato liegt bereits für den Body vor — keine neue Schrift nötig.
 
 ### 🔴 2 — Fehler werden orange statt rot dargestellt
 `.krt-error-message { color: var(--color-primary) }` und `.krt-monospace-text`
@@ -119,7 +119,7 @@ dokumentiert — auf Account übertragen).
 ---
 
 ## Priorisierte Reihenfolge
-1. 🔴 **1 (Audiowide)** + 🔴 **2/🟠 4 (Semantik-Tokens + rote Fehler)** — gemeinsam,
+1. 🔴 **1 (Lato-only)** + 🔴 **2/🟠 4 (Semantik-Tokens + rote Fehler)** — gemeinsam,
    gleiche `:root`-Stelle, größte Marken-/UX-Wirkung.
 2. 🟠 **3 (Hover vereinheitlichen)** + 🟠 **5 (CTA-Bloom)**.
 3. 🟡 **6 (Honigwaben)**, **7 (Fokus)**, **8 (mono)**, **9 (Token-Sync)** als Politur.

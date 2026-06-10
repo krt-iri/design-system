@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Card & chip" subtitle="Plain card surface + squared inline chips (variants)" viewport="700x300" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 20px; }
+  .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .krt-icon { width: 0.9em; height: 0.9em; fill: none; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Card &amp; chip — reusable building blocks</p>
+  <div class="demo">
+    <div class="card card--accent">
+      <div class="card-head"><h4 class="card-title">Auftrag #1042</h4><span class="chip chip--success">Erfüllt</span></div>
+      <p style="margin:0; color:var(--color-gray-1); font-weight:300; font-size:.9rem;">Plain <code>.card</code> mit Top-Accent. Kombinierbar mit <code>.card-head</code>, <code>.kv-list</code>, Tabellen.</p>
+    </div>
+    <div class="card card--inset">
+      <div class="card-head"><h4 class="card-title">Bearbeiter</h4></div>
+      <div class="row">
+        <span class="chip chip--data"><strong>IRI</strong>: 1,200 SCU</span>
+        <span class="chip chip--data"><strong>BRV</strong>: 800 SCU</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pv-label" style="margin-top:18px;">Chip-Varianten (eckig, currentColor)</p>
+  <div class="card row" style="gap:8px;">
+    <span class="chip">Material</span>
+    <span class="chip chip--primary">Item</span>
+    <span class="chip chip--success">Gut (700+)</span>
+    <span class="chip chip--warning">Ausstehend</span>
+    <span class="chip chip--danger">Fehlend</span>
+    <span class="chip chip--info">In Bearbeitung</span>
+    <span class="chip chip--muted">Keine</span>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.card (+ --inset/--accent/--flush) · .card-head/.card-title · .chip (+ --primary/-success/-danger/-warning/-info/-muted/-data). Pills bleiben .squadron-badge; .chip ist die eckige Daten-Variante.</p>
+</body>
+</html>

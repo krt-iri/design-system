@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Org-Chart — Audit-Nachbildung</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 30px 26px 70px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 25px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 84ch; margin: 0 0 22px; }
+
+  /* org-chart recreation (ported from org-chart.css) */
+  .oc-chart { --oc-line: var(--color-gray-2); --oc-line-w: 2px; --oc-gap: 1.25rem; --oc-col-gap: 1.5rem; --oc-unit-gap: 3.5rem; --oc-box-w: 200px; overflow-x: auto; padding-bottom: 1rem; }
+  .oc-caption { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+  .oc-caption-title { font-family: var(--font-headline); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-white); font-size: 1rem; }
+  .oc-tree { display: flex; justify-content: safe center; min-width: 100%; }
+  .oc-col { display: flex; flex-direction: column; align-items: center; }
+  .oc-v { flex: 0 0 auto; width: 100%; height: var(--oc-gap); position: relative; }
+  .oc-v::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; margin-left: calc(var(--oc-line-w)/-2); border-left: var(--oc-line-w) solid var(--oc-line); }
+  .oc-fan { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start; position: relative; padding-top: var(--oc-gap); }
+  .oc-fan::before { content: ''; position: absolute; top: 0; left: 50%; height: calc(var(--oc-gap)/2); margin-left: calc(var(--oc-line-w)/-2); border-left: var(--oc-line-w) solid var(--oc-line); }
+  .oc-fan > li { list-style: none; position: relative; display: flex; flex-direction: column; align-items: center; padding: 0 calc(var(--oc-col-gap)/2); }
+  .oc-fan > li::before, .oc-fan > li::after { content: ''; position: absolute; top: calc(-1*var(--oc-gap)/2); height: calc(var(--oc-gap)/2); width: 50%; border-top: var(--oc-line-w) solid var(--oc-line); }
+  .oc-fan > li::before { right: 50%; }
+  .oc-fan > li::after { left: 50%; margin-left: calc(var(--oc-line-w)/-2); border-left: var(--oc-line-w) solid var(--oc-line); }
+  .oc-fan > li:first-child::before { border-top: 0; }
+  .oc-fan > li:last-child::after { border-top: 0; }
+  .oc-fan--units > li { padding-left: calc(var(--oc-unit-gap)/2); padding-right: calc(var(--oc-unit-gap)/2); }
+  .oc-node { position: relative; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.55rem 0.75rem; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); width: var(--oc-box-w); text-align: left; }
+  .oc-node-rank { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.62rem; color: var(--color-primary); }
+  .oc-node-name { color: var(--color-white); font-weight: 700; font-size: 0.92rem; }
+  .oc-node--hero { border-color: var(--color-primary); box-shadow: var(--glow-primary); }
+  .oc-node--vacant { border-style: dashed; border-color: var(--color-gray-2); background: var(--color-surface-input); }
+  .oc-node--vacant .oc-node-name { color: var(--color-gray-1); font-weight: 400; font-style: italic; }
+  .oc-unit-box { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; padding: 0.5rem 0.9rem; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); border-top: 3px solid var(--color-primary); width: var(--oc-box-w); }
+  .oc-unit-box .sh { font-weight: 700; color: var(--color-primary); font-size: 0.7rem; letter-spacing: 0.06em; }
+  .oc-unit-box .nm { font-family: var(--font-headline); text-transform: uppercase; color: var(--color-white); font-size: 0.95rem; letter-spacing: 0.04em; }
+  .oc-unit-box--sk { border-top-color: var(--color-dept-profit); }
+  .oc-unit-box--sk .sh { color: var(--color-dept-profit); }
+  .oc-command-head { gap: 0.15rem; border-top: 2px solid var(--color-primary); }
+  .oc-command-name { color: var(--color-white); font-weight: 700; font-size: 0.9rem; }
+  .oc-actions { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
+  .oc-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; background: transparent; border: 1px solid var(--color-gray-3); color: var(--color-gray-1); cursor: pointer; }
+  .oc-icon-btn:hover { color: var(--color-primary); border-color: var(--color-primary); }
+  .oc-icon-btn--danger:hover { color: var(--color-danger); border-color: var(--color-danger); }
+  .krt-icon { width: 18px; height: 18px; fill: none; }
+  .frame { border: 1px solid var(--color-gray-3); background: rgba(0,0,0,0.25); padding: 18px; }
+
+  .annx { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 900px) { .annx { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); padding: 14px 16px; }
+  .card h3 { font-family: var(--font-headline); text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; margin: 0 0 10px; }
+  .card.ok h3 { color: var(--color-dept-profit); }
+  .card.imp h3 { color: var(--color-primary); }
+  .card ul { margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .card li { display: flex; gap: 9px; font-size: 13px; font-weight: 300; align-items: flex-start; }
+  .card li::before { content: ''; width: 7px; height: 7px; margin-top: 6px; flex: none; }
+  .card.ok li::before { background: var(--color-dept-profit); }
+  .card.imp li::before { background: var(--color-primary); }
+  .card b { color: var(--color-white); font-weight: 700; }
+  .lvl { font-family: var(--font-mono); font-size: 10px; padding: 1px 5px; border: 1px solid currentColor; margin-right: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Audit · /org-chart</div>
+  <h1 class="t">Organigramm — Konformität &amp; Verbesserungen</h1>
+  <p class="lead">Nachbildung des Profit-Bereich-Organigramms (Ist-Zustand). Die Umsetzung ist <b style="color:var(--color-gray-1)">stark systemkonform</b>; die Hinweise rechts sind Feinschliff.</p>
+
+  <div class="frame">
+    <div class="oc-chart">
+      <div class="oc-caption"><span class="oc-caption-title">Bereichsleitung</span></div>
+      <div class="oc-tree"><div class="oc-col">
+        <div class="oc-node oc-node--hero"><span class="oc-node-rank">Bereichsleiter</span><span class="oc-node-name">cmdr.valk</span><div class="oc-actions"><button class="oc-icon-btn" title="Neu zuweisen"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="oc-icon-btn oc-icon-btn--danger" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></div>
+        <div class="oc-v"></div>
+        <div class="oc-node"><span class="oc-node-rank">Bereichskoordinator</span><span class="oc-node-name">mara.k</span></div>
+        <div class="oc-v"></div>
+        <div class="oc-node oc-node--vacant"><span class="oc-node-rank">Bereichsoperator</span><span class="oc-node-name">Nicht besetzt</span></div>
+
+        <ul class="oc-fan oc-fan--units">
+          <li><div class="oc-col">
+            <div class="oc-unit-box"><span class="sh">IRI</span><span class="nm">IRIDIUM</span></div>
+            <div class="oc-v"></div>
+            <div class="oc-node"><span class="oc-node-rank">Staffelleiter</span><span class="oc-node-name">hex_07</span></div>
+            <ul class="oc-fan">
+              <li><div class="oc-col">
+                <div class="oc-node oc-command-head"><span class="oc-node-rank">Kommandogruppe</span><span class="oc-command-name">Alpha</span><div class="oc-actions"><button class="oc-icon-btn" title="Umbenennen"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="oc-icon-btn oc-icon-btn--danger" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></div>
+                <div class="oc-v"></div>
+                <div class="oc-node"><span class="oc-node-rank">Kommandoleiter</span><span class="oc-node-name">dane.r</span></div>
+                <div class="oc-v"></div>
+                <div class="oc-node"><span class="oc-node-rank">Stellv. Kommandoleiter</span><span class="oc-node-name">lena.v</span></div>
+              </div></li>
+              <li><div class="oc-col">
+                <div class="oc-node"><span class="oc-node-rank">Ensign</span><span class="oc-node-name">tom.k</span></div>
+              </div></li>
+            </ul>
+          </div></li>
+          <li><div class="oc-col">
+            <div class="oc-unit-box oc-unit-box--sk"><span class="sh">BRV</span><span class="nm">Bravo</span></div>
+            <ul class="oc-fan">
+              <li><div class="oc-col"><div class="oc-node"><span class="oc-node-rank">SK-Leiter</span><span class="oc-node-name">kira.s</span></div></div></li>
+            </ul>
+          </div></li>
+        </ul>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="annx">
+    <div class="card ok">
+      <h3>✓ Systemkonform</h3>
+      <ul>
+        <li>Nur System-Tokens, <b>keine erfundenen Farben</b>; eckige Boxen, Hairline-Connectors, Orange-Bloom als einzige Elevation.</li>
+        <li><b>Hero</b> (Bereichsleiter) = Orange-Rahmen+Bloom; Unit-Boxen = Orange-Top-Border; <b>SK</b> in Profit-Grün abgegrenzt.</li>
+        <li>Icon-only Edit/Trash aus dem Sprite mit <b>title+aria-label</b>; <code>--touch-target</code> (44px) eingehalten.</li>
+        <li>Vacant-Slots: gestrichelt + kursives Label (lesbar). Globale HUD-Scrollbar, responsive Box-Breite.</li>
+        <li>Modal mit <code>role=dialog</code>, <code>aria-modal</code>, Fokus-Setzen, eine <code>.btn--cta</code>.</li>
+      </ul>
+    </div>
+    <div class="card imp">
+      <h3>△ Verbesserungsmöglichkeiten</h3>
+      <ul>
+        <li><span class="lvl">A11y</span><b>Baum-Semantik:</b> rein visuelle DIV/UL-Hierarchie. <code>role="tree/treeitem/group"</code> + Pfeiltasten-Navigation würde Screenreadern die Struktur vermitteln.</li>
+        <li><span class="lvl">A11y</span><b>Modal-Fokusfalle</b> fehlt: Tab kann hinter den Dialog wandern; Esc schließt nicht (nur Klick außerhalb/✕). Focus-Trap + Esc ergänzen.</li>
+        <li><span class="lvl">UX</span><b>Reload nach jeder Änderung</b> (<code>location.reload()</code> nach 400ms) verliert Scrollposition im breiten Baum. Knoten gezielt im DOM patchen oder Scroll-Position merken.</li>
+        <li><span class="lvl">UX</span><b>Hero-Bloom = Fokus-Bloom:</b> der Bereichsleiter trägt denselben Orange-Glow wie der Tastatur-Fokus → bei Fokus nicht unterscheidbar. Fokus-Ring auf Outline-Offset stellen.</li>
+        <li><span class="lvl">UX</span><b>Edit-Modus-Hinweis:</b> „Bearbeiten" blendet viele gestrichelte „+"-Affordances ein — ein kurzer Hinweis/Legende beim Umschalten hilft der Orientierung.</li>
+        <li><span class="lvl">Konsist.</span><b>Connector-Farbe</b> <code>--oc-line: gray-2</code> auf Schwarz ist dezent (~2,8:1). Für dichte Bäume optional gray-1-Tick an Knotenpunkten oder etwas hellere Linie.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+</body>
+</html>

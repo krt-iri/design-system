@@ -6,7 +6,7 @@ durchgehenden Reihenfolge:
 - **B) Keycloak-Theme** (`keycloak-theme/krt-theme/` Login + Account)
 
 Ziel: ein einheitlicher Marken-Look über App **und** SSO-Redirect hinweg, gemäß dem
-aktuellen KRT-Design-System (Audiowide, eckig, HUD, Action-Hierarchie, neutrale
+aktuellen KRT-Design-System (Lato-only, eckig, HUD, Action-Hierarchie, neutrale
 Labels/Datenwerte, semantische Statusfarben).
 
 ## Quelle der Wahrheit
@@ -20,7 +20,7 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
   `keycloak/conformity-audit.md`, `keycloak/krt-keycloak-tokens.css`,
   `keycloak/keycloak-login-target.html`.
 - Referenz-Optik gesamt: `ui_kits/basetool/` (interaktiv).
-- Assets: `fonts/Audiowide-Regular.woff2`(+`.ttf`), `assets/honeycomb-bg.svg`.
+- Assets: `fonts/Lato-*.woff2`, `assets/honeycomb-bg.svg`.
 
 > Die beiden Detail-Aufträge sind verbindlich und enthalten die genauen
 > Klassen-/Selektor-Mappings. Dieser Master-Auftrag gibt nur Reihenfolge,
@@ -32,7 +32,7 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
    Sekundär = Ghost/Outline, destruktiv = Quiet-Danger, Status = Grün.
 2. Orange = **Aktion + Identität** (Logo, Badges, Headlines) — **nie** für
    Formular-Labels, Tabellentext oder reine Datenwerte (`.data-value`).
-3. **Audiowide** nur für Headlines, **Lato** für alles andere. Kein Ethnocentric.
+3. **Eine Schrift: Lato.** Headlines = bold (700/900) + UPPERCASE + Tracking — keine separate Display-Schrift. Kein Audiowide/Ethnocentric.
 4. Eckig (kein `border-radius`), HUD-Idiom, 44px-Targets, sichtbarer Fokus.
 5. Status **semantisch**: Fehler rot (`--color-danger`), nie orange.
 6. Keine neuen Farben — nur System-Tokens.
@@ -51,15 +51,15 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
   Frontend übernehmen bzw. `static/css/styles.css` an deren Tokens/Klassen
   angleichen. Neu: Button-Leiter (`.btn--cta/.btn-outline/.btn-ghost/
   .btn-quiet-danger`), `.panel-header`, `.data-value`, neutrale `label`-Defaults,
-  hellgraue `th`, Scrollbar-System, Audiowide-`@font-face`, Action-Tokens.
-- `Audiowide-Regular.woff2`(+`.ttf`) ins Frontend-`fonts/` legen; Ethnocentric
-  entfernen.
+  hellgraue `th`, Scrollbar-System, Lato-`@font-face`, Action-Tokens.
+- Sicherstellen, dass nur `Lato-*.woff2` im Frontend-`fonts/` liegt; **Audiowide**
+  und **Ethnocentric** entfernen (Dateien + `@font-face` + Referenzen).
 
 ## PHASE 1 — App: globaler Sweep (höchste Wirkung, kleinstes Risiko)
 Nach `proposals/claude-code-auftrag.md` Schritt 2:
 - Repo-weit Inline-Overrides entfernen, die System-Defaults aushebeln:
   `label { color: var(--color-primary) }`, `.form-group label`,
-  `font-family:'Ethnocentric'`, Inline-Orange auf Datenwerten → `.data-value`.
+  `font-family:'Ethnocentric'`/`'Audiowide'`, Inline-Orange auf Datenwerten → `.data-value`.
   (Bekannt in `mission-detail`, `operation-detail`, `refinery-orders-details`,
   `admin/locations`, `material-collection`.)
 
@@ -99,12 +99,15 @@ Zusätzlich app-weit auf die neuen DS-Bausteine umstellen (Audit:
   Fehlerfeld zusätzlich rot umranden.
 - **„Label : Wert"-Detailblöcke** (profile `.profile-row`, Detail-Köpfe,
   Organisation/Finanzen) → `.kv-list`. Specimen: `preview/components-detail-list.html`.
+- **Wiederholte `<h3>`-Inline-Styles** (orders-detail 8×, refinery-detail, mission-detail)
+  → `.section-title`. Specimen: `preview/components-section-title.html`.
+  Detail-Audit: `proposals/orders-detail-audit.md` (+ Mock `orders-detail-readability.html`).
 
 ## PHASE 6 — Keycloak-Theme
 Vollständig nach `keycloak/claude-code-auftrag.md`:
-1. Audiowide + semantische Tokens + **rote Fehler** (Drop-in
+1. Lato-only + semantische Tokens + **rote Fehler** (Drop-in
    `keycloak/krt-keycloak-tokens.css` ersetzt `:root`/`@font-face`/`body` in
-   Login **und** Account; Ethnocentric-Dateien raus).
+   Login **und** Account; Audiowide- **und** Ethnocentric-Dateien raus).
 2. Primär-Hover vereinheitlichen (`--color-accent-light`) + CTA-Bloom.
 3. (optional) Honigwaben-Hintergrund; PF-Grid-Reset behalten.
 4. Tastatur-Fokus sichtbar (`:focus-visible`).
@@ -120,10 +123,10 @@ Vollständig nach `keycloak/claude-code-auftrag.md`:
 2. Kein Label / reiner Datenwert orange; Tabellenköpfe hellgrau (Orange-Unterrule bleibt).
 3. Wiederholte Zeilenaktionen ruhig (ghost/quiet) — keine Orange-Kaskade.
 4. Keine Inline-Overrides hebeln System-Tokens/-Komponenten mehr aus.
-5. Audiowide nur in Headlines, sonst Lato.
+5. Eine Schrift: Lato (Headlines = bold + UPPERCASE). Kein Audiowide/Ethnocentric.
 
 **Keycloak**
-6. Headlines Audiowide; keine Ethnocentric-Referenz/-Datei mehr.
+6. Headlines in Lato bold; keine Audiowide-/Ethnocentric-Referenz/-Datei mehr.
 7. Validierungsfehler rot (`--color-danger`), Fehlerfelder mit rotem Rand.
 8. Primär-Hover hellt auf; Primär-Button mit Bloom; eine CTA pro Screen;
    Login-/Account-Tokens identisch; Optik = `keycloak/keycloak-login-target.html`.

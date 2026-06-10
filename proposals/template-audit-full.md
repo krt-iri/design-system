@@ -121,7 +121,7 @@ Neu in `krt-components.css`, damit Templates darauf umstellen können:
   `admin/uex.html` (36 KB), `admin/mission-data.html` (35 KB), `admin/blueprints.html`,
   `admin/special-commands*.html`, `admin/sync-reports.html`, `admin/p4k-import.html`,
   `admin/personal-*`**: Admin-Chrome (`accent-dark`-Header) behalten. Häufig:
-  Label-Overrides (orange / Ethnocentric→Audiowide) entfernen; CRUD-Tabellen mit
+  Label-Overrides (orange / Ethnocentric / Audiowide → Lato) entfernen; CRUD-Tabellen mit
   Icon-Aktionen + Pagination-Komponente; Import/Sync-Aktionen mit `upload`/
   `clipboard-check`/`download`-Icons; lange Formulare → `.field-error`.
 - **`admin/locations.html`**: Labels in Display-Schrift bei 0,8rem → Lato (Befund B

@@ -2,7 +2,7 @@
 
 Repo: `krt-iri/basetool`. Ziel: Das vorhandene Keycloak-Theme
 `keycloak-theme/krt-theme/` (Login + Account) auf den **aktuellen** Stand des
-KRT-Design-Systems bringen — Audiowide statt Ethnocentric, semantische Fehlerfarbe
+KRT-Design-Systems bringen — Lato-only (Audiowide + Ethnocentric raus), semantische Fehlerfarbe
 (rot statt orange), einheitlicher Primär-Hover, CTA-Bloom, optional Wabenmuster,
 sichtbarer Tastatur-Fokus. Das Theme ist bereits sehr gut; dies sind gezielte
 Angleichungen, **keine Neugestaltung**.
@@ -15,7 +15,7 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
   (ersetzt die entsprechenden Blöcke in beiden Theme-CSS-Dateien 1:1).
 - `keycloak/keycloak-login-target.html` — Ziel-Optik (Soll).
 - `colors_and_type.css` / `krt-components.css` / README → „Action hierarchy".
-- Font: `fonts/Audiowide-Regular.woff2` (+ `.ttf`); Muster: `assets/honeycomb-bg.svg`.
+- Fonts: `fonts/Lato-*.woff2`; Muster: `assets/honeycomb-bg.svg`.
 
 Betroffene Dateien:
 - `keycloak-theme/krt-theme/login/resources/css/krt-login-v3.css`
@@ -32,13 +32,13 @@ Betroffene Dateien:
 
 ---
 
-## SCHRITT 1 🔴 — Audiowide + semantische Tokens + rote Fehler (eine `:root`-Operation)
-1. **Fonts austauschen:** `Audiowide-Regular.woff2` + `.ttf` in
-   `login/resources/fonts/` **und** `account/resources/fonts/` legen; die 6
-   `Ethnocentric Rg.*`-Dateien (otf+woff2 je Theme) entfernen.
+## SCHRITT 1 🔴 — Lato-only + semantische Tokens + rote Fehler (eine `:root`-Operation)
+1. **Fonts bereinigen:** sicherstellen, dass `Lato-{Light,Regular,Bold}.woff2`(+`.ttf`)
+   in `login/resources/fonts/` **und** `account/resources/fonts/` liegen; alle
+   Audiowide- **und** Ethnocentric-Dateien (otf/woff2/ttf je Theme) entfernen.
 2. In **beiden** CSS-Dateien den `@font-face`-, `:root`- und `body`-Block durch
-   `keycloak/krt-keycloak-tokens.css` ersetzen (Audiowide; `--font-headline:
-   'Audiowide'`; semantische Tokens `--color-danger/-success/-warning/-info`;
+   `keycloak/krt-keycloak-tokens.css` ersetzen (Lato-only; `--font-headline:
+   'Lato'`; semantische Tokens `--color-danger/-success/-warning/-info`;
    `--color-surface-input`; `--glow-primary/-danger`).
 3. **Rote Fehler** (Befund B2): alle fehlerbezogenen Regeln von `--color-primary`
    auf `--color-danger` umstellen — u. a. `.krt-error-message`, sowie
@@ -93,7 +93,7 @@ durchschlagen.
   weißer QR-Wrapper.
 
 ## Definition of Done
-1. Headlines rendern in **Audiowide**; keine Ethnocentric-Datei/-Referenz mehr.
+1. Headlines rendern in **Lato bold**; keine Audiowide-/Ethnocentric-Datei/-Referenz mehr.
 2. Validierungsfehler erscheinen **rot** (`--color-danger`), Felder mit rotem Rand.
 3. Primär-Hover hellt überall auf; Primär-Button trägt den Orange-Bloom; pro Screen
    genau eine gefüllte CTA.

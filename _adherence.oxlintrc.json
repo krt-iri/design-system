@@ -35,8 +35,8 @@
         "message": "Raw px value — use a design-system spacing token via var()."
       },
       {
-        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Audiowide|Lato))/i]",
-        "message": "Font not provided by the design system. Available: Audiowide, Lato."
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Lato))/i]",
+        "message": "Font not provided by the design system. Available: Lato."
       }
     ]
   },
@@ -199,7 +199,6 @@
       "--ring": "color"
     },
     "fontFamilies": [
-      "Audiowide",
       "Lato"
     ]
   }

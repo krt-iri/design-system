@@ -18,7 +18,7 @@ In-repo theme: `keycloak-theme/krt-theme/` (`login/` + `account/`), parent
 ## Principles
 
 1. **One identity across the redirect.** Same orange `#E77E23`, black canvas,
-   Audiowide headlines, Lato body, square corners, HUD corner brackets. A user
+   Lato throughout (headlines = bold + UPPERCASE), square corners, HUD corner brackets. A user
    bounced to Keycloak for SSO should not notice a visual seam.
 2. **Override PatternFly, don't fight it twice.** Neutralise PF with its own CSS
    variables (`--pf-*--BackgroundColor`, `--pf-global--primary-color--100`, …) AND
@@ -47,7 +47,7 @@ In-repo theme: `keycloak-theme/krt-theme/` (`login/` + `account/`), parent
   `::before`/`::after`. `box-shadow: 0 0 20px rgba(231,126,35,0.10)`.
 - `max-width: 450px`, `padding: 40px`, centered; square (no radius).
 
-**Headline** — `#kc-page-title` / `h1`: Audiowide, uppercase, `+0.05em`, orange,
+**Headline** — `#kc-page-title` / `h1`: Lato bold, uppercase, `+0.05em`, orange,
 centered. Optional brand mark (`krt.webp`, ~84px) above it.
 
 **Inputs** — black fill, `1px #646464` border, `2px #E77E23` bottom border, square,
@@ -56,7 +56,7 @@ Placeholder: italic `#646464`.
 
 **Buttons**
 - Primary (`.pf-m-primary`, `#kc-login`, submit): filled orange, **black** text,
-  Audiowide uppercase, square, `min-height: 44px`, `box-shadow: var(--glow-primary)`.
+  Lato bold uppercase, square, `min-height: 44px`, `box-shadow: var(--glow-primary)`.
   Hover → `--color-accent-light` (lighten). *(Not accent-dark.)*
 - Secondary / Cancel (`.pf-m-secondary`, `#kc-cancel`, `.krt-button-secondary`):
   transparent, orange text, `1px` orange border. Hover → orange fill, black text.
@@ -93,5 +93,5 @@ cards, page header). Every one inherits the rules above.
 - ✅ Mirror tokens from `krt-keycloak-tokens.css`; cover `pf-v5-`+`pf-v6-`.
 - ✅ One primary button per screen; outline for secondary.
 - ✅ Errors in red, focus always visible.
-- ❌ No Ethnocentric (replaced by Audiowide), no rounded corners, no PF blue, no
+- ❌ No Audiowide/Ethnocentric (Lato only), no rounded corners, no PF blue, no
   white cards, no orange error text, no background grid.

@@ -21,7 +21,7 @@ Die folgenden Punkte sind **Feinschliff/UX**, keine Compliance-Fehler.
 | Bereich | Status | Beleg im Code |
 | :-- | :-- | :-- |
 | **Farben** | ✅ exakt | `Theme.kt > Krt`: `Orange #E77E23`, Grau 1–4, `SurfaceInput #1C1C1C`, Semantik korrekt |
-| **Typo** | ✅ | `Display = Audiowide`, `Lato` (Light/Regular/Bold); Headlines UPPERCASE durch Aufrufer |
+| **Typo** | ✅* | `Lato` (Light/Regular/Bold); Headlines UPPERCASE durch Aufrufer. *Display-Face ggf. auf Lato-only angleichen (System-Update 2026-06). |
 | **Eckig** | ✅ | `Shapes(... = Square 0.dp)` global; `RectangleShape` auf Textfeldern |
 | **HUD-Box** | ✅ | `Modifier.hudBox()` mit zwei diagonalen Orange-Eckklammern + Hairline |
 | **Greeting** | ✅ | `GreetingHeader`: Orange-Akzentbalken links + dark→transparent-Fade |
@@ -78,10 +78,11 @@ Nach dem Schreiben der JSON gibt es nur Text. Auf dem Desktop erwartet man
 → **Fix:** zwei `GhostButton` im Ergebnis-Panel („Im Ordner anzeigen" via
 `Desktop.open(parent)`, „JSON öffnen"). Hebt die Nützlichkeit ohne Stil-Bruch.
 
-### 🟡 6 — Audiowide bei sehr kleinen Größen
-`headlineSmall = 13sp` (Audiowide) für Titelleiste und „ERGEBNIS"-Überschrift.
-Audiowide ist eine breite Display-Schrift; bei 13sp leidet die Lesbarkeit, und die
-Titelleiste muss per Ellipsis kürzen.
+### 🟡 6 — Display-Headline bei sehr kleinen Größen
+`headlineSmall = 13sp` für Titelleiste und „ERGEBNIS"-Überschrift. Bei 13sp leidet
+die Lesbarkeit, und die Titelleiste muss per Ellipsis kürzen. (Das System ist
+inzwischen Lato-only — Headlines = Lato bold; falls noch Audiowide im Tool, mit
+angleichen.)
 → **Fix:** `headlineSmall` auf ~15sp anheben; Titelleiste kürzer fassen (z. B. nur
 „Blueprint Extractor"), da das Greeting den vollen Titel ohnehin trägt → keine
 Dopplung, kein Ellipsis. Tracking 0.04em → 0.05em (System-Wert) angleichen.

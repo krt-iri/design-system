@@ -3,7 +3,7 @@
    ----------------------------------------------------------------------------
    Drop-in replacement for the :root + @font-face blocks at the top of
    krt-login-v3.css and krt-account-v3.css. Mirrors the CURRENT KRT design
-   system (das-kartell-design): Audiowide display face, full semantic color
+   system (das-kartell-design): single typeface Lato, full semantic color
    set, honeycomb page background. Keep this block byte-identical between the
    login and account themes; only the component selectors below it differ.
 
@@ -14,14 +14,10 @@
    ============================================================================ */
 
 /* ----- FONTS (WOFF2 first, font-display: swap) -------------------------- */
-/* Ship Audiowide-Regular.woff2 + Lato-{Light,Regular,Bold}.woff2 in
-   resources/fonts/. Audiowide replaces Ethnocentric (2026-06). */
-@font-face {
-    font-family: 'Audiowide';
-    src: url('../fonts/Audiowide-Regular.woff2') format('woff2'),
-         url('../fonts/Audiowide-Regular.ttf') format('truetype');
-    font-weight: normal; font-style: normal; font-display: swap;
-}
+/* One typeface: Lato. Ship Lato-{Light,Regular,Bold}.woff2 in resources/fonts/.
+   Headlines = Lato bold + UPPERCASE (no separate display face).
+   History: Ethnocentric → Audiowide → consolidated to Lato-only (2026-06) —
+   remove any Audiowide/Ethnocentric @font-face + files from the themes. */
 @font-face {
     font-family: 'Lato';
     src: url('../fonts/Lato-Light.woff2') format('woff2'),
@@ -62,8 +58,8 @@
     --color-warning: #FFD23F;
     --color-info: #355DDC;
 
-    /* Type */
-    --font-headline: 'Audiowide', sans-serif;
+    /* Type — one typeface; headlines are Lato bold + UPPERCASE */
+    --font-headline: 'Lato', sans-serif;
     --font-body: 'Lato', sans-serif;
 
     /* Glows */
