@@ -169,16 +169,6 @@ nesting `<table>`s that each repeat their own `<thead>`. Rules:
 Live before/after: [`proposals/inventory-table-readability.html`](proposals/inventory-table-readability.html);
 specimen: `preview/components-tree-table.html`; audit: `proposals/inventory-table-audit.md`.
 
-<<<<<<< Updated upstream
-### Action icons (CRUD)
-
-The recurring row/form actions share fixed sprite glyphs: **delete / remove → `krt-icon-trash`**,
-**edit → `krt-icon-edit`**, **save → `krt-icon-save`** (inventory book-out → `krt-icon-bookout`).
-In dense rows (table / tree / compact clusters) they are icon-only `.btn-icon` squares with the
-label in `title` / `aria-label`; in forms and dialogs they are icon + text. `.btn .krt-icon` sets
-`pointer-events: none` so the click lands on the button, not the glyph. Keep the danger styling
-(`btn-quiet-danger` / `btn-outline-danger`) on delete. Specimen: `preview/brand-iconography.html`.
-=======
 ### Button icons
 
 The app uses **one hand-curated SVG sprite** (`assets/krt-icons.svg`; in the repo
@@ -192,12 +182,19 @@ icon inherits the button's text colour). Two usage rules:
   (edit, trash, check-in/login, check-out/logout, bookout, close) — saves ~50–60%
   of the action column in dense tables. **Always** carries `aria-label` + `title`.
 
-Full set + guidance: specimen `preview/components-icon-set.html` and
+The recurring CRUD actions share fixed sprite glyphs: **delete / remove →
+`krt-icon-trash`**, **edit → `krt-icon-edit`**, **save → `krt-icon-save`**
+(inventory book-out → `krt-icon-bookout`). In dense rows (table / tree / compact
+clusters) they are icon-only `.btn-icon` squares with the label in `title` /
+`aria-label`; in forms and dialogs they are icon + text. `.btn .krt-icon` sets
+`pointer-events: none` so the click lands on the button, not the glyph. Keep the
+danger styling (`btn-quiet-danger` / `btn-outline-danger`) on delete.
+
+Full set + guidance: specimens `preview/components-icon-set.html` and
 `preview/brand-iconography.html`; rules + action→icon dictionary in
 [`proposals/button-icons-guidelines.md`](proposals/button-icons-guidelines.md);
 before/after `proposals/button-icons-readability.html`; repo handoff
 `proposals/button-icons-claude-code-auftrag.md`.
->>>>>>> Stashed changes
 
 ---
 
