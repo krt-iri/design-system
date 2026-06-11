@@ -681,17 +681,21 @@ input[type="radio"]:checked::after {
    close-X = icon button with aria-label; danger variant for destructive
    confirms (consequence named in the body). Focus-trap + Esc required. */
 .krt-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 3000; }
-.krt-modal { width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
+/* The frame itself must NOT scroll: the ::before/::after corner brackets sit 2px outside
+   the box and would register as permanent overflow, forcing scrollbars even when the
+   content fits. Scrolling happens in .krt-modal-body only (head/foot stay pinned). */
+.krt-modal { width: 100%; max-width: 440px; max-height: 90vh; display: flex; flex-direction: column; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
+.krt-modal > form { display: flex; flex-direction: column; min-height: 0; }
 .krt-modal::before, .krt-modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-primary); }
 .krt-modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
 .krt-modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 .krt-modal--danger { border-top-color: var(--color-danger); box-shadow: var(--glow-danger-lg); }
 .krt-modal--danger::before, .krt-modal--danger::after { border-color: var(--color-danger); }
-.krt-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: var(--border-hairline); }
+.krt-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: var(--border-hairline); flex-shrink: 0; }
 .krt-modal-head h2 { font-family: var(--font-headline); font-weight: var(--fw-bold); font-size: 0.85rem; color: var(--color-white); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
 .krt-modal--danger .krt-modal-head h2 { color: var(--color-danger-text, #ff6b6b); }
-.krt-modal-body { padding: 14px 16px; }
-.krt-modal-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: var(--border-hairline); }
+.krt-modal-body { padding: 14px 16px; min-height: 0; overflow-y: auto; }
+.krt-modal-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: var(--border-hairline); flex-shrink: 0; }
 
 /* --------------------------------------------------------- ASSIGN BOARD -- */
 /* Drag-&-drop planning board (mission crew): a pool of unassigned people and
