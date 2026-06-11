@@ -717,7 +717,8 @@ input[type="radio"]:checked::after {
 .drop-zone { min-height: var(--touch-target); padding: 6px; display: flex; flex-direction: column; gap: 5px; }
 .drop-zone:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
 .drop-zone.is-over { outline: 2px dashed var(--color-primary); outline-offset: -4px; background: rgba(231,126,35,0.06); }
-.drop-hint { border: 1px dashed var(--color-gray-3); color: var(--color-gray-2); font-size: 0.66rem; text-align: center; padding: 7px; font-style: italic; }
+/* gray-1 + regular weight: gray-2 at thin weight is unreadable over the honeycomb backdrop. */
+.drop-hint { border: 1px dashed var(--color-gray-3); color: var(--color-gray-1); font-size: 0.7rem; font-weight: 400; text-align: center; padding: 7px; font-style: italic; }
 .drop-zone.is-over .drop-hint { border-color: var(--color-primary); color: var(--color-primary); }
 
 /* Chip-styled inline select — uppercase label + orange chevron; reads like a
