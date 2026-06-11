@@ -733,6 +733,7 @@ input[type="radio"]:checked::after {
 /* ----------------------------------------------------------- EMPTY STATE -- */
 /* Centered placeholder for empty lists/collections: short reason + ONE next
    action (ghost or cta). Never leave a bare "Keine Einträge." table cell. */
+.empty-state[hidden] { display: none; } /* hidden attr must win over the flex display */
 .empty-state { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 28px 16px; text-align: center; border: 1px dashed var(--color-gray-3); background: var(--color-bg-dark-gray); }
 .empty-state .empty-title { font-family: var(--font-headline); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .06em; font-size: 0.85rem; color: var(--color-gray-1); }
 .empty-state .empty-text { font-size: 0.8rem; font-weight: 300; color: var(--color-gray-2); max-width: 48ch; }
