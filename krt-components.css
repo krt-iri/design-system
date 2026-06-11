@@ -689,6 +689,9 @@ input[type="radio"]:checked::after {
 .krt-modal::before, .krt-modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-primary); }
 .krt-modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
 .krt-modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+/* Width variant for form-heavy modals (3+ stacked fields): confirms and single-field
+   prompts stay at the compact 440px default. */
+.krt-modal--wide { max-width: 600px; }
 .krt-modal--danger { border-top-color: var(--color-danger); box-shadow: var(--glow-danger-lg); }
 .krt-modal--danger::before, .krt-modal--danger::after { border-color: var(--color-danger); }
 .krt-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: var(--border-hairline); flex-shrink: 0; }
