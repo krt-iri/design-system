@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Assign board" subtitle="Drag&drop-Planung: Person-Row, Drop-Zone, Chip-Select" viewport="700x250" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .panel { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .panel .h { padding: 7px 10px; background: var(--color-surface-input); border-bottom: 2px solid var(--color-primary); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-1); }
+  .pname { font-weight: 700; color: var(--color-white); font-size: 12px; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Assign board — Pool → offene Drop-Zonen, Funktion als Chip-Select</p>
+  <div class="demo">
+    <div class="panel">
+      <div class="h">Ohne Einheit</div>
+      <div class="drop-zone">
+        <div class="person-row" draggable="true"><span class="row-grip">⠿</span><span class="status-dot status-dot--on"></span><div class="row-main"><span class="pname">rix.o</span><div class="row-sub">wünscht Gunner</div></div></div>
+        <div class="person-row is-selected" draggable="true"><span class="row-grip">⠿</span><span class="status-dot"></span><div class="row-main"><span class="pname">dane_88</span><div class="row-sub">wünscht Medic ✎</div></div></div>
+        <div class="drop-hint">Hierher ziehen = Zuweisung entfernen</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="h">Einheit · Eisenfaust <span class="chip chip--warning" style="font-size:8.5px; margin-left:6px;">HVU</span></div>
+      <div class="drop-zone is-over">
+        <div class="person-row" draggable="true"><span class="row-grip">⠿</span><span class="status-dot status-dot--on"></span><div class="row-main"><span class="pname">hex_07</span><div class="row-sub">wünscht Pilot</div></div><select class="chip-select"><option>Pilot</option><option>Salvage Schiff groß</option></select></div>
+        <div class="drop-hint">Teilnehmer hierher ziehen — beliebig viele</div>
+      </div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.person-row (+ .is-selected, .row-grip/.row-sub) · .status-dot(--on) · .drop-zone (+ .is-over, .drop-hint) · .chip-select. Klick-Fallback + Tastatur Pflicht; HVU = .chip--warning.</p>
+</body>
+</html>

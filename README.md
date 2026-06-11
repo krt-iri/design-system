@@ -178,6 +178,27 @@ Two reusable building blocks (`krt-components.css`):
 
 Specimen: `preview/components-card-chip.html`.
 
+### Mission page patterns (tabs, modal, assign board)
+
+Canonised from the mission-detail redesign (Variante B) — see the approved mocks
+under `proposals/mission-*.html` and the implementation order
+`proposals/mission-page-claude-code-auftrag.md`:
+
+- **`.tab-nav` / `.tab` / `.tab-count`** — page tabs (active = white + 3px orange
+  underline; `role="tablist"`, arrow keys, `?tab=`/`#tab=` deeplink) and
+  **`.facts-bar`** — quick-fact strip under a sticky page head.
+  Specimen: `preview/components-tabs.html`.
+- **`.krt-modal*`** — modal frame (orange top edge + HUD corner brackets on a
+  blurred scrim; `--danger` variant; ONE filled CTA, ghost cancel, focus trap +
+  Esc; destructive modals name the consequence).
+  Specimen: `preview/components-modal.html`.
+- **Assign board** — `.person-row` (+ `.row-grip`/`.row-sub`/`.is-selected`),
+  `.status-dot(--on)`, `.drop-zone` (+ `.is-over`, `.drop-hint`) and
+  **`.chip-select`** (uppercase chip-style select with orange chevron). Units are
+  open-ended (no slots); always ship a click + keyboard fallback beside drag&drop.
+  HVU marking = `.chip chip--warning`.
+  Specimen: `preview/components-assign-board.html`.
+
 ### Button icons
 
 The app uses **one hand-curated SVG sprite** (`assets/krt-icons.svg`; in the repo

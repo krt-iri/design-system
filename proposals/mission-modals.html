@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einsatz-Modals — Mockups</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 28px 24px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 22px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0 0 20px; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+  .cap { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; color: var(--color-gray-2); margin: 0 0 8px; }
+  .cap b { color: var(--color-primary); }
+
+  /* dimmed backdrop sample around each modal */
+  .stage { background: rgba(0,0,0,0.8); backdrop-filter: blur(2px); padding: 22px; display: flex; justify-content: center; border: 1px solid var(--color-gray-3); }
+
+  /* KRT modal */
+  .modal { width: 100%; max-width: 440px; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3);
+    border-top: 3px solid var(--color-primary); position: relative; box-shadow: 0 0 20px rgba(231,126,35,0.10); }
+  .modal::before, .modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-primary); }
+  .modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+  .modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+  .m-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--color-gray-3); }
+  .m-head h2 { font-family: var(--font-headline); font-weight: 700; font-size: 13px; color: var(--color-white); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+  .m-body { padding: 14px 16px; }
+  .m-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--color-gray-3); }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn-ic { min-height: 28px; min-width: 28px; padding: 0.15rem; }
+  .btn-xs2 { min-height: 32px; padding: 0.25rem 0.6rem; font-size: 0.68rem; }
+
+  .fg { margin-bottom: 12px; }
+  .fg label { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; color: var(--color-gray-1); margin-bottom: 4px; }
+  .fg input, .fg select, .fg textarea { width: 100%; box-sizing: border-box; background: var(--color-surface-input); color: var(--color-gray-1);
+    border: 1px solid var(--color-gray-3); font-family: var(--font-body); font-size: 12.5px; padding: 7px 9px; min-height: 34px; }
+  .fg textarea { min-height: 50px; resize: vertical; }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .withbtn { display: flex; gap: 6px; }
+  .withbtn input { flex: 1; }
+  .seg { display: inline-flex; border: 1px solid var(--color-gray-3); }
+  .seg button { background: none; border: none; color: var(--color-gray-2); font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 10.5px; letter-spacing: .06em; padding: 8px 14px; cursor: pointer; min-height: 34px; }
+  .seg button.on-pos { background: var(--color-success); color: #fff; }
+  .seg button.on-neg { background: var(--color-danger); color: #fff; }
+  .hint { font-size: 10.5px; color: var(--color-gray-2); margin-top: 4px; }
+  .field-err input { border-color: var(--color-danger) !important; box-shadow: 0 0 5px rgba(163,0,10,0.3); }
+  .err-msg { display: flex; align-items: center; gap: 5px; color: var(--color-danger-text, #ff6b6b); font-size: 11px; margin-top: 4px; }
+  .ann { margin: 10px 0 0; font-size: 12px; color: var(--color-gray-2); font-weight: 300; max-width: 60ch; }
+  .ann b { color: var(--color-gray-1); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Variante B · Einsatz-Seite · Modal-Mockups</div>
+  <h1 class="t">Modals: Eintragen &amp; Ändern</h1>
+  <p class="lead">Einheitlicher KRT-Modal-Rahmen (Surface + Orange-Oberkante + HUD-Eckklammern, Overlay mit Blur) — pro Modal genau <b>eine</b> gefüllte CTA, Abbrechen als Ghost, Schließen-X oben. Felder entsprechen den heutigen Funktionen.</p>
+
+  <div class="grid">
+    <!-- ① ANMELDEN -->
+    <div>
+      <p class="cap"><b>①</b> Teilnehmer anmelden <span style="text-transform:none; letter-spacing:0;">(CTA „Anmelden")</span></p>
+      <div class="stage"><div class="modal">
+        <div class="m-head"><h2>Zum Einsatz anmelden</h2><button class="btn btn-ghost btn-ic" title="Schließen" aria-label="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button></div>
+        <div class="m-body">
+          <div class="fg"><label>Benutzer</label><select><option>cmdr.valk (du)</option><option>— Gast eintragen —</option></select>
+            <div class="hint">Mission-Manager können andere Mitglieder oder Gäste anmelden.</div></div>
+          <div class="fg"><label>Gastname <span style="color:var(--color-gray-2)">(nur bei Gast)</span></label><input type="text" placeholder="z. B. Wingman von hex_07" disabled></div>
+          <div class="frow">
+            <div class="fg"><label>Aufgabenwunsch</label><select><option>Pilot</option><option>Gunner</option><option>Engineer</option><option>Medic</option><option>Scout</option><option>Cargo</option><option>—</option></select></div>
+            <div class="fg"><label>Auszahlungsart</label><select><option>Auszahlen</option><option>Spenden</option></select></div>
+          </div>
+          <div class="fg" style="margin-bottom:0;"><label>Bemerkung</label><textarea placeholder="z. B. Kann erst 19:15 …"></textarea></div>
+        </div>
+        <div class="m-foot"><button class="btn btn-ghost">Abbrechen</button><button class="btn btn--cta"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button></div>
+      </div></div>
+      <p class="ann"><b>Heute erhalten:</b> Selbst-/Fremd-/Gast-Anmeldung, Aufgabenwunsch, Auszahlungsart, Bemerkung.</p>
+    </div>
+
+    <!-- ② TEILNEHMER BEARBEITEN -->
+    <div>
+      <p class="cap"><b>②</b> Teilnehmer bearbeiten <span style="text-transform:none; letter-spacing:0;">(aus Zeile / Board-Popover)</span></p>
+      <div class="stage"><div class="modal">
+        <div class="m-head"><h2>mara.k bearbeiten</h2><button class="btn btn-ghost btn-ic" title="Schließen" aria-label="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button></div>
+        <div class="m-body">
+          <div class="frow">
+            <div class="fg"><label>Aufgabenwunsch</label><select><option>Gunner</option><option>Pilot</option><option>—</option></select></div>
+            <div class="fg"><label>Funktion an Bord</label><select><option>Gunner</option><option>Salvage Schiff groß</option><option>—</option></select></div>
+          </div>
+          <div class="fg"><label>Org-Einheiten</label><select multiple size="2"><option selected>IRI — IRIDIUM</option><option selected>VIP — Vipers (SK)</option></select></div>
+          <div class="frow">
+            <div class="fg"><label>Check-In</label><div class="withbtn"><input type="text" value="29.05. 19:02"><button class="btn btn-ghost btn-xs2" title="Jetzt"><svg class="krt-icon"><use href="#i-clock"/></svg></button></div></div>
+            <div class="fg"><label>Check-Out</label><div class="withbtn"><input type="text" placeholder="—"><button class="btn btn-ghost btn-xs2" title="Jetzt"><svg class="krt-icon"><use href="#i-clock"/></svg></button></div></div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label>Auszahlungsart</label><select><option selected>Spenden</option><option>Auszahlen</option></select></div>
+            <div class="fg"><label>Bemerkung</label><input type="text" value="bringt Munition mit"></div>
+          </div>
+        </div>
+        <div class="m-foot"><button class="btn btn-quiet-danger" style="margin-right:auto;"><svg class="krt-icon"><use href="#i-trash"/></svg> Abmelden</button><button class="btn btn-ghost">Abbrechen</button><button class="btn btn--cta"><svg class="krt-icon"><use href="#i-save"/></svg> Speichern</button></div>
+      </div></div>
+      <p class="ann"><b>Heute erhalten:</b> Wunsch + zugewiesene Funktion, Org-Einheiten, Check-in/-out-Zeiten (Manager, mit „Jetzt"), Auszahlungsart, Bemerkung, Abmelden; Versions-Check (optimistic locking) bleibt.</p>
+    </div>
+
+    <!-- ③ EINHEIT -->
+    <div>
+      <p class="cap"><b>③</b> Einheit hinzufügen / bearbeiten</p>
+      <div class="stage"><div class="modal">
+        <div class="m-head"><h2>Einheit hinzufügen</h2><button class="btn btn-ghost btn-ic" title="Schließen" aria-label="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button></div>
+        <div class="m-body">
+          <div class="fg"><label>Schiffstyp</label><select><option>Constellation Andromeda</option><option>Hammerhead</option><option>MOLE</option><option>Vulture</option><option>Hull C</option></select></div>
+          <div class="fg"><label>Schiff aus dem Hangar <span style="color:var(--color-gray-2)">(nach Typ gefiltert)</span></label><select><option>Schwarze Witwe (valk)</option><option>Sternenpflüger (mara.k)</option><option>— keines · nur Typ verwenden —</option></select>
+            <div class="hint">Kein passendes Schiff im Hangar? „— keines“ wählen — die Einheit wird nur über den Schiffstyp angelegt.</div></div>
+          <div class="frow">
+            <div class="fg"><label>Anzeigename <span style="color:var(--color-gray-2)">(optional)</span></label><input type="text" value="Schwarze Witwe"></div>
+            <div class="fg"><label>Verantwortlich</label><select><option>cmdr.valk</option><option>hex_07</option></select></div>
+          </div>
+          <div class="fg"><label style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; font-size:12.5px; cursor:pointer; margin-bottom:0;"><input type="checkbox" checked style="width:16px; height:16px; min-height:0; padding:0;"> Als <span class="chip chip--warning" style="font-size:9px;">HVU</span> markieren — High Value Unit</label>
+            <div class="hint">HVUs werden im Crew-Board und in den Übersichten hervorgehoben (besonders schützenswert).</div></div>
+          <div class="fg" style="margin-bottom:0;"><label>Notiz</label><input type="text" placeholder="z. B. Eskorte, Gruppe 1"></div>
+        </div>
+        <div class="m-foot"><button class="btn btn-ghost">Abbrechen</button><button class="btn btn--cta"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button></div>
+      </div></div>
+      <p class="ann"><b>Heute erhalten:</b> Schiffstyp und konkretes Schiff sind <b>getrennt</b> wählbar — das Hangar-Select filtert nach Typ; ohne passendes Schiff im Hangar wird nur der Typ verwendet. <b>HVU-Markierung</b> (High Value Unit) als Checkbox. <b>Hinweis:</b> Crew-Zuweisung läuft nicht mehr im Modal, sondern direkt im Board (Drag &amp; Drop).</p>
+    </div>
+
+    <!-- ④ FINANZEINTRAG -->
+    <div>
+      <p class="cap"><b>④</b> Finanzeintrag — neu / bearbeiten</p>
+      <div class="stage"><div class="modal">
+        <div class="m-head"><h2>Neuer Finanzeintrag</h2><button class="btn btn-ghost btn-ic" title="Schließen" aria-label="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button></div>
+        <div class="m-body">
+          <div class="frow">
+            <div class="fg"><label>Typ</label><span class="seg"><button class="on-pos" type="button">Einnahme</button><button type="button">Ausgabe</button></span></div>
+            <div class="fg field-err"><label>Betrag (aUEC)</label><input type="text" value="1.850.000,50">
+              <div class="err-msg"><b>⚠</b> Nur ganze aUEC — Betrag wird gerundet.</div></div>
+          </div>
+          <div class="fg"><label>Teilnehmer</label><select><option>cmdr.valk</option><option>mara.k</option><option>— (Einsatz)</option></select></div>
+          <div class="fg" style="margin-bottom:0;"><label>Notiz</label><input type="text" placeholder="z. B. Quantanium-Verkauf ARC-L1"></div>
+        </div>
+        <div class="m-foot"><button class="btn btn-ghost">Abbrechen</button><button class="btn btn--cta"><svg class="krt-icon"><use href="#i-save"/></svg> Speichern</button></div>
+      </div></div>
+      <p class="ann"><b>Heute erhalten:</b> Typ Einnahme/Ausgabe (als Segment statt Select), Betrag, Teilnehmer-Zuordnung, Notiz; Inline-Feldfehler in Rot (semantisch). Raffinerie-Ausgaben bleiben automatisch.</p>
+    </div>
+
+    <!-- ⑤ LÖSCHEN -->
+    <div>
+      <p class="cap"><b>⑤</b> Lösch-Bestätigung <span style="text-transform:none; letter-spacing:0;">(Teilnehmer, Einheit, Eintrag, Einsatz)</span></p>
+      <div class="stage"><div class="modal" style="border-top-color: var(--color-danger);">
+        <div class="m-head"><h2 style="color:var(--color-danger-text, #ff6b6b);">Einheit löschen?</h2><button class="btn btn-ghost btn-ic" title="Schließen" aria-label="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button></div>
+        <div class="m-body">
+          <p style="margin:0; font-size:13px; font-weight:300;">„Schwarze Witwe" wird aus dem Einsatz entfernt. <b style="color:var(--color-white)">2 zugewiesene Crew-Mitglieder</b> wandern zurück in „Ohne Einheit". Diese Aktion kann nicht rückgängig gemacht werden.</p>
+        </div>
+        <div class="m-foot"><button class="btn btn-ghost">Abbrechen</button><button class="btn btn-danger"><svg class="krt-icon"><use href="#i-trash"/></svg> Löschen</button></div>
+      </div></div>
+      <p class="ann"><b>Muster:</b> Danger-Oberkante + rote Headline; die Konsequenz wird benannt (wohin geht die Crew); „Löschen" als gefüllter Danger-Button, Abbrechen Ghost.</p>
+    </div>
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M15 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+</body>
+</html>

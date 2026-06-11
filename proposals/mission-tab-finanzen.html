@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tab „Finanzen &amp; Auszahlung" — Mockup</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 28px 24px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 22px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0 0 18px; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 24px rgba(0,0,0,0.6); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 1px solid var(--color-gray-3); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .s-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 15px; margin: 0; display: inline; }
+  .facts { display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 16px; background: var(--color-surface-input); border-bottom: 1px solid var(--color-gray-3); font-size: 12px; }
+  .facts .k { color: var(--color-gray-2); text-transform: uppercase; font-size: 9.5px; letter-spacing: .08em; font-weight: 700; margin-right: 5px; }
+  .facts b { color: var(--color-white); font-variant-numeric: tabular-nums; }
+  .tab-nav { display: flex; border-bottom: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); padding: 0 12px; }
+  .tab-nav .tab { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    font-size: 11px; color: var(--color-gray-2); padding: 11px 13px; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; min-height: 40px; }
+  .tab-nav .tab.active { color: var(--color-white); border-bottom-color: var(--color-primary); }
+  .tab-nav .tab .cnt { color: var(--color-primary); margin-left: 4px; }
+  .s-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn-xs2 { min-height: 32px; padding: 0.25rem 0.6rem; font-size: 0.68rem; }
+  .btn-ic { min-height: 28px; min-width: 28px; padding: 0.15rem; }
+
+  /* summary strip */
+  .sumstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 880px) { .sumstrip { grid-template-columns: repeat(2, 1fr); } }
+  .sum { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 10px 14px; }
+  .sum .sk { font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gray-2); font-weight: 700; }
+  .sum .sv { font-family: var(--font-headline); font-weight: 700; font-size: 19px; color: var(--color-white); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .sum .sv.pos { color: var(--color-success); }
+  .sum .sv.neg { color: var(--color-danger-text, #ff6b6b); }
+  .sum .sd { font-size: 10.5px; color: var(--color-gray-2); margin-top: 2px; }
+
+  .cols2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; align-items: start; }
+  @media (max-width: 980px) { .cols2 { grid-template-columns: 1fr; } }
+  .panel { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .panel .ph2 { padding: 8px 12px; background: var(--color-surface-input); border-bottom: 2px solid var(--color-primary); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-1); display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .panel .pbody { padding: 10px 12px; }
+
+  table.mock { width: 100%; border-collapse: collapse; }
+  .mock th { background: var(--color-surface-input); color: var(--color-gray-1); font-size: 10px; text-transform: uppercase; letter-spacing: .07em; text-align: left; padding: 7px 9px; border-bottom: 2px solid var(--color-primary); }
+  .mock td { padding: 6px 9px; font-size: 12.5px; border-bottom: 1px solid var(--color-gray-3); vertical-align: middle; }
+  .mock tr:last-child td { border-bottom: none; }
+  .mock td.who { font-weight: 700; color: var(--color-white); }
+  .mock td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--color-white); }
+  .mock th.num { text-align: right; }
+  .mock td .act { display: flex; gap: 4px; justify-content: flex-end; }
+  .mock td.note { color: var(--color-gray-2); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .reflink { color: var(--color-dept-profit); text-decoration: underline; }
+  .pay-sel { background: var(--color-bg-dark-gray); color: var(--color-gray-1); border: 1px solid var(--color-gray-3);
+    font-family: var(--font-body); font-size: 11px; padding: 4px 6px; min-height: 30px; }
+  .pay-sel:disabled { opacity: .45; cursor: not-allowed; }
+  .pay-sel:focus { border-color: var(--color-primary); outline: none; }
+
+  details.eco { border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  details.eco + details.eco { margin-top: 10px; }
+  details.eco summary { cursor: pointer; list-style: none; padding: 9px 12px; background: var(--color-surface-input);
+    border-left: 4px solid var(--color-primary); font-weight: 700; text-transform: uppercase; letter-spacing: .07em; font-size: 11px; color: var(--color-gray-1);
+    display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  details.eco summary::-webkit-details-marker { display: none; }
+  details.eco summary .chev { color: var(--color-primary); transition: transform .15s; font-size: 10px; }
+  details.eco[open] summary .chev { transform: rotate(90deg); }
+  details.eco .pbody { padding: 10px 12px; }
+  .subtab { margin: 4px 0 0 0; }
+  .subtab td, .subtab th { padding: 3px 8px; font-size: 11px; border-bottom: none; background: transparent; }
+  .subtab th { border-bottom: 1px solid var(--color-gray-3); color: var(--color-gray-2); }
+
+  .note { margin-top: 18px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-bg-dark-gray); padding: 12px 16px; font-size: 13px; font-weight: 300; max-width: 1050px; }
+  .note b { color: var(--color-white); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Variante B · Tab „Finanzen &amp; Auszahlung" · Mockup</div>
+  <h1 class="t">Finanzen, Auszahlung &amp; Wirtschaft in einem Tab</h1>
+  <p class="lead">Alle heutigen Funktionen der drei Panels <b>Finanzen</b>, <b>Auszahlung</b> und <b>Wirtschaft</b> — ergänzt um eine <b>Summen-Leiste</b>, die Einnahmen/Ausgaben/Anteil auf einen Blick zeigt. Beträge rechtsbündig-tabellarisch, Typ als Farb-Chip, Raffinerie-Ausgaben verlinkt wie heute.</p>
+
+  <div class="screen">
+    <div class="s-head">
+      <div><h3>Einsatz: Operation Tiefschlag</h3> <span class="squadron-badge">IRI</span> <span class="status-pill status-active" style="margin-left:6px;">ACTIVE</span></div>
+      <button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button>
+    </div>
+    <div class="facts">
+      <span><span class="k">Server-Join</span><b>29.05. · 19:00</b></span>
+      <span><span class="k">TS</span><b>18:45</b></span>
+      <span><span class="k">Teilnehmer</span><b>12/18</b></span>
+      <span><span class="k">Gesamtsumme</span><b style="color:var(--color-success)">+2.412.500 aUEC</b></span>
+    </div>
+    <div class="tab-nav">
+      <button class="tab">Übersicht</button>
+      <button class="tab">Teilnehmer &amp; Einheiten <span class="cnt">12/18</span></button>
+      <button class="tab active">Finanzen &amp; Auszahlung <span class="cnt">9</span></button>
+      <button class="tab">Verwaltung</button>
+    </div>
+    <div class="s-body">
+
+      <!-- summary strip -->
+      <div class="sumstrip">
+        <div class="sum"><div class="sk">Gesamtsumme</div><div class="sv pos">+2.412.500</div><div class="sd">aUEC · 9 Einträge</div></div>
+        <div class="sum"><div class="sk">Einnahmen</div><div class="sv pos">+2.730.000</div><div class="sd">6 Einträge</div></div>
+        <div class="sum"><div class="sk">Ausgaben</div><div class="sv neg">−317.500</div><div class="sd">3 Einträge · inkl. Raffinerie</div></div>
+        <div class="sum"><div class="sk">Je Anteil (12 TN)</div><div class="sv">201.041</div><div class="sd">aUEC · bei Gleichverteilung</div></div>
+      </div>
+
+      <div class="cols2">
+        <!-- FINANZEN -->
+        <div class="panel">
+          <div class="ph2">Finanzen
+            <button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#i-plus"/></svg> Neuer Eintrag</button>
+          </div>
+          <div class="pbody">
+            <table class="mock">
+              <thead><tr><th>Nutzer</th><th>Typ</th><th class="num">Betrag</th><th>Notiz</th><th style="text-align:right">Aktionen</th></tr></thead>
+              <tbody>
+                <tr><td class="who">cmdr.valk</td><td><span class="chip chip--success">Einnahme</span></td><td class="num">+1.850.000 aUEC</td><td class="note" title="Quantanium-Verkauf ARC-L1">Quantanium-Verkauf ARC-L1</td>
+                  <td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></td></tr>
+                <tr><td class="who">mara.k</td><td><span class="chip chip--success">Einnahme</span></td><td class="num">+880.000 aUEC</td><td class="note">Beifang Laranite</td>
+                  <td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></td></tr>
+                <tr><td class="who">hex_07</td><td><span class="chip chip--danger">Ausgabe</span></td><td class="num">−95.000 aUEC</td><td class="note">Treibstoff + Reparatur</td>
+                  <td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></td></tr>
+                <tr><td class="who">dane_88</td><td><span class="chip chip--danger">Ausgabe</span></td><td class="num">−138.200 aUEC</td><td><a class="reflink" href="#" onclick="return false">Raffinerieauftrag</a></td>
+                  <td><div class="act" style="color:var(--color-gray-3)"><span style="font-size:10px; color:var(--color-gray-2);" title="Automatisch aus Raffinerieauftrag — dort bearbeiten">auto</span></div></td></tr>
+                <tr><td colspan="5" style="color:var(--color-gray-2); font-size:11px;">+ 5 weitere Einträge …</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- AUSZAHLUNG -->
+        <div class="panel">
+          <div class="ph2">Auszahlung</div>
+          <div class="pbody">
+            <table class="mock">
+              <thead><tr><th>Benutzer</th><th class="num">Teilnahme</th><th>Auszahlungsart</th></tr></thead>
+              <tbody>
+                <tr><td class="who">cmdr.valk</td><td class="num">100,00 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td></tr>
+                <tr><td class="who">mara.k</td><td class="num">87,50 %</td><td><select class="pay-sel"><option selected>Spenden</option><option>Auszahlen</option></select></td></tr>
+                <tr><td class="who">hex_07</td><td class="num">75,00 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td></tr>
+                <tr><td class="who">vey_2 <span class="chip chip--muted" style="font-size:8.5px;">Gast</span></td><td class="num">50,00 %</td><td><select class="pay-sel" disabled title="Nur Mission-Manager oder die Person selbst"><option>Auszahlen</option></select></td></tr>
+                <tr><td colspan="3" style="color:var(--color-gray-2); font-size:11px;">+ 8 weitere … · Teilnahme-% aus Check-in-Zeiten, Auszahlungsart je Person (rollenbasiert änderbar)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIRTSCHAFT -->
+      <details class="eco" open>
+        <summary>Raffinerieaufträge <span style="display:flex; gap:10px; align-items:center;"><span class="chip chip--data" style="font-size:9px;"><strong>2</strong> Aufträge</span><span class="chev">▶</span></span></summary>
+        <div class="pbody">
+          <table class="mock">
+            <thead><tr><th>Nutzer</th><th>Standort</th><th>Ende</th><th>Status</th><th>Materialien</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="who">dane_88</td><td>ARC-L1 · Refinery</td><td>30.05.2026 14:20 <span style="color:var(--color-gray-2); font-size:10px;">(lokal)</span></td><td><span class="chip chip--info">In Arbeit</span></td>
+                <td>
+                  <table class="subtab"><thead><tr><th>Material</th><th>Menge</th><th>Qualität</th></tr></thead>
+                  <tbody><tr><td>Quantanium</td><td>12,800 SCU</td><td>796</td></tr><tr><td>Laranite</td><td>4,200 SCU</td><td>702</td></tr></tbody></table>
+                </td>
+              </tr>
+              <tr>
+                <td class="who">rix.o</td><td>Lorville · L19</td><td>29.05.2026 21:05 <span style="color:var(--color-gray-2); font-size:10px;">(lokal)</span></td><td><span class="chip chip--success">Fertig</span></td>
+                <td><table class="subtab"><tbody><tr><td>Agricium</td><td>6,050 SCU</td><td>640</td></tr></tbody></table></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <details class="eco">
+        <summary>Lagereinträge <span style="display:flex; gap:10px; align-items:center;"><span class="chip chip--data" style="font-size:9px;"><strong>3</strong> Einträge</span><span class="chev">▶</span></span></summary>
+        <div class="pbody">
+          <table class="mock">
+            <thead><tr><th>Nutzer</th><th>Standort</th><th>Material</th><th class="num">Menge</th><th class="num">Qualität</th><th>Auftrag</th></tr></thead>
+            <tbody>
+              <tr><td class="who">cmdr.valk</td><td>ARC-L1</td><td>Quantanium</td><td class="num">12,800 SCU</td><td class="num">796</td><td><a class="reflink" href="#" onclick="return false">#1042</a></td></tr>
+              <tr><td class="who">mara.k</td><td>Area18</td><td>Laranite</td><td class="num">4,200 SCU</td><td class="num">702</td><td style="color:var(--color-gray-2)">—</td></tr>
+              <tr><td class="who">rix.o</td><td>Lorville</td><td>Agricium</td><td class="num">6,050 SCU</td><td class="num">640</td><td style="color:var(--color-gray-2)">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Erhaltene Funktionen:</b> Gesamtsumme (jetzt als Summen-Leiste + Einnahmen/Ausgaben/Anteil) · „Neuer Eintrag"-CTA (Modal wie heute) · Finanz-Tabelle mit Nutzer, Typ (Einnahme grün / Ausgabe rot), Betrag (aUEC, gerundet), Notiz, Edit/Löschen (rollenbasiert) · automatische <b>Raffinerie-Ausgaben-Zeilen</b> mit Link zum Auftrag (nicht editierbar, „auto") · <b>Auszahlung</b> mit Teilnahme-% (aus Check-in-Zeiten, nur eingeloggt sichtbar) und Auszahlungsart-Select „Auszahlen/Spenden" je Person (deaktiviert ohne Berechtigung) · <b>Wirtschaft</b> als aufklappbare Bereiche: Raffinerieaufträge (Standort, Ende in Lokalzeit, Status, verschachtelte Material-Liste) und Lagereinträge (inkl. Auftrags-Link). <b>Neu:</b> Summen-Leiste, Farb-Chips statt Farbtext, tabellarische Beträge.
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M15 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+</body>
+</html>

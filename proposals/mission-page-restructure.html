@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einsatz-Seite — drei Umbau-Vorschläge</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 36px 28px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 26px; margin: 13px 0 8px; }
+  .lead { font-weight: 300; max-width: 92ch; margin: 0 0 8px; }
+  .prob { border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-warning); background: var(--color-bg-dark-gray); padding: 12px 16px; margin: 18px 0 0; max-width: 980px; }
+  .prob b { color: var(--color-white); }
+  .prob p { margin: 0; font-size: 13.5px; font-weight: 300; }
+
+  .variant { margin-top: 44px; }
+  .vhead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin-bottom: 16px; }
+  .vhead .vnum { font-family: var(--font-headline); font-weight: 900; color: var(--color-accent-dark); font-size: 30px; line-height: 1; }
+  .vhead h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 18px; margin: 0; }
+  .vhead .vsub { color: var(--color-gray-2); font-size: 13px; }
+
+  /* screen frame */
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 24px rgba(0,0,0,0.6); }
+  .s-head { position: relative; background: var(--color-bg-dark-gray); border-bottom: 1px solid var(--color-gray-3); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .s-head .ttl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .s-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 17px; margin: 0; }
+  .sticky-tag { position: absolute; top: -9px; right: 10px; background: var(--color-bg-black); border: 1px solid var(--color-gray-2); color: var(--color-gray-2); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; padding: 1px 7px; font-weight: 700; }
+  .facts { display: flex; gap: 18px; flex-wrap: wrap; padding: 9px 18px; background: var(--color-surface-input); border-bottom: 1px solid var(--color-gray-3); font-size: 12.5px; }
+  .facts .f { display: flex; gap: 6px; align-items: baseline; }
+  .facts .k { color: var(--color-gray-2); text-transform: uppercase; font-size: 10px; letter-spacing: .08em; font-weight: 700; }
+  .facts .v { color: var(--color-white); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .s-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+
+  .zone-label { font-family: var(--font-body); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-primary); display: flex; align-items: center; gap: 8px; }
+  .zone-label::after { content: ''; flex: 1; height: 1px; background: var(--color-gray-3); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+
+  .mini-card { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 12px 14px; }
+  .mini-card h4 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11.5px; color: var(--color-gray-1); margin: 0 0 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 12.5px; }
+  .kv dt { color: var(--color-gray-2); } .kv dd { margin: 0; color: var(--color-white); font-weight: 700; }
+  .desc { font-size: 12.5px; font-weight: 300; color: var(--color-gray-1); margin: 8px 0 0; }
+  .mrow { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; padding: 5px 0; border-bottom: 1px dashed var(--color-surface-input); }
+  .mrow:last-child { border-bottom: none; }
+  .mrow .who { font-weight: 700; color: var(--color-white); }
+  .btn-xxs { min-height: 26px; padding: 0.1rem 0.5rem; font-size: 0.62rem; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+
+  /* tabs (variant B) */
+  .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); padding: 0 12px; }
+  .tab-nav .tab { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    font-size: 11.5px; color: var(--color-gray-2); padding: 11px 14px; border: none; background: none; cursor: pointer;
+    border-bottom: 3px solid transparent; }
+  .tab-nav .tab:hover { color: var(--color-gray-1); }
+  .tab-nav .tab.active { color: var(--color-white); border-bottom-color: var(--color-primary); }
+  .tab-nav .tab .cnt { color: var(--color-primary); margin-left: 4px; }
+
+  /* cockpit (variant C) */
+  .hero { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); padding: 16px 18px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+  .count { text-align: right; }
+  .count .cd { font-family: var(--font-headline); font-weight: 900; font-size: 26px; color: var(--color-primary); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+  .count .cl { color: var(--color-gray-2); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+  .youin { display: inline-flex; align-items: center; gap: 6px; color: var(--color-success); font-size: 12px; font-weight: 700; }
+  .cards4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 980px) { .cards4 { grid-template-columns: repeat(2, 1fr); } }
+  .navcard { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 12px 14px; cursor: pointer; transition: border-color .15s; display: flex; flex-direction: column; gap: 6px; min-height: 86px; }
+  .navcard:hover { border-color: var(--color-primary); }
+  .navcard .nk { font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gray-2); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .navcard .nv { font-family: var(--font-headline); font-weight: 700; font-size: 19px; color: var(--color-white); }
+  .navcard .nd { font-size: 11.5px; color: var(--color-gray-1); font-weight: 300; }
+  .navcard .warn { color: var(--color-warning); }
+  .navcard .arrow { color: var(--color-primary); }
+
+  /* pros / cons */
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 860px) { .pc { grid-template-columns: 1fr; } }
+  .pc ul { margin: 0; padding: 12px 14px; list-style: none; display: flex; flex-direction: column; gap: 7px; border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .pc li { display: block; position: relative; padding-left: 20px; font-size: 13px; font-weight: 300; }
+  .pc b { color: var(--color-white); font-weight: 700; }
+  .pros li::before { content: '✓'; color: var(--color-success); font-weight: 700; position: absolute; left: 0; top: 0; }
+  .cons li::before { content: '✕'; color: var(--color-danger-text, #ff6b6b); font-weight: 700; position: absolute; left: 0; top: 0; }
+  .pc .h { font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; padding-left: 0; }
+  .pros .h { color: var(--color-success); } .cons .h { color: var(--color-danger-text, #ff6b6b); }
+  .pros .h::before, .cons .h::before { content: none; }
+  .effort { margin-top: 10px; font-size: 12px; color: var(--color-gray-2); font-family: var(--font-mono); }
+  .effort b { color: var(--color-gray-1); }
+  .reco { margin-top: 44px; border: 1px solid var(--color-success); background: rgba(35,158,51,0.08); padding: 14px 18px; }
+  .reco h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-success); text-transform: uppercase; letter-spacing: .04em; font-size: 14px; margin: 0 0 8px; }
+  .reco p { margin: 0; font-size: 13.5px; font-weight: 300; max-width: 100ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Konzept · /missions/{id} · Einsatz-Seite</div>
+  <h1 class="t">Drei Wege zu einer übersichtlicheren Einsatz-Seite</h1>
+  <p class="lead">Heute: <b style="color:var(--color-gray-1)">7 gleichrangige Collapse-Panels</b> (Details-Formular, Organisation, Teilnehmer, Einheiten, Auszahlung, Finanzen, Wirtschaft) in einem 2-Spalten-Grid — alle gleich laut, das Edit-Formular zuerst.</p>
+  <div class="prob">
+    <p><b>Kernproblem:</b> Die Seite ist <b>Formular-zuerst statt Briefing-zuerst</b>. Die häufigsten Nutzerfragen — „Wann geht's los? Wo treffen wir uns? Bin ich angemeldet?" — brauchen Scrollen und Suchen; die 90 % Nur-Leser sehen dieselbe Edit-Ansicht wie der Einsatzleiter. Alle drei Varianten lösen das mit demselben Baustein: ein <b>kompakter Briefing-Kopf</b> mit Schnellfakten + „Anmelden"-CTA. Sie unterscheiden sich darin, <b>wie der Rest organisiert wird</b>.</p>
+  </div>
+
+  <!-- ============================== VARIANTE A ============================== -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">A</span><h2>Briefing zuerst — eine Seite, drei Zonen</h2><span class="vsub">Umbau der bestehenden Seite, kein neues Routing</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <span class="sticky-tag">sticky</span>
+        <div class="ttl"><h3>Einsatz: Operation Tiefschlag</h3><span class="squadron-badge">IRI</span><span class="status-pill status-planned">PLANNED</span></div>
+        <div style="display:flex; gap:8px;"><button class="btn btn--cta"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button><button class="btn btn-ghost btn-xxs" style="min-height:34px;">Zurück</button></div>
+      </div>
+      <div class="facts">
+        <span class="f"><span class="k">Server-Join</span><span class="v">29.05. · 19:00</span></span>
+        <span class="f"><span class="k">TS-Treffen</span><span class="v">18:45</span></span>
+        <span class="f"><span class="k">Teilnehmer</span><span class="v">12/18</span></span>
+        <span class="f"><span class="k">Einsatzleiter</span><span class="v">cmdr.valk</span></span>
+        <span class="f"><span class="k">Flottenfunk</span><span class="v">123.450</span></span>
+      </div>
+      <div class="s-body">
+        <div class="zone-label">Briefing</div>
+        <div class="two">
+          <div class="mini-card">
+            <h4>Auftrag <button class="btn btn-ghost btn-xxs"><svg class="krt-icon"><use href="#i-edit"/></svg> Bearbeiten</button></h4>
+            <p class="desc">Quantanium-Run durch Pyro — Kampfeskorte + Raffinerie-Übergabe. Sammeln bei ARC-L1, Konvoi in Dreiergruppen.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Termine &amp; Funk</h4>
+            <dl class="kv">
+              <dt>Geplanter Start</dt><dd>29.05.2026 · 19:00</dd>
+              <dt>TS-Treffen</dt><dd>18:45 · Lobby 2</dd>
+              <dt>Bodenfunk</dt><dd>88.200</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="zone-label">Beteiligung</div>
+        <div class="two">
+          <div class="mini-card">
+            <h4>Teilnehmer <span style="color:var(--color-primary)">12/18</span></h4>
+            <div class="mrow"><span class="who">cmdr.valk · Pilot</span><span><button class="btn btn-ghost btn-xxs" title="Check-Out">⇤</button> <button class="btn btn-ghost btn-xxs" title="Bearbeiten">✎</button></span></div>
+            <div class="mrow"><span class="who">mara.k · Gunner</span><span><button class="btn btn-success btn-xxs" title="Check-In">⇥</button></span></div>
+            <div class="mrow"><span style="color:var(--color-gray-2)">+ 10 weitere …</span><span></span></div>
+          </div>
+          <div class="mini-card">
+            <h4>Einheiten <span style="color:var(--color-primary)">4</span></h4>
+            <div class="mrow"><span class="who">Schwarze Witwe — Constellation</span><span class="chip chip--warning" style="font-size:9px;">2 Plätze frei</span></div>
+            <div class="mrow"><span class="who">Eisenfaust — Hammerhead</span><span class="chip chip--success" style="font-size:9px;">voll</span></div>
+          </div>
+        </div>
+        <div class="zone-label">Wirtschaft &amp; Abrechnung <span style="color:var(--color-gray-2); letter-spacing:0; text-transform:none; font-weight:400;">— eingeklappt, für Logistiker/Einsatzleiter</span></div>
+        <div class="mini-card" style="display:flex; gap:18px; flex-wrap:wrap; font-size:12px; color:var(--color-gray-2);">
+          <span>▸ Finanzen <b style="color:var(--color-gray-1)">7 Einträge · +2,4M</b></span>
+          <span>▸ Auszahlung <b style="color:var(--color-gray-1)">bereit</b></span>
+          <span>▸ Raffinerie &amp; Lager <b style="color:var(--color-gray-1)">3 Aufträge</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Briefing sofort sichtbar</b> — Schnellfakten + CTA sticky, ohne Klick.</li>
+        <li><b>Lesemodus statt Formular</b>: Edit nur hinter „Bearbeiten" — ruhiger für 90 % der Nutzer.</li>
+        <li>Zonen nach Nutzerfrage (Was? Wer? Geld?) statt 7 gleichrangiger Panels.</li>
+        <li><b>Kleinster Umbau</b>: gleiche Route, gleiche Fragmente, alles druckbar/scrollbar.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li>Seite bleibt <b>lang</b> — Wirtschafts-Zone weiterhin unten.</li>
+        <li>Read-only→Edit-Umschaltung ist neuer Zustand, der gepflegt werden muss.</li>
+        <li>Auf Mobile weiterhin viel Scroll (wenn auch besser sortiert).</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>gering–mittel</b> · kein neues Routing · CSS/Markup-Umbau + Read-only-Ansicht der Details</p>
+  </div>
+
+  <!-- ============================== VARIANTE B ============================== -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">B</span><h2>Tabs — eine Seite, vier Reiter</h2><span class="vsub">Fokussierte Ansichten, per ?tab= deeplinkbar</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <span class="sticky-tag">sticky</span>
+        <div class="ttl"><h3>Einsatz: Operation Tiefschlag</h3><span class="squadron-badge">IRI</span><span class="status-pill status-planned">PLANNED</span></div>
+        <button class="btn btn--cta"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button>
+      </div>
+      <div class="facts">
+        <span class="f"><span class="k">Server-Join</span><span class="v">29.05. · 19:00</span></span>
+        <span class="f"><span class="k">TS</span><span class="v">18:45</span></span>
+        <span class="f"><span class="k">Teilnehmer</span><span class="v">12/18</span></span>
+      </div>
+      <div class="tab-nav">
+        <button class="tab active">Übersicht</button>
+        <button class="tab">Teilnehmer &amp; Einheiten <span class="cnt">12/18</span></button>
+        <button class="tab">Finanzen &amp; Auszahlung <span class="cnt">7</span></button>
+        <button class="tab">Verwaltung</button>
+      </div>
+      <div class="s-body">
+        <div class="two">
+          <div class="mini-card">
+            <h4>Auftrag</h4>
+            <p class="desc">Quantanium-Run durch Pyro — Kampfeskorte + Raffinerie-Übergabe. Sammeln bei ARC-L1, Konvoi in Dreiergruppen.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Termine &amp; Funk</h4>
+            <dl class="kv">
+              <dt>Geplanter Start</dt><dd>29.05.2026 · 19:00</dd>
+              <dt>TS-Treffen</dt><dd>18:45 · Lobby 2</dd>
+              <dt>Flottenfunk</dt><dd>123.450 · Boden 88.200</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="mini-card" style="display:flex; gap:16px; flex-wrap:wrap; font-size:12px;">
+          <span class="chip chip--success">Du bist angemeldet · Pilot</span>
+          <span class="chip">Einheiten: 4 · 2 Plätze frei</span>
+          <span class="chip chip--data"><strong>Finanzen</strong>: +2,4M</span>
+        </div>
+        <p style="margin:0; font-size:11.5px; color:var(--color-gray-2); font-family:var(--font-mono);">Tab „Teilnehmer &amp; Einheiten" = volle Tabellen · „Verwaltung" = Edit-Formular, Owner/Manager, Löschen (rollenbasiert sichtbar)</p>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Kurze, fokussierte Ansichten</b> — nie mehr als ein Thema gleichzeitig.</li>
+        <li>Rollen-Trennung: Pilot bleibt in „Übersicht", Logistiker in „Finanzen", Leiter in „Verwaltung".</li>
+        <li>Deeplinks (<code>?tab=teilnehmer</code>) für Discord/TS-Ansagen.</li>
+        <li>Mobile-freundlich: Tabbar statt Kilometerscroll.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li><b>Wechselkosten</b>: Querlesen (Teilnehmer ↔ Einheiten ↔ Funk) braucht Tab-Sprünge.</li>
+        <li>Kein Gesamtüberblick auf einen Blick; Drucken/Export schwieriger.</li>
+        <li>Ungespeicherte Formulare beim Tab-Wechsel → State-Handling nötig.</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>mittel</b> · Tab-Komponente (DS-Erweiterung) + Panel-Zuordnung + ?tab=-Parameter · Fragmente bleiben</p>
+  </div>
+
+  <!-- ============================== VARIANTE C ============================== -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">C</span><h2>Mission-Cockpit + Unterseiten</h2><span class="vsub">Übersicht als Landeplatz, Module als eigene Seiten</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <div class="ttl"><h3>Einsatz: Operation Tiefschlag</h3><span class="squadron-badge">IRI</span><span class="status-pill status-planned">PLANNED</span></div>
+        <span style="font-size:11px; color:var(--color-gray-2); font-family:var(--font-mono);">/missions/1042</span>
+      </div>
+      <div class="s-body">
+        <div class="hero">
+          <div>
+            <p class="desc" style="margin:0 0 10px; font-size:13.5px;">Quantanium-Run durch Pyro — Kampfeskorte + Raffinerie-Übergabe. Sammeln bei <b style="color:var(--color-white)">ARC-L1</b>, TS-Treffen <b style="color:var(--color-white)">18:45 · Lobby 2</b>, Flottenfunk <b style="color:var(--color-white)">123.450</b>.</p>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <button class="btn btn--cta"><svg class="krt-icon"><use href="#i-user-plus"/></svg> Anmelden</button>
+              <span class="youin">✓ Du bist angemeldet · Pilot</span>
+            </div>
+          </div>
+          <div class="count"><div class="cd">T−02:14:08</div><div class="cl">bis Server-Join · 29.05. 19:00</div></div>
+        </div>
+        <div class="cards4">
+          <div class="navcard"><span class="nk">Teilnehmer <span class="arrow">→</span></span><span class="nv">12/18</span><span class="nd">3 ohne Check-In</span></div>
+          <div class="navcard"><span class="nk">Einheiten <span class="arrow">→</span></span><span class="nv">4</span><span class="nd warn">2 Crew-Plätze frei</span></div>
+          <div class="navcard"><span class="nk">Finanzen &amp; Auszahlung <span class="arrow">→</span></span><span class="nv">+2,4M</span><span class="nd">7 Einträge · Auszahlung bereit</span></div>
+          <div class="navcard"><span class="nk">Verwaltung <span class="arrow">→</span></span><span class="nv">⚙</span><span class="nd">Details, Funk, Owner, Status</span></div>
+        </div>
+        <p style="margin:0; font-size:11.5px; color:var(--color-gray-2); font-family:var(--font-mono);">Karten → echte Unterseiten: /missions/1042/teilnehmer · /einheiten · /finanzen · /verwaltung (mit Breadcrumb zurück)</p>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Maximale Übersicht</b> für den häufigsten Fall: Briefing + Countdown + „bin ich dabei?" auf einem Schirm, ohne Scroll.</li>
+        <li>Karten zeigen <b>Zustand + Handlungsbedarf</b> („2 Crew-Plätze frei", „3 ohne Check-In") statt nur Daten.</li>
+        <li>Jede Unterseite bleibt einfach &amp; schnell; skaliert mit neuen Modulen.</li>
+        <li>Saubere Rechte-Trennung pro Unterseite (Verwaltung nur für Leiter).</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li><b>Mehr Klicks</b> für Power-User (Einsatzleiter springt zwischen Unterseiten).</li>
+        <li><b>Größter Umbau</b>: neue Routen/Controller, Breadcrumbs, Karten-Aggregationen.</li>
+        <li>Cockpit lebt von guten Zusammenfassungen — schlechte Aggregation = leere Hülle.</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>hoch</b> · neue Unterrouten + Aggregations-Queries · dafür langfristig wartbarste Struktur</p>
+  </div>
+
+  <!-- ============================== EMPFEHLUNG ============================== -->
+  <div class="reco">
+    <h3>Empfehlung</h3>
+    <p><b style="color:var(--color-white)">Variante A als nächster Schritt, C als Zielbild.</b> A liefert 80 % des Nutzens (Briefing-Kopf, Lesemodus, Zonen) zum kleinsten Preis und ist die Grundlage für beide anderen: Der sticky Briefing-Kopf und die Zusammenfassungs-Karten aus A/C sind dieselben Bausteine. Wächst die Seite weiter (mehr Wirtschafts-Module), lässt sich A später verlustfrei zu C ausbauen — B (Tabs) lohnt nur, wenn Mobile-Nutzung dominiert.</p>
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M15 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+</body>
+</html>

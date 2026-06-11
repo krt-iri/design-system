@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Modal" subtitle="KRT-Modal mit Eckklammern + Danger-Variante" viewport="700x330" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stage { background: rgba(0,0,0,0.8); padding: 16px; display: flex; justify-content: center; border: 1px solid var(--color-gray-3); }
+  .krt-modal { max-width: 280px; }
+  .krt-modal-body p { margin: 0; font-size: 12px; font-weight: 300; color: var(--color-gray-1); }
+  .btn-xs2 { min-height: 30px; padding: 0.2rem 0.55rem; font-size: 0.66rem; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Modal — eine gefüllte CTA, Ghost-Abbrechen, Fokus-Falle + Esc</p>
+  <div class="row">
+    <div class="stage"><div class="krt-modal">
+      <div class="krt-modal-head"><h2>Neuer Eintrag</h2><button class="btn btn-ghost btn-xs2" aria-label="Schließen">✕</button></div>
+      <div class="krt-modal-body"><p>Formular-Inhalt …</p></div>
+      <div class="krt-modal-foot"><button class="btn btn-ghost btn-xs2">Abbrechen</button><button class="btn btn--cta btn-xs2">Speichern</button></div>
+    </div></div>
+    <div class="stage"><div class="krt-modal krt-modal--danger">
+      <div class="krt-modal-head"><h2>Einheit löschen?</h2><button class="btn btn-ghost btn-xs2" aria-label="Schließen">✕</button></div>
+      <div class="krt-modal-body"><p>2 Crew-Mitglieder wandern zurück in „Ohne Einheit".</p></div>
+      <div class="krt-modal-foot"><button class="btn btn-ghost btn-xs2">Abbrechen</button><button class="btn btn-danger btn-xs2">Löschen</button></div>
+    </div></div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.krt-modal-overlay (Blur-Scrim) · .krt-modal (+ --danger) · -head/-body/-foot. Destruktive Modals benennen die Konsequenz.</p>
+</body>
+</html>

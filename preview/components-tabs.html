@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Tab nav & facts bar" subtitle="Seiten-Tabs mit Deeplink + Schnellfakten-Leiste" viewport="700x170" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style> body { padding: 18px 20px; } .frame { border: 1px solid var(--color-gray-3); } </style>
+</head>
+<body>
+  <p class="pv-label">Tab nav + facts bar — Seitenkopf-Muster (z. B. Einsatz-Seite)</p>
+  <div class="frame">
+    <div class="facts-bar">
+      <span><span class="fact-k">Server-Join</span><span class="fact-v">29.05. · 19:00</span></span>
+      <span><span class="fact-k">Teilnehmer</span><span class="fact-v">12/18</span></span>
+      <span><span class="fact-k">Gesamtsumme</span><span class="fact-v" style="color:var(--color-success)">+2,4M aUEC</span></span>
+    </div>
+    <div class="tab-nav" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true">Übersicht</button>
+      <button class="tab" role="tab" aria-selected="false">Teilnehmer &amp; Einheiten <span class="tab-count">12/18</span></button>
+      <button class="tab" role="tab" aria-selected="false">Finanzen <span class="tab-count">9</span></button>
+      <button class="tab" role="tab" aria-selected="false">Verwaltung</button>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.tab-nav (role=tablist, ?tab=-Deeplink, Pfeiltasten) · .facts-bar (tabular-nums). Aktiv = weiß + 3px Orange-Unterstrich.</p>
+</body>
+</html>
