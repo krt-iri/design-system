@@ -681,7 +681,7 @@ input[type="radio"]:checked::after {
    close-X = icon button with aria-label; danger variant for destructive
    confirms (consequence named in the body). Focus-trap + Esc required. */
 .krt-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 3000; }
-.krt-modal { width: 100%; max-width: 440px; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
+.krt-modal { width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
 .krt-modal::before, .krt-modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-primary); }
 .krt-modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
 .krt-modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
@@ -701,12 +701,14 @@ input[type="radio"]:checked::after {
 .person-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--color-surface-input); border: var(--border-hairline); cursor: grab; }
 .person-row.is-selected { border-color: var(--color-primary); box-shadow: var(--glow-primary); }
 .person-row:active { cursor: grabbing; }
+.person-row:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -2px; }
 .person-row .row-grip { color: var(--color-gray-2); flex: none; }
 .person-row .row-main { flex: 1; min-width: 0; }
 .person-row .row-sub { font-size: 0.66rem; color: var(--color-gray-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status-dot { width: 8px; height: 8px; flex: none; display: inline-block; background: var(--color-gray-2); }
 .status-dot--on { background: var(--color-success); }
 .drop-zone { min-height: var(--touch-target); padding: 6px; display: flex; flex-direction: column; gap: 5px; }
+.drop-zone:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
 .drop-zone.is-over { outline: 2px dashed var(--color-primary); outline-offset: -4px; background: rgba(231,126,35,0.06); }
 .drop-hint { border: 1px dashed var(--color-gray-3); color: var(--color-gray-2); font-size: 0.66rem; text-align: center; padding: 7px; font-style: italic; }
 .drop-zone.is-over .drop-hint { border-color: var(--color-primary); color: var(--color-primary); }
