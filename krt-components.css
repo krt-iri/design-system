@@ -726,3 +726,6 @@ input[type="radio"]:checked::after {
 }
 .chip-select:hover { border-color: var(--color-primary); color: var(--color-white); }
 .chip-select:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+/* Firefox paints the option popup with the select's (transparent -> white) background;
+   pin it to the dark surface so the list stays readable. */
+.chip-select option { background-color: var(--color-bg-dark-gray); color: var(--color-gray-1); }
