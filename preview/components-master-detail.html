@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Master-detail & ingredient quality" subtitle="Sammlungs-Browser + Stat-Beitrag nach Zutat-Qualität" viewport="700x290" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .master-detail { grid-template-columns: 200px 1fr; }
+  .krt-icon { width: 1em; height: 1em; fill: none; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Master-detail (Liste → Detail) + per-Zutat-Qualität mit Live-Faktor</p>
+  <div class="master-detail">
+    <div class="master-list">
+      <div class="master-row is-active" tabindex="0"><span>ADP Core</span><span style="color:var(--color-primary)">✎</span></div>
+      <div class="master-row" tabindex="0"><span>Quantum Drive XL-1</span></div>
+      <div class="master-row" tabindex="0" style="color:var(--color-gray-2); font-size:11px;">+ 39 weitere …</div>
+    </div>
+    <div class="detail-pane">
+      <div class="quality-block" style="margin-bottom:10px;">
+        <span class="quality-source">Armored Carapace</span>
+        <div class="quality-name"><strong>Ouratite</strong> <small>· 0,07 SCU · min. Qualität 0</small></div>
+        <div class="quality-row"><input type="range" min="0" max="1000" value="796" data-ing="a" data-maxf="1.15"><span class="quality-value"><span data-q-val="a">796</span> <small>/ 1000</small></span></div>
+        <div class="quality-affects">→ <span class="chip">Damage Mitigation ×<span data-mult-of="a">1.12</span></span> <small>(höher ist besser · 1000 → ×1.15)</small></div>
+      </div>
+      <div class="quality-block">
+        <span class="quality-source">Insulative Liner</span>
+        <div class="quality-name"><strong>Aslarite</strong> <small>· 0,02 SCU · min. Qualität 0</small></div>
+        <div class="quality-row"><input type="range" min="0" max="1000" value="640" data-ing="b" data-maxf="1.20"><span class="quality-value"><span data-q-val="b">640</span> <small>/ 1000</small></span></div>
+        <div class="quality-affects">→ <span class="chip">Min Temp ×<span data-mult-of="b">1.13</span></span> <span class="chip">Max Temp ×<span data-mult-of="b">1.13</span></span></div>
+      </div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.master-detail/.master-list/.master-row(.is-active)/.detail-pane · .quality-block/-row/-affects · range = accent-orange. Faktor f = 1 + (max−1)·q/1000, nur auf zugeordnete Stats.</p>
+  <script>
+    document.querySelectorAll('[data-ing]').forEach(sl => {
+      const id = sl.dataset.ing, maxf = parseFloat(sl.dataset.maxf);
+      const apply = () => { const q = +sl.value, f = 1 + (maxf - 1) * q / 1000;
+        document.querySelectorAll('[data-q-val="' + id + '"]').forEach(el => el.textContent = q);
+        document.querySelectorAll('[data-mult-of="' + id + '"]').forEach(el => el.textContent = f.toFixed(2)); };
+      sl.addEventListener('input', apply); apply();
+    });
+  </script>
+</body>
+</html>

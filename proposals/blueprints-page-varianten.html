@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meine Blueprints — drei Gestaltungsvarianten</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 32px 26px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 23px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+  .prob { border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-warning); background: var(--color-bg-dark-gray); padding: 11px 15px; margin: 16px 0 0; max-width: 1000px; font-size: 13px; font-weight: 300; }
+  .prob b { color: var(--color-white); }
+
+  .variant { margin-top: 42px; }
+  .vhead { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin-bottom: 15px; }
+  .vhead .vnum { font-family: var(--font-headline); font-weight: 900; color: var(--color-accent-dark); font-size: 27px; line-height: 1; }
+  .vhead h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 16px; margin: 0; }
+  .vhead .vsub { color: var(--color-gray-2); font-size: 12.5px; }
+
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 24px rgba(0,0,0,0.6); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 1px solid var(--color-gray-3); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .s-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 15px; margin: 0; }
+  .s-head .sub { color: var(--color-gray-2); font-size: 11.5px; margin-top: 2px; }
+  .addbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .addbar input { background: var(--color-surface-input); color: var(--color-gray-1); border: 1px solid var(--color-gray-3); padding: 7px 10px; font-family: var(--font-body); font-size: 12.5px; min-height: 36px; width: 240px; }
+  .addbar input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .s-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn-xs2 { min-height: 32px; padding: 0.25rem 0.6rem; font-size: 0.68rem; }
+  .btn-ic { min-height: 28px; min-width: 28px; padding: 0.15rem; }
+  .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .toolbar input[type="search"] { flex: 1; min-width: 160px; background: var(--color-surface-input); color: var(--color-gray-1); border: 1px solid var(--color-gray-3); padding: 7px 10px; font-size: 12.5px; min-height: 36px; }
+
+  table.mock { width: 100%; border-collapse: collapse; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .mock th { background: var(--color-surface-input); color: var(--color-gray-1); font-size: 10px; text-transform: uppercase; letter-spacing: .07em; text-align: left; padding: 7px 9px; border-bottom: 2px solid var(--color-primary); }
+  .mock td { padding: 7px 9px; font-size: 12.5px; border-bottom: 1px solid var(--color-gray-3); vertical-align: middle; }
+  .mock td.who { font-weight: 700; color: var(--color-white); }
+  .mock td .act { display: flex; gap: 4px; justify-content: flex-end; }
+  .caret { color: var(--color-primary); cursor: pointer; background: none; border: 1px solid var(--color-gray-3); min-width: 26px; min-height: 26px; }
+  .recipe-row { background: rgba(0,0,0,0.35); }
+  .recipe-box { margin: 0 9px 8px 44px; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); border-left: 3px solid var(--color-primary); padding: 9px 12px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; }
+  .recipe-box .rk { font-size: 9.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--color-gray-2); font-weight: 700; display: block; margin-bottom: 4px; }
+  .ing { display: flex; gap: 6px; flex-wrap: wrap; }
+  .qrow { display: flex; align-items: center; gap: 8px; }
+  .qrow input[type="range"] { accent-color: var(--color-primary); width: 130px; height: 18px; background: transparent; }
+  .qrow .qval { font-variant-numeric: tabular-nums; color: var(--color-white); font-weight: 700; font-size: 11.5px; min-width: 70px; }
+  .qrow .qval small { color: var(--color-gray-2); font-weight: 400; }
+  .qrow .qlbl { font-size: 9px; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; color: var(--color-gray-2); min-width: 52px; }
+  .ingblock { display: flex; flex-direction: column; gap: 4px; min-width: 250px; }
+  .ingblock .ingname { font-size: 12px; color: var(--color-gray-1); }
+  .ingblock .ingname small { color: var(--color-gray-2); }
+  .affects { font-size: 11px; color: var(--color-gray-2); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 980px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .bp-card { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 11px 13px; display: flex; flex-direction: column; gap: 7px; }
+  .bp-card:hover { border-color: var(--color-primary); }
+  .bp-card .nm { font-weight: 700; color: var(--color-white); font-size: 13px; }
+  .bp-card .meta { font-size: 10.5px; color: var(--color-gray-2); }
+  .bp-card .noterow { font-size: 11.5px; color: var(--color-gray-1); background: var(--color-surface-input); border-left: 3px solid var(--color-primary); padding: 5px 8px; }
+  .bp-card .foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-top: auto; }
+
+  .md { display: grid; grid-template-columns: 300px 1fr; gap: 12px; align-items: start; }
+  @media (max-width: 900px) { .md { grid-template-columns: 1fr; } }
+  .mlist { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .mlist .mrow { display: flex; justify-content: space-between; gap: 8px; padding: 8px 11px; border-bottom: 1px solid var(--color-gray-3); cursor: pointer; font-size: 12.5px; }
+  .mlist .mrow:hover { background: rgba(255,255,255,0.03); }
+  .mlist .mrow.on { border-left: 3px solid var(--color-primary); background: var(--color-surface-input); color: var(--color-white); font-weight: 700; }
+  .detail { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 14px 16px; }
+
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 13px; }
+  @media (max-width: 860px) { .pc { grid-template-columns: 1fr; } }
+  .pc ul { margin: 0; padding: 12px 14px; list-style: none; display: flex; flex-direction: column; gap: 7px; border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .pc li { display: block; position: relative; padding-left: 20px; font-size: 13px; font-weight: 300; }
+  .pc b { color: var(--color-white); font-weight: 700; }
+  .pros li::before { content: '✓'; color: var(--color-success); font-weight: 700; position: absolute; left: 0; top: 0; }
+  .cons li::before { content: '✕'; color: #ff6b6b; font-weight: 700; position: absolute; left: 0; top: 0; }
+  .pc .h { font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; padding-left: 0; }
+  .pros .h { color: var(--color-success); } .cons .h { color: #ff6b6b; }
+  .pros .h::before, .cons .h::before { content: none; }
+  .effort { margin-top: 9px; font-size: 12px; color: var(--color-gray-2); font-family: var(--font-mono); }
+  .effort b { color: var(--color-gray-1); }
+  .reco { margin-top: 42px; border: 1px solid var(--color-success); background: rgba(35,158,51,0.08); padding: 14px 18px; }
+  .reco h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-success); text-transform: uppercase; letter-spacing: .04em; font-size: 14px; margin: 0 0 8px; }
+  .reco p { margin: 0; font-size: 13.5px; font-weight: 300; max-width: 105ch; }
+  .reco b { color: var(--color-white); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Konzept · /personal-inventory/blueprints</div>
+  <h1 class="t">Meine Blueprints — drei Gestaltungsvarianten</h1>
+  <p class="lead">Heute: oben eine große „Hinzufügen"-Box (Typeahead + Staging + JSON-Import), darunter die Tabelle [▸ | Produkt | Erhalten am | Notiz | Aktionen] mit ausklappbarer Rezept-Zeile. Funktional solide — aber <b>Formular-zuerst</b>, und die Sammlung selbst (das, weswegen man kommt) wirkt karg.</p>
+  <div class="prob"><b>Gemeinsam in allen Varianten:</b> Sammlung zuerst, Hinzufügen als kompakte Kopf-Leiste (Typeahead + „JSON importieren"); Zähler-Fakten; leere Notiz-Spalten verschwinden; DS-Angleichung: PI-Tabs → <code>.tab-nav</code>, Modals → <code>.krt-modal</code>, „Entfernen" → <code>.btn-danger</code> (statt Alt-Klasse <code>krt-danger</code>).</div>
+
+  <!-- ============ V1 ============ -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">V1</span><h2>Polierte Tabelle</h2><span class="vsub">heutige Struktur, aufgeräumt — Quick-Win</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <div><h3>Meine Blueprints</h3><div class="sub">42 Blueprints · 6 mit Notiz · zuletzt: gestern</div></div>
+        <div class="addbar">
+          <input type="text" placeholder="Blueprint suchen &amp; hinzufügen …">
+          <button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button>
+          <button class="btn btn-outline btn-xs2"><svg class="krt-icon"><use href="#i-upload"/></svg> JSON importieren</button>
+        </div>
+      </div>
+      <div class="tab-nav"><button class="tab">Items</button><button class="tab active">Blueprints <span class="tab-count">42</span></button></div>
+      <div class="s-body">
+        <div class="toolbar"><input type="search" placeholder="In meiner Sammlung filtern …"><button class="btn btn-ghost btn-xs2"><svg class="krt-icon"><use href="#i-filter"/></svg> Filtern</button></div>
+        <table class="mock">
+          <thead><tr><th style="width:34px;"></th><th>Produkt</th><th>Erhalten am</th><th>Notiz</th><th style="text-align:right">Aktionen</th></tr></thead>
+          <tbody>
+            <tr><td><button class="caret" aria-expanded="true" title="Zutaten &amp; Stats">▾</button></td><td class="who">ADP Core</td><td>05.05.2026</td><td>Event vom 05.05. Zurückgelegt.</td><td><div class="act"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></td></tr>
+            <tr class="recipe-row"><td colspan="5">
+              <div class="recipe-box">
+                <div class="ingblock"><span class="rk">Armored Carapace</span>
+                  <div class="ingname"><strong>Ouratite</strong> <small>· 0,07 SCU · min. Qualität 0</small></div>
+                  <div class="qrow"><input type="range" min="0" max="1000" value="796" data-ing="v1a" data-maxf="1.15"><span class="qval"><span data-q-val="v1a">796</span> <small>/ 1000</small></span></div>
+                  <div class="affects">→ <span class="chip">Damage Mitigation ×<span data-mult-of="v1a">1.12</span></span> <small>(höher ist besser · 1000 → ×1.15)</small></div>
+                </div>
+                <div class="ingblock"><span class="rk">Insulative Liner</span>
+                  <div class="ingname"><strong>Aslarite</strong> <small>· 0,02 SCU · min. Qualität 0</small></div>
+                  <div class="qrow"><input type="range" min="0" max="1000" value="640" data-ing="v1b" data-maxf="1.20"><span class="qval"><span data-q-val="v1b">640</span> <small>/ 1000</small></span></div>
+                  <div class="affects">→ <span class="chip">Min Temp ×<span data-mult-of="v1b">1.13</span></span> <span class="chip">Max Temp ×<span data-mult-of="v1b">1.13</span></span> <small>(1000 → ×1.20)</small></div>
+                </div>
+                
+              </div>
+            </td></tr>
+            <tr><td><button class="caret" aria-expanded="false" title="Zutaten &amp; Stats">▸</button></td><td class="who">Quantum Drive XL-1</td><td>28.04.2026</td><td style="color:var(--color-gray-3)">—</td><td><div class="act"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Kleinster Umbau:</b> Markup bleibt; Add-Box wird Kopf-Leiste, Fakten-Zeile neu.</li>
+        <li>Rezept-Ausklappen als eingerückte Annotations-Box (Tree-Note-Idiom) statt nackter Zeile.</li>
+        <li>Dichte Tabelle bleibt ideal für große Sammlungen + Massenscannen.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li>Rezept (der eigentliche Inhalt) bleibt <b>versteckt</b> hinter Klick pro Zeile.</li>
+        <li>Tabelle bleibt textlastig — wenig „Sammlungs-Gefühl".</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>gering</b> · CSS/Markup-Umbau, keine neuen Endpoints</p>
+  </div>
+
+  <!-- ============ V2 ============ -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">V2</span><h2>Karten-Galerie</h2><span class="vsub">die Sammlung als Sammlung zeigen</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <div><h3>Meine Blueprints</h3><div class="sub">42 Blueprints · 6 mit Notiz</div></div>
+        <div class="addbar">
+          <input type="text" placeholder="Blueprint suchen &amp; hinzufügen …">
+          <button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button>
+          <button class="btn btn-outline btn-xs2"><svg class="krt-icon"><use href="#i-upload"/></svg> Import</button>
+        </div>
+      </div>
+      <div class="tab-nav"><button class="tab">Items</button><button class="tab active">Blueprints <span class="tab-count">42</span></button></div>
+      <div class="s-body">
+        <div class="cards">
+          <div class="bp-card">
+            <span class="nm">ADP Core</span>
+            <span class="meta">Erhalten 05.05.2026</span>
+            <div class="ing"><span class="chip chip--data"><strong>Ouratite</strong> 0,07 SCU</span><span class="chip chip--data"><strong>Aslarite</strong> 0,02 SCU</span></div>
+            <div class="qrow"><span class="qlbl">Ouratite</span><input type="range" min="0" max="1000" value="796" data-ing="v2a" data-maxf="1.15" style="width:80px;"><span class="qval" style="min-width:30px;"><span data-q-val="v2a">796</span></span><span class="chip" style="font-size:8.5px;">DM ×<span data-mult-of="v2a">1.12</span></span></div>
+            <div class="qrow"><span class="qlbl">Aslarite</span><input type="range" min="0" max="1000" value="640" data-ing="v2b" data-maxf="1.20" style="width:80px;"><span class="qval" style="min-width:30px;"><span data-q-val="v2b">640</span></span><span class="chip" style="font-size:8.5px;">Temp ×<span data-mult-of="v2b">1.13</span></span></div>
+            <div class="noterow">Event vom 05.05. Zurückgelegt.</div>
+            <div class="foot"><span class="chip" style="font-size:8.5px;">Armor Core</span><span class="act" style="display:flex; gap:4px;"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></span></div>
+          </div>
+          <div class="bp-card">
+            <span class="nm">Quantum Drive XL-1</span>
+            <span class="meta">Erhalten 28.04.2026</span>
+            <div class="ing"><span class="chip chip--data"><strong>Laranite</strong> ×16</span><span class="chip chip--data"><strong>Gold</strong> ×8</span></div>
+            <div class="foot"><span class="chip" style="font-size:8.5px;">Größe XL</span><span class="act" style="display:flex; gap:4px;"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></span></div>
+          </div>
+          <div class="bp-card">
+            <span class="nm">Salvage Head „Abrade"</span>
+            <span class="meta">Erhalten 12.03.2026</span>
+            <div class="ing"><span class="chip chip--data"><strong>Tungsten</strong> ×30</span><span class="chip chip--muted">+2</span></div>
+            <div class="foot"><span class="chip" style="font-size:8.5px;">Größe S2</span><span class="act" style="display:flex; gap:4px;"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Rezept sofort sichtbar</b> (Zutaten-Chips auf der Karte) — kein Klick nötig.</li>
+        <li>Fühlt sich wie eine Sammlung an; angenehm zu scannen; mobil exzellent.</li>
+        <li>Notiz nur wenn vorhanden, als markierte Zeile.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li>Bei sehr großen Sammlungen weniger dicht als die Tabelle (mehr Scroll).</li>
+        <li>Sortierung/Spaltenvergleich (z. B. nach Datum) schwächer als in Tabellenform.</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>mittel</b> · Karten-Markup + Rezept-Daten direkt in der Liste (statt lazy)</p>
+  </div>
+
+  <!-- ============ V3 ============ -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">V3</span><h2>Master-Detail</h2><span class="vsub">Liste links, Rezept &amp; Stats permanent rechts</span></div>
+    <div class="screen">
+      <div class="s-head">
+        <div><h3>Meine Blueprints</h3><div class="sub">42 Blueprints</div></div>
+        <div class="addbar"><input type="text" placeholder="Blueprint suchen &amp; hinzufügen …"><button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button><button class="btn btn-outline btn-xs2"><svg class="krt-icon"><use href="#i-upload"/></svg> Import</button></div>
+      </div>
+      <div class="tab-nav"><button class="tab">Items</button><button class="tab active">Blueprints <span class="tab-count">42</span></button></div>
+      <div class="s-body">
+        <div class="md">
+          <div class="mlist">
+            <div style="padding:8px;"><input type="search" placeholder="Filtern …" style="width:100%; box-sizing:border-box; background:var(--color-surface-input); border:1px solid var(--color-gray-3); color:var(--color-gray-1); padding:6px 8px; font-size:12px;"></div>
+            <div class="mrow on"><span>ADP Core</span><span style="color:var(--color-primary)">✎</span></div>
+            <div class="mrow"><span>Quantum Drive XL-1</span><span></span></div>
+            <div class="mrow"><span>Salvage Head „Abrade"</span><span></span></div>
+            <div class="mrow" style="color:var(--color-gray-2); font-size:11px;">+ 39 weitere …</div>
+          </div>
+          <div class="detail">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+              <div><span style="font-weight:700; color:var(--color-white); font-size:15px;">ADP Core</span>
+                <div style="font-size:11px; color:var(--color-gray-2); margin-top:2px;">Erhalten am 05.05.2026</div></div>
+              <div style="display:flex; gap:5px;"><button class="btn btn-ghost btn-ic" title="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button></div>
+            </div>
+            <h4 class="section-title" style="font-size:.78rem; margin:14px 0 8px;">Zutaten &amp; Stat-Beitrag nach Zutat-Qualität</h4>
+            <div class="ingblock" style="margin-bottom:12px;">
+              <div class="ingname"><span class="rk" style="display:block;">Armored Carapace</span><strong>Ouratite</strong> <small>· 0,07 SCU · min. Qualität 0</small></div>
+              <div class="qrow"><input type="range" min="0" max="1000" value="796" data-ing="v3a" data-maxf="1.15" style="width:200px;"><span class="qval"><span data-q-val="v3a">796</span> <small>/ 1000</small></span></div>
+              <div class="affects">→ <span class="chip">Damage Mitigation ×<span data-mult-of="v3a">1.12</span></span> <small>(höher ist besser · 1000 → ×1.15)</small></div>
+            </div>
+            <div class="ingblock">
+              <div class="ingname"><span class="rk" style="display:block;">Insulative Liner</span><strong>Aslarite</strong> <small>· 0,02 SCU · min. Qualität 0</small></div>
+              <div class="qrow"><input type="range" min="0" max="1000" value="640" data-ing="v3b" data-maxf="1.20" style="width:200px;"><span class="qval"><span data-q-val="v3b">640</span> <small>/ 1000</small></span></div>
+              <div class="affects">→ <span class="chip">Min Temp ×<span data-mult-of="v3b">1.13</span></span> <span class="chip">Max Temp ×<span data-mult-of="v3b">1.13</span></span> <small>(1000 → ×1.20)</small></div>
+            </div>
+            <h4 class="section-title" style="font-size:.78rem; margin:14px 0 8px;">Notiz</h4>
+            <p style="margin:0; font-size:12.5px; background:var(--color-surface-input); border-left:3px solid var(--color-primary); padding:6px 9px;">Event vom 05.05. Zurückgelegt.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Rezept &amp; Stats permanent sichtbar</b> — beantwortet „was brauche ich zum Craften?" ohne Klickorgie.</li>
+        <li>Liste bleibt maximal dicht (42 Einträge scanbar), Detail wechselt per Klick/Pfeiltasten.</li>
+        <li>Notiz im Kontext lesbar und direkt editierbar.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li><b>Größter Umbau</b> (Detail-Ansicht + Auswahl-State + Lazy-Load je Auswahl).</li>
+        <li>Auf Mobile muss das Layout auf Liste→Detail-Navigation zusammenfallen.</li>
+      </ul>
+    </div>
+    <p class="effort">Aufwand: <b>mittel–hoch</b> · Detail-Panel nutzt den bestehenden Lazy-Rezept-Endpoint</p>
+  </div>
+
+  <!-- ============ EMPFEHLUNG ============ -->
+  <div class="reco">
+    <h3>Empfehlung</h3>
+    <p><b>V2 (Karten-Galerie) als Standard, V1 als Quick-Win davor.</b> Blueprints sind eine Sammlung mit reichem Inhalt (Zutaten/Stats) — die Karten zeigen diesen Inhalt ohne Interaktion und machen die Seite „angenehm anzusehen". V1 lässt sich in einem kleinen PR umsetzen (Kopf-Leiste, Fakten, Annotations-Rezept) und teilt Kopf + Add-Leiste mit V2 — der Weg V1 → V2 ist additiv. V3 lohnt erst, wenn Rezepte deutlich mehr Inhalt bekommen (Stats-Tabellen, Crafting-Ketten). In allen Fällen: PI-Tabs auf <code>.tab-nav</code>, Modals auf <code>.krt-modal</code>, Lösch-Button auf <code>.btn-danger</code>, Leerzustand mit <code>.empty-state</code>.</p>
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 8l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+<script>
+// Jede Zutat hat eine eigene Qualität (0–1000); sie skaliert NUR die ihr
+// zugeordneten Stats: Faktor f = 1 + (maxf − 1) · q/1000  (z. B. 1000 → ×1.15).
+document.querySelectorAll('[data-ing]').forEach(sl => {
+  const id = sl.dataset.ing, maxf = parseFloat(sl.dataset.maxf);
+  const apply = () => {
+    const q = parseInt(sl.value, 10);
+    const fct = 1 + (maxf - 1) * (q / 1000);
+    document.querySelectorAll('[data-q-val="' + id + '"]').forEach(el => el.textContent = q);
+    document.querySelectorAll('[data-mult-of="' + id + '"]').forEach(el => el.textContent = fct.toFixed(2));
+  };
+  sl.addEventListener('input', apply);
+  apply();
+});
+</script>
+</body>
+</html>

@@ -198,6 +198,14 @@ under `proposals/mission-*.html` and the implementation order
   open-ended (no slots); always ship a click + keyboard fallback beside drag&drop.
   HVU marking = `.chip chip--warning`.
   Specimen: `preview/components-assign-board.html`.
+- **Master-detail & ingredient quality** — `.master-detail` / `.master-list` /
+  `.master-row(.is-active)` / `.detail-pane` (collection browser, list → detail,
+  ↑/↓ + deeplink; collapses on mobile) and `.quality-block` / `.quality-row` /
+  `.quality-affects` (per-ingredient quality 0–1000 scaling only its mapped stats,
+  live ×-factor on the stat chips; ranges are accent-orange). Built for the
+  blueprints page (V3) — see `proposals/blueprints-page-varianten.html` and
+  `proposals/blueprints-claude-code-auftrag.md`.
+  Specimen: `preview/components-master-detail.html`.
 
 ### Button icons
 
