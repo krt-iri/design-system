@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="KPI card & sparkline" subtitle="Dashboard-Kachel: Saldo, ±Delta, Inline-SVG-Sparkline" viewport="700x240" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: stretch; }
+</style>
+</head>
+<body>
+  <p class="pv-label">KPI-Bausteine — Summen-Kachel + Konto-Karte (Sparkline = server-gerendertes SVG)</p>
+  <div class="row">
+    <div class="kpi-total"><div class="kpi-label">Gesamtsaldo</div><div class="kpi-value">4.812.500</div></div>
+    <div class="kpi-card" tabindex="0">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+        <div><div class="kpi-title">Staffel IRIDIUM</div><div class="kpi-sub">KB-0001</div></div>
+        <span class="chip" style="font-size:8.5px;">Staffel</span>
+      </div>
+      <div class="kpi-value">1.850.000</div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:8px;">
+        <span class="kpi-delta kpi-delta--pos">▲ +420.000 / 30 T</span>
+        <svg width="84" height="24" viewBox="0 0 96 26"><polyline points="0,20 24,19 48,15 72,11 96,4" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg>
+      </div>
+    </div>
+    <div class="kpi-card kpi-card--closed" tabindex="0">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+        <div><div class="kpi-title">Event Stanton Cup</div><div class="kpi-sub">KB-0006</div></div>
+        <span class="chip chip--muted" style="font-size:8.5px;">geschlossen</span>
+      </div>
+      <div class="kpi-value">0</div>
+      <div><span class="kpi-delta" style="color:var(--color-gray-2);">—</span></div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.kpi-total (Akzentbalken) · .kpi-card (+ --closed, hover → Orange-Rahmen, ganze Karte klickbar) · .kpi-delta--pos/--neg · Werte tabular-nums.</p>
+</body>
+</html>

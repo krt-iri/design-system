@@ -206,6 +206,15 @@ under `proposals/mission-*.html` and the implementation order
   blueprints page (V3) — see `proposals/blueprints-page-varianten.html` and
   `proposals/blueprints-claude-code-auftrag.md`.
   Specimen: `preview/components-master-detail.html`.
+- **Bank patterns (KPI, custody, grants)** — `.kpi-total` / `.kpi-card` (+ `--closed`,
+  `.kpi-value`, `.kpi-delta--pos/--neg`; sparkline = server-rendered inline SVG, no
+  chart library), `.holder-row`/`.holder-bar`/`.holder-sum` and `.stack-bar` +
+  `.stack-legend` (per-holder custody distribution, sums to the balance),
+  `.matrix-flag(.on)` + `tr.is-inert` (permission flag matrix — row existence =
+  view right) and `.krt-modal .confirm-input` (type-to-confirm hurdle, reserved
+  for wipe-reset-grade actions). Built for the bank epic (#556) — mocks under
+  `proposals/bank-*.html`.
+  Specimens: `preview/components-kpi-sparkline.html`, `preview/components-bank-patterns.html`.
 
 ### Button icons
 

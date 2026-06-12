@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank — Dashboard (/bank)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 32px 26px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 23px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0 0 24px; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 24px rgba(0,0,0,0.6); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 1px solid var(--color-gray-3); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .s-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 15px; margin: 0; }
+  .s-head .sub { color: var(--color-gray-2); font-size: 11.5px; margin-top: 2px; }
+  .s-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn-xs2 { min-height: 32px; padding: 0.25rem 0.6rem; font-size: 0.68rem; }
+  .num { font-variant-numeric: tabular-nums; }
+  .pos { color: var(--color-success); } .neg { color: #ff6b6b; }
+
+  .totals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 880px) { .totals { grid-template-columns: repeat(2, 1fr); } }
+  .tot { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); padding: 10px 14px; }
+  .tot .tk { font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gray-2); font-weight: 700; }
+  .tot .tv { font-family: var(--font-headline); font-weight: 700; font-size: 19px; color: var(--color-white); margin-top: 2px; }
+
+  .acc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 980px) { .acc-grid { grid-template-columns: 1fr 1fr; } }
+  .acc-card { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: border-color .15s; }
+  .acc-card:hover { border-color: var(--color-primary); }
+  .acc-card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .acc-card .nm { font-weight: 700; color: var(--color-white); font-size: 13.5px; }
+  .acc-card .no { font-size: 10.5px; color: var(--color-gray-2); }
+  .acc-card .bal { font-family: var(--font-headline); font-weight: 700; font-size: 21px; color: var(--color-white); }
+  .acc-card .bal small { font-size: 11px; color: var(--color-gray-2); font-weight: 400; }
+  .acc-card .foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+  .delta { font-size: 11.5px; font-weight: 700; }
+  .closedcard { opacity: .55; }
+
+  /* compact density */
+  body.density-compact .acc-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 980px) { body.density-compact .acc-grid { grid-template-columns: 1fr 1fr; } }
+  body.density-compact .acc-card { padding: 8px 10px; gap: 5px; }
+  body.density-compact .acc-card .bal { font-size: 17px; }
+  body.density-compact .acc-card .nm { font-size: 12px; }
+  body.density-compact .acc-card .foot svg { width: 72px; height: 20px; }
+  body.density-compact .totals { gap: 8px; }
+  body.density-compact .tot { padding: 7px 11px; }
+  body.density-compact .tot .tv { font-size: 16px; }
+
+  .note { margin-top: 30px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-bg-dark-gray); padding: 12px 16px; font-size: 13px; font-weight: 300; max-width: 1050px; }
+  .note b { color: var(--color-white); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Bank-System (Epic #556) · Seite 1/4 · /bank · umgesetzte Empfehlung D1</div>
+  <h1 class="t">Bank-Dashboard — finaler Entwurf</h1>
+  <p class="lead">Festgelegt auf <b>D1 (Karten-Raster)</b>: eine KPI-Karte je sichtbarem Konto (Saldo · ±30-Tage vorzeichen-gefärbt · Server-SVG-Sparkline · Typ-Chip), Summen-Leiste für die Bankleitung (REQ-BANK-016). Über <b>Tweaks</b>: Perspektive (Bankleitung ⇄ Mitarbeiter — lebt die Sichtbarkeits-Matrix vor), Dichte und geschlossene Konten.</p>
+
+  <div class="screen">
+    <div class="s-head">
+      <div><h3>Kartellbank</h3><div class="sub"><span id="sub-mgmt">Ansicht: Bankleitung · 7 Konten · Stand 12.06.2026 14:02</span><span id="sub-emp" style="display:none;">Ansicht: Bank-Mitarbeiter · 3 berechtigte Konten · Stand 12.06.2026 14:02</span></div></div>
+      <div style="display:flex; gap:8px;" id="mgmt-actions"><button class="btn btn-outline btn-xs2"><svg class="krt-icon"><use href="#i-pdf"/></svg> 3-Monats-Report</button><button class="btn btn-ghost btn-xs2"><svg class="krt-icon"><use href="#i-settings"/></svg> Verwaltung</button></div>
+    </div>
+    <div class="s-body">
+      <div class="totals" id="totals-strip">
+        <div class="tot"><div class="tk">Gesamtsaldo</div><div class="tv num">4.812.500 <small style="font-size:10px;color:var(--color-gray-2);">aUEC</small></div></div>
+        <div class="tot"><div class="tk">Eingänge 30 T</div><div class="tv num pos">+1.240.000</div></div>
+        <div class="tot"><div class="tk">Ausgänge 30 T</div><div class="tv num neg">−385.000</div></div>
+        <div class="tot"><div class="tk">Aktive Konten</div><div class="tv num">7 <small style="font-size:10px;color:var(--color-gray-2);">· 1 geschlossen</small></div></div>
+      </div>
+      <div class="acc-grid">
+        <div class="acc-card" data-granted="true">
+          <div class="top"><div><div class="nm">Staffel IRIDIUM</div><div class="no num">KB-0001</div></div><span class="chip" style="font-size:8.5px;">Staffel</span></div>
+          <div class="bal num">1.850.000 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num pos">▲ +420.000 / 30 T</span>
+            <svg width="96" height="26" viewBox="0 0 96 26"><polyline points="0,20 12,18 24,19 36,14 48,15 60,10 72,11 84,6 96,4" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+        </div>
+        <div class="acc-card" data-granted="true">
+          <div class="top"><div><div class="nm">Bereich Profit</div><div class="no num">KB-0003</div></div><span class="chip" style="font-size:8.5px;">Bereich</span></div>
+          <div class="bal num">1.000.000 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num neg">▼ −120.000 / 30 T</span>
+            <svg width="96" height="26" viewBox="0 0 96 26"><polyline points="0,6 12,8 24,7 36,12 48,10 60,15 72,14 84,18 96,19" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+        </div>
+        <div class="acc-card" data-granted="false">
+          <div class="top"><div><div class="nm">DAS KARTELL</div><div class="no num">KB-0002</div></div><span class="chip chip--data" style="font-size:8.5px;"><strong>Kartell</strong></span></div>
+          <div class="bal num">1.612.500 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num pos">▲ +85.000 / 30 T</span>
+            <svg width="96" height="26" viewBox="0 0 96 26"><polyline points="0,16 12,15 24,16 36,13 48,14 60,12 72,13 84,11 96,10" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+        </div>
+        <div class="acc-card" data-granted="false">
+          <div class="top"><div><div class="nm">Kartellbank</div><div class="no num">KB-0004</div></div><span class="chip chip--data" style="font-size:8.5px;"><strong>Kartellbank</strong></span></div>
+          <div class="bal num">250.000 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num" style="color:var(--color-gray-2);">± 0 / 30 T</span>
+            <svg width="96" height="26" viewBox="0 0 96 26"><polyline points="0,13 96,13" fill="none" stroke="#646464" stroke-width="1.5"/></svg></div>
+        </div>
+        <div class="acc-card" data-granted="true">
+          <div class="top"><div><div class="nm">SK Vipers</div><div class="no num">KB-0005</div></div><span class="chip" style="font-size:8.5px;">SK</span></div>
+          <div class="bal num">100.000 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num pos">▲ +100.000 / 30 T</span>
+            <svg width="96" height="26" viewBox="0 0 96 26"><polyline points="0,24 36,24 48,18 60,12 96,6" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+        </div>
+        <div class="acc-card closedcard" data-granted="false">
+          <div class="top"><div><div class="nm">Event Stanton Cup</div><div class="no num">KB-0006</div></div><span class="chip chip--muted" style="font-size:8.5px;">Spezial · geschlossen</span></div>
+          <div class="bal num">0 <small>aUEC</small></div>
+          <div class="foot"><span class="delta num" style="color:var(--color-gray-2);">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Umgesetzte Empfehlung D1:</b> Karte je Konto = wörtliche Umsetzung von REQ-BANK-016; Klick auf eine Karte öffnet das Konto-Detail. Mitarbeiter sehen nur Konten mit Grant-Zeile und keine Summen-Leiste, kein 3-Monats-Report (Sichtbarkeits-Matrix REQ-BANK-010 — über die Tweaks-Perspektive erlebbar). Sparklines server-gerendert (Inline-SVG, eine Dashboard-Query, kein N+1). Bei stark wachsender Kontenzahl ist die kompakte Dichte-Stufe der erste Hebel; eine Listen-Ansicht bleibt als späterer Ausbau möglich.
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M15 3v4h4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 13h6M9 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<div id="tweaks-root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const BANK_DASH_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "perspective": "Bankleitung",
+  "density": "Komfortabel",
+  "showClosed": true
+}/*EDITMODE-END*/;
+
+function BankDashTweaksApp() {
+  const [t, setTweak] = useTweaks(BANK_DASH_TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const mgmt = t.perspective === 'Bankleitung';
+    // Sichtbarkeits-Matrix: Mitarbeiter sehen nur Konten mit Grant, keine Summen, keine Leitungs-Aktionen.
+    const totals = document.getElementById('totals-strip');
+    const actions = document.getElementById('mgmt-actions');
+    const subM = document.getElementById('sub-mgmt');
+    const subE = document.getElementById('sub-emp');
+    if (totals) totals.style.display = mgmt ? '' : 'none';
+    if (actions) actions.style.display = mgmt ? '' : 'none';
+    if (subM) subM.style.display = mgmt ? '' : 'none';
+    if (subE) subE.style.display = mgmt ? 'none' : '';
+    document.querySelectorAll('.acc-card').forEach((card) => {
+      const granted = card.dataset.granted === 'true';
+      const closed = card.classList.contains('closedcard');
+      let visible = mgmt || granted;
+      if (closed && !t.showClosed) visible = false;
+      card.style.display = visible ? '' : 'none';
+    });
+    document.body.classList.toggle('density-compact', t.density === 'Kompakt');
+  }, [t]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection label="Perspektive" />
+      <TweakRadio label="Rolle" value={t.perspective}
+                  options={['Bankleitung', 'Mitarbeiter']}
+                  onChange={(v) => setTweak('perspective', v)} />
+      <TweakSection label="Darstellung" />
+      <TweakRadio label="Dichte" value={t.density}
+                  options={['Komfortabel', 'Kompakt']}
+                  onChange={(v) => setTweak('density', v)} />
+      <TweakToggle label="Geschlossene Konten zeigen" value={t.showClosed}
+                   onChange={(v) => setTweak('showClosed', v)} />
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<BankDashTweaksApp />);
+</script>
+</body>
+</html>

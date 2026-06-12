@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank — Admin (/admin/bank + /admin/bank-audit)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 32px 26px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 23px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+  .sec { margin-top: 36px; }
+  .sec > h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 15px; margin: 0 0 12px; border-bottom: 2px solid var(--color-primary); padding-bottom: 7px; }
+  .sec > h2 small { color: var(--color-gray-2); font-family: var(--font-body); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 12px; margin-left: 8px; }
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 24px rgba(0,0,0,0.6); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 2px solid var(--color-accent-dark); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .s-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 15px; margin: 0; }
+  .s-head .adm { font-size: 9px; text-transform: uppercase; letter-spacing: .14em; color: var(--color-accent-light); border: 1px solid var(--color-accent-dark); background: rgba(196,92,0,0.15); padding: 3px 8px; font-weight: 700; }
+  .s-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn-xs2 { min-height: 32px; padding: 0.25rem 0.6rem; font-size: 0.68rem; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .danger-card { border: 1px solid var(--color-danger); border-left: 4px solid var(--color-danger); background: rgba(163,0,10,0.07); padding: 14px 16px; }
+  .danger-card h4 { margin: 0 0 6px; font-family: var(--font-headline); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; font-size: 13px; color: var(--color-danger-text, #ff6b6b); }
+  .danger-card p { margin: 0 0 12px; font-size: 13px; font-weight: 300; max-width: 80ch; }
+  .danger-card b { color: var(--color-white); }
+
+  .stage { background: rgba(0,0,0,0.8); padding: 20px; display: flex; justify-content: center; border: 1px solid var(--color-gray-3); }
+  .modal { width: 100%; max-width: 430px; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); border-top: 3px solid var(--color-danger); position: relative; box-shadow: 0 0 20px rgba(163,0,10,0.18); }
+  .modal::before, .modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-danger); }
+  .modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+  .modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+  .m-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 11px 15px; border-bottom: 1px solid var(--color-gray-3); }
+  .m-head h4 { font-family: var(--font-headline); font-weight: 700; font-size: 12.5px; color: var(--color-danger-text, #ff6b6b); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+  .m-body { padding: 13px 15px; font-size: 13px; font-weight: 300; }
+  .m-body b { color: var(--color-white); }
+  .m-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 11px 15px; border-top: 1px solid var(--color-gray-3); }
+  .confirm-input { width: 100%; box-sizing: border-box; background: var(--color-surface-input); color: var(--color-gray-1); border: 1px solid var(--color-gray-3); padding: 7px 9px; font-size: 12.5px; margin-top: 8px; font-family: var(--font-body); }
+  .confirm-input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+
+  .filterbar { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+  .filterbar .fg { display: flex; flex-direction: column; gap: 3px; }
+  .filterbar label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-2); }
+  .filterbar input, .filterbar select { background: var(--color-surface-input); color: var(--color-gray-1); border: 1px solid var(--color-gray-3); padding: 6px 9px; font-size: 12px; min-height: 34px; font-family: var(--font-body); }
+  table.mock { width: 100%; border-collapse: collapse; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .mock th { background: var(--color-surface-input); color: var(--color-gray-1); font-size: 10px; text-transform: uppercase; letter-spacing: .07em; text-align: left; padding: 7px 10px; border-bottom: 2px solid var(--color-primary); }
+  .mock td { padding: 7px 10px; font-size: 12px; border-bottom: 1px solid var(--color-gray-3); vertical-align: top; }
+  .mock tr:last-child td { border-bottom: none; }
+  .mock td.who { font-weight: 700; color: var(--color-white); white-space: nowrap; }
+  .detl { color: var(--color-gray-2); font-size: 11.5px; }
+
+  .tl { border-left: 2px solid var(--color-gray-3); margin-left: 8px; padding-left: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .tl-item { position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -23px; top: 4px; width: 8px; height: 8px; background: var(--color-primary); }
+  .tl-item.warn::before { background: var(--color-warning); }
+  .tl-item.danger::before { background: var(--color-danger); }
+  .tl-item .when { font-size: 10.5px; color: var(--color-gray-2); font-variant-numeric: tabular-nums; }
+  .tl-item .what { font-size: 12.5px; }
+  .tl-item .what b { color: var(--color-white); }
+
+  .note { margin-top: 30px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-bg-dark-gray); padding: 12px 16px; font-size: 13px; font-weight: 300; max-width: 1050px; }
+  .note b { color: var(--color-white); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Bank-System (Epic #556) · Seite 4/4 · /admin/bank + /admin/bank-audit · umgesetzte Empfehlung</div>
+  <h1 class="t">Admin: Wipe-Reset &amp; Audit-Log</h1>
+  <p class="lead">Finaler Entwurf (Empfehlung <b>A1 + A2</b>): Danger-Sektion mit Tipp-Hürden-Bestätigung und filterbares Audit-Log als Tabelle. Nur Admins (Admin-Chrome: <b>accent-dark-Header</b>); Bankleitung sieht das Audit-Log nicht. Über <b>Tweaks</b> lassen sich Audit-Ansicht (Tabelle ⇄ Zeitleiste) und Tipp-Hürde umschalten.</p>
+
+  <!-- ================= /admin/bank ================= -->
+  <div class="sec">
+    <h2>/admin/bank<small>Wipe-Reset · Danger-Sektion</small></h2>
+    <div class="screen">
+      <div class="s-head"><h3>Bank — Administration</h3><span class="adm">Admin</span></div>
+      <div class="s-body">
+        <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:12px;">
+          <span class="chip chip--data"><strong>8</strong> Konten</span>
+          <span class="chip chip--data"><strong>4.812.500</strong> aUEC gesamt</span>
+          <span class="chip chip--data"><strong>5</strong> Halter</span>
+          <span class="chip"><a href="#" onclick="return false" style="color:inherit;">→ Audit-Log</a></span>
+        </div>
+        <div class="danger-card">
+          <h4>Wipe-Reset</h4>
+          <p>Setzt nach einem Star-Citizen-Wipe <b>alle Kontosalden und Halter-Sub-Salden auf 0</b>. Buchungshistorie, Kontoauszüge und Audit-Trail bleiben vollständig erhalten — es wird nichts gelöscht, sondern je Konto eine WIPE_RESET-Transaktion gebucht. Die Aktion ist idempotent: Bei bereits leerer Bank passiert nichts (Hinweis statt Buchung).</p>
+          <button class="btn btn-danger"><svg class="krt-icon"><use href="#i-reset"/></svg> Alle Salden zurücksetzen</button>
+        </div>
+      </div>
+    </div>
+    <p style="margin:12px 0 0; font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--color-gray-2);">Bestätigungs-Modal</p>
+    <div class="stage" style="margin-top:8px;">
+      <div class="modal">
+        <div class="m-head"><h4>Wipe-Reset bestätigen</h4><button class="btn btn-ghost" style="min-height:28px; min-width:28px; padding:0.15rem;" aria-label="Schließen">✕</button></div>
+        <div class="m-body">
+          <b>8 Konten</b> mit zusammen <b class="num">4.812.500 aUEC</b> werden auf 0 gesetzt (24 Halter-Stashes). Historie und Auszüge bleiben erhalten. <b>Diese Aktion kann nicht rückgängig gemacht werden.</b>
+          <input class="confirm-input" id="wipe-confirm-input" type="text" placeholder='Zum Bestätigen „WIPE" eintippen' aria-label="Bestätigungswort">
+        </div>
+        <div class="m-foot"><button class="btn btn-ghost">Abbrechen</button><button class="btn btn-danger" id="wipe-confirm-btn" disabled>Zurücksetzen</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= /admin/bank-audit ================= -->
+  <div class="sec">
+    <h2>/admin/bank-audit<small>insert-only · paginiert · Filter Zeitraum/Akteur/Konto/Typ</small></h2>
+    <div class="screen">
+      <div class="s-head"><h3>Bank — Audit-Log</h3><span class="adm">Admin</span></div>
+      <div class="s-body">
+        <div class="filterbar">
+          <div class="fg"><label>Von</label><input type="text" value="01.06.2026"></div>
+          <div class="fg"><label>Bis</label><input type="text" value="12.06.2026"></div>
+          <div class="fg"><label>Akteur</label><select><option>Alle</option><option>banker_jo</option></select></div>
+          <div class="fg"><label>Konto</label><select><option>Alle</option><option>KB-0001</option></select></div>
+          <div class="fg"><label>Ereignistyp</label><select><option>Alle</option><option>Buchung</option><option>Storno</option><option>Grant</option><option>Export</option><option>Wipe-Reset</option></select></div>
+          <button class="btn btn-ghost btn-xs2"><svg class="krt-icon"><use href="#i-filter"/></svg> Filtern</button>
+        </div>
+        <div id="audit-view-table">
+          <table class="mock">
+            <thead><tr><th>Zeitpunkt</th><th>Akteur</th><th>Ereignis</th><th>Bezug</th><th>Details</th></tr></thead>
+            <tbody>
+              <tr><td class="num">12.06. 13:40:12</td><td class="who">banker_jo</td><td><span class="chip chip--success" style="font-size:8.5px;">Einzahlung</span></td><td class="num">KB-0001 · TX a4f1</td><td class="detl">+250.000 · Halter greluc · „Mining-Erlöse KW 24"</td></tr>
+              <tr><td class="num">11.06. 09:02:55</td><td class="who">leitung_max</td><td><span class="chip" style="font-size:8.5px;">Grant geändert</span></td><td class="num">KB-0001 · banker_jo</td><td class="detl">auszahlen: nein → ja (vorher/nachher gespeichert)</td></tr>
+              <tr><td class="num">10.06. 19:12:30</td><td class="who">banker_jo</td><td><span class="chip" style="font-size:8.5px;">Transfer</span></td><td class="num">KB-0001 → KB-0003</td><td class="detl">80.000 · carol → carol · „Bereichsanteil"</td></tr>
+              <tr><td class="num">09.06. 21:44:01</td><td class="who">leitung_max</td><td><span class="chip chip--data" style="font-size:8.5px;"><strong>PDF-Export</strong></span></td><td class="num">KB-0001</td><td class="detl">Kontoauszug 01.05.–31.05.</td></tr>
+              <tr><td class="num">04.02. 08:00:00</td><td class="who">admin_root</td><td><span class="chip chip--danger" style="font-size:8.5px;">Wipe-Reset</span></td><td class="num">8 Konten</td><td class="detl">4.1M aUEC genullt · Sammel-Ereignis + Einzeltransaktionen</td></tr>
+            </tbody>
+          </table>
+          <p style="margin:8px 0 0; font-size:11px; color:var(--color-gray-2); font-family:var(--font-mono);">Paginierung wie üblich (PageResponse) · Akteur-Handle ist Snapshot (überlebt Nutzer-Löschung) · Zeile → Detail-Aufklapp mit vollem Details-Payload.</p>
+        </div>
+        <div id="audit-view-timeline" style="display:none;">
+          <div class="tl">
+            <div class="tl-item"><div class="when">12.06.2026 · 13:40:12</div><div class="what"><b>banker_jo</b> bucht <b class="num">+250.000</b> Einzahlung auf <b>KB-0001</b> (Halter greluc) — „Mining-Erlöse KW 24"</div></div>
+            <div class="tl-item warn"><div class="when">11.06.2026 · 09:02:55</div><div class="what"><b>leitung_max</b> ändert Grant für <b>banker_jo</b> auf KB-0001: auszahlen <b>nein → ja</b></div></div>
+            <div class="tl-item"><div class="when">10.06.2026 · 19:12:30</div><div class="what"><b>banker_jo</b> transferiert <b class="num">80.000</b> von <b>KB-0001</b> nach <b>KB-0003</b> (carol → carol) — „Bereichsanteil"</div></div>
+            <div class="tl-item"><div class="when">09.06.2026 · 21:44:01</div><div class="what"><b>leitung_max</b> exportiert <b>Kontoauszug</b> KB-0001 (01.05.–31.05.)</div></div>
+            <div class="tl-item danger"><div class="when">04.02.2026 · 08:00:00</div><div class="what"><b>admin_root</b> führt <b>Wipe-Reset</b> aus — 8 Konten, 4.1M aUEC genullt</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Umgesetzte Empfehlung A1 + A2:</b> Danger-Muster nach ship-data-Vorbild + <b>Tipp-Hürde („WIPE")</b> als bewusste Verschärfung für die destruktivste Aktion des Systems (per Tweak abschaltbar, dann genügt der Klick); Audit-Log als filterbare, paginierte Tabelle — die Zeitleiste bleibt als optionale Zweitansicht über die Tweaks erlebbar. Beide Seiten hängen in der Admin-Sidebar-Gruppe; der Bank-Bereich selbst bekommt eine eigene Gruppe „Bank" (sichtbar ab Rolle Bank-Mitarbeiter).
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+
+<script>
+// Tipp-Hürde: Button erst aktiv, wenn exakt „WIPE" eingetippt ist.
+(function () {
+  var inp = document.getElementById('wipe-confirm-input');
+  var btn = document.getElementById('wipe-confirm-btn');
+  inp.addEventListener('input', function () { btn.disabled = inp.value.trim() !== 'WIPE'; });
+})();
+</script>
+
+<div id="tweaks-root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const BANK_ADMIN_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "auditView": "Tabelle",
+  "typeHurdle": true,
+  "showModal": true
+}/*EDITMODE-END*/;
+
+function BankAdminTweaksApp() {
+  const [t, setTweak] = useTweaks(BANK_ADMIN_TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const tbl = document.getElementById('audit-view-table');
+    const tl = document.getElementById('audit-view-timeline');
+    if (tbl && tl) {
+      tbl.style.display = t.auditView === 'Tabelle' ? '' : 'none';
+      tl.style.display = t.auditView === 'Zeitleiste' ? '' : 'none';
+    }
+    const inp = document.getElementById('wipe-confirm-input');
+    const btn = document.getElementById('wipe-confirm-btn');
+    if (inp && btn) {
+      inp.style.display = t.typeHurdle ? '' : 'none';
+      btn.disabled = t.typeHurdle ? inp.value.trim() !== 'WIPE' : false;
+    }
+    const stage = document.querySelector('.stage');
+    if (stage) stage.style.display = t.showModal ? '' : 'none';
+  }, [t]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection label="Audit-Log" />
+      <TweakRadio label="Ansicht" value={t.auditView}
+                  options={['Tabelle', 'Zeitleiste']}
+                  onChange={(v) => setTweak('auditView', v)} />
+      <TweakSection label="Wipe-Reset" />
+      <TweakToggle label="Tipp-Hürde (WIPE)" value={t.typeHurdle}
+                   onChange={(v) => setTweak('typeHurdle', v)} />
+      <TweakToggle label="Bestätigungs-Modal zeigen" value={t.showModal}
+                   onChange={(v) => setTweak('showModal', v)} />
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<BankAdminTweaksApp />);
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Bank patterns" subtitle="Halter-Verteilung (Balken/Stapel), Flag-Matrix, Tipp-Hürde" viewport="700x330" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .blk { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 10px 12px; }
+  .blk + .blk { margin-top: 10px; }
+  table.g { width: 100%; border-collapse: collapse; }
+  .g th { background: var(--color-surface-input); color: var(--color-gray-1); font-size: 9px; text-transform: uppercase; letter-spacing: .07em; text-align: center; padding: 5px 6px; border-bottom: 2px solid var(--color-primary); }
+  .g th:first-child { text-align: left; }
+  .g td { padding: 5px 6px; font-size: 11.5px; border-bottom: 1px solid var(--color-gray-3); text-align: center; }
+  .g td:first-child { text-align: left; font-weight: 700; color: var(--color-white); }
+  .g tr:last-child td { border-bottom: none; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Bank-Bausteine — Custody, Berechtigungen, destruktive Bestätigung</p>
+  <div class="cols">
+    <div>
+      <div class="blk">
+        <div class="holder-row"><span class="holder-name">greluc</span><span class="holder-bar"><i style="width:54%;"></i></span><span class="holder-value">1.000.000 · 54 %</span></div>
+        <div class="holder-row"><span class="holder-name">carol</span><span class="holder-bar"><i style="width:24%;"></i></span><span class="holder-value">450.000 · 24 %</span></div>
+        <div class="holder-sum"><span style="color:var(--color-gray-2);">Summe = Kontosaldo</span><b style="color:var(--color-white); font-variant-numeric:tabular-nums;">1.850.000</b></div>
+      </div>
+      <div class="blk">
+        <div class="stack-bar"><i style="width:54%; background:#E77E23;"></i><i style="width:24%; background:#EEB64B;"></i><i style="width:22%; background:#C45C00;"></i></div>
+        <div class="stack-legend">
+          <span><i class="sw" style="background:#E77E23;"></i>greluc</span>
+          <span><i class="sw" style="background:#EEB64B;"></i>carol</span>
+          <span><i class="sw" style="background:#C45C00;"></i>doppi</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="blk" style="padding:0;">
+        <table class="g">
+          <thead><tr><th>Mitarbeiter</th><th>Ansehen</th><th>Einzahlen</th><th>Auszahlen</th><th>Transfer</th></tr></thead>
+          <tbody>
+            <tr><td>banker_jo</td><td><span class="matrix-flag on">✓</span></td><td><span class="matrix-flag on">✓</span></td><td><span class="matrix-flag"></span></td><td><span class="matrix-flag on">✓</span></td></tr>
+            <tr class="is-inert"><td>moon_k <span class="chip chip--warning" style="font-size:8px;">ausgesetzt</span></td><td><span class="matrix-flag on">✓</span></td><td><span class="matrix-flag on">✓</span></td><td><span class="matrix-flag on">✓</span></td><td><span class="matrix-flag"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="blk">
+        <div style="font-size:10px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--color-danger-text,#ff6b6b); margin-bottom:6px;">Tipp-Hürde (nur Wipe-Reset)</div>
+        <input class="confirm-input" style="margin-top:0;" type="text" placeholder='Zum Bestätigen „WIPE" eintippen'>
+        <div style="display:flex; justify-content:flex-end; margin-top:8px;"><button class="btn btn-danger" style="min-height:30px; padding:0.2rem 0.6rem; font-size:0.66rem;" disabled>Zurücksetzen</button></div>
+      </div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:12px;">.holder-row/.holder-bar/.holder-sum · .stack-bar + .stack-legend (Akzent-Stufen) · .matrix-flag(.on) + tr.is-inert (Zeile = Lese-Recht) · .confirm-input im .krt-modal--danger.</p>
+</body>
+</html>

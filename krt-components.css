@@ -681,24 +681,17 @@ input[type="radio"]:checked::after {
    close-X = icon button with aria-label; danger variant for destructive
    confirms (consequence named in the body). Focus-trap + Esc required. */
 .krt-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 3000; }
-/* The frame itself must NOT scroll: the ::before/::after corner brackets sit 2px outside
-   the box and would register as permanent overflow, forcing scrollbars even when the
-   content fits. Scrolling happens in .krt-modal-body only (head/foot stay pinned). */
-.krt-modal { width: 100%; max-width: 440px; max-height: 90vh; display: flex; flex-direction: column; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
-.krt-modal > form { display: flex; flex-direction: column; min-height: 0; }
+.krt-modal { width: 100%; max-width: 440px; background: var(--color-bg-dark-gray); border: var(--border-hairline); border-top: 3px solid var(--color-primary); position: relative; box-shadow: var(--glow-primary-lg); }
 .krt-modal::before, .krt-modal::after { content: ''; position: absolute; width: 13px; height: 13px; border: 2px solid var(--color-primary); }
 .krt-modal::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
 .krt-modal::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
-/* Width variant for form-heavy modals (3+ stacked fields): confirms and single-field
-   prompts stay at the compact 440px default. */
-.krt-modal--wide { max-width: 600px; }
 .krt-modal--danger { border-top-color: var(--color-danger); box-shadow: var(--glow-danger-lg); }
 .krt-modal--danger::before, .krt-modal--danger::after { border-color: var(--color-danger); }
-.krt-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: var(--border-hairline); flex-shrink: 0; }
+.krt-modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: var(--border-hairline); }
 .krt-modal-head h2 { font-family: var(--font-headline); font-weight: var(--fw-bold); font-size: 0.85rem; color: var(--color-white); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
 .krt-modal--danger .krt-modal-head h2 { color: var(--color-danger-text, #ff6b6b); }
-.krt-modal-body { padding: 14px 16px; min-height: 0; overflow-y: auto; }
-.krt-modal-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: var(--border-hairline); flex-shrink: 0; }
+.krt-modal-body { padding: 14px 16px; }
+.krt-modal-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: var(--border-hairline); }
 
 /* --------------------------------------------------------- ASSIGN BOARD -- */
 /* Drag-&-drop planning board (mission crew): a pool of unassigned people and
@@ -708,17 +701,14 @@ input[type="radio"]:checked::after {
 .person-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--color-surface-input); border: var(--border-hairline); cursor: grab; }
 .person-row.is-selected { border-color: var(--color-primary); box-shadow: var(--glow-primary); }
 .person-row:active { cursor: grabbing; }
-.person-row:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -2px; }
 .person-row .row-grip { color: var(--color-gray-2); flex: none; }
 .person-row .row-main { flex: 1; min-width: 0; }
 .person-row .row-sub { font-size: 0.66rem; color: var(--color-gray-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status-dot { width: 8px; height: 8px; flex: none; display: inline-block; background: var(--color-gray-2); }
 .status-dot--on { background: var(--color-success); }
 .drop-zone { min-height: var(--touch-target); padding: 6px; display: flex; flex-direction: column; gap: 5px; }
-.drop-zone:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
 .drop-zone.is-over { outline: 2px dashed var(--color-primary); outline-offset: -4px; background: rgba(231,126,35,0.06); }
-/* gray-1 + regular weight: gray-2 at thin weight is unreadable over the honeycomb backdrop. */
-.drop-hint { border: 1px dashed var(--color-gray-3); color: var(--color-gray-1); font-size: 0.7rem; font-weight: 400; text-align: center; padding: 7px; font-style: italic; }
+.drop-hint { border: 1px dashed var(--color-gray-3); color: var(--color-gray-2); font-size: 0.66rem; text-align: center; padding: 7px; font-style: italic; }
 .drop-zone.is-over .drop-hint { border-color: var(--color-primary); color: var(--color-primary); }
 
 /* Chip-styled inline select — uppercase label + orange chevron; reads like a
@@ -734,14 +724,10 @@ input[type="radio"]:checked::after {
 }
 .chip-select:hover { border-color: var(--color-primary); color: var(--color-white); }
 .chip-select:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
-/* Firefox paints the option popup with the select's (transparent -> white) background;
-   pin it to the dark surface so the list stays readable. */
-.chip-select option { background-color: var(--color-bg-dark-gray); color: var(--color-gray-1); }
 
 /* ----------------------------------------------------------- EMPTY STATE -- */
 /* Centered placeholder for empty lists/collections: short reason + ONE next
    action (ghost or cta). Never leave a bare "Keine Einträge." table cell. */
-.empty-state[hidden] { display: none; } /* hidden attr must win over the flex display */
 .empty-state { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 28px 16px; text-align: center; border: 1px dashed var(--color-gray-3); background: var(--color-bg-dark-gray); }
 .empty-state .empty-title { font-family: var(--font-headline); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .06em; font-size: 0.85rem; color: var(--color-gray-1); }
 .empty-state .empty-text { font-size: 0.8rem; font-weight: 300; color: var(--color-gray-2); max-width: 48ch; }
@@ -775,3 +761,56 @@ input[type="range"] { accent-color: var(--color-primary); }
 .quality-row .quality-value { font-variant-numeric: tabular-nums; color: var(--color-white); font-weight: var(--fw-bold); font-size: 0.76rem; min-width: 70px; }
 .quality-row .quality-value small { color: var(--color-gray-2); font-weight: 400; }
 .quality-affects { font-size: 0.72rem; color: var(--color-gray-2); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+/* -------------------------------------------------------------- KPI CARDS -- */
+/* Dashboard tiles (bank dashboard, home): .kpi-total = aggregate strip tile
+   (orange left-accent), .kpi-card = per-entity card with value, sign-colored
+   delta and a server-rendered inline-SVG sparkline (no chart library — spec
+   REQ-BANK-016). The whole card is the click target. */
+.kpi-total { background: var(--color-bg-dark-gray); border: var(--border-hairline); border-left: 4px solid var(--color-primary); padding: 10px 14px; }
+.kpi-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: .1em; color: var(--color-gray-2); font-weight: var(--fw-bold); }
+.kpi-value { font-family: var(--font-headline); font-weight: var(--fw-bold); font-size: 1.2rem; color: var(--color-white); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.kpi-card { background: var(--color-bg-dark-gray); border: var(--border-hairline); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: border-color .15s; }
+.kpi-card:hover { border-color: var(--color-primary); }
+.kpi-card:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.kpi-card .kpi-title { font-weight: var(--fw-bold); color: var(--color-white); font-size: 0.85rem; }
+.kpi-card .kpi-sub { font-size: 0.66rem; color: var(--color-gray-2); font-variant-numeric: tabular-nums; }
+.kpi-card .kpi-value { font-size: 1.3rem; }
+.kpi-delta { font-size: 0.72rem; font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.kpi-delta--pos { color: var(--color-success); }
+.kpi-delta--neg { color: var(--color-danger-text, #ff6b6b); }
+.kpi-card--closed { opacity: .55; }
+
+/* ----------------------------------------------------- HOLDER DISTRIBUTION -- */
+/* Custody partition (bank REQ-BANK-003): per-(account, holder) sub-balances
+   that always sum to the account balance. Two renderings:
+   .holder-row — one row per holder with track bar + exact value (default for
+   the account detail); .stack-bar — proportional single bar + legend (compact;
+   segment colors step through the accent shades #E77E23/#EEB64B/#C45C00). */
+.holder-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--color-surface-input); }
+.holder-row:last-child { border-bottom: none; }
+.holder-row .holder-name { font-weight: var(--fw-bold); color: var(--color-white); font-size: 0.8rem; min-width: 80px; }
+.holder-row .holder-bar { flex: 1; height: 9px; background: var(--color-surface-input); position: relative; }
+.holder-row .holder-bar i { position: absolute; inset: 0 auto 0 0; background: var(--color-primary); }
+.holder-row .holder-value { font-size: 0.76rem; min-width: 110px; text-align: right; color: var(--color-gray-1); font-variant-numeric: tabular-nums; }
+.holder-sum { border-top: var(--border-hairline); margin-top: 7px; padding-top: 7px; display: flex; justify-content: space-between; font-size: 0.76rem; }
+.stack-bar { display: flex; height: 14px; border: var(--border-hairline); overflow: hidden; }
+.stack-bar i { display: block; height: 100%; }
+.stack-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.7rem; color: var(--color-gray-2); margin-top: 8px; }
+.stack-legend .sw { display: inline-block; width: 9px; height: 9px; margin-right: 5px; vertical-align: -1px; }
+
+/* ------------------------------------------------------------- FLAG MATRIX -- */
+/* Permission grids (bank grants): one square toggle per capability cell
+   (deposit/withdraw/transfer). The row's EXISTENCE = view right (always ✓,
+   removed by revoking the row). Suspended rows: tr.is-inert + a reason chip. */
+.matrix-flag { display: inline-flex; width: 18px; height: 18px; border: var(--border-hairline); align-items: center; justify-content: center; cursor: pointer; background: var(--color-surface-input); }
+.matrix-flag.on { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-bg-black); font-weight: var(--fw-black); font-size: 0.7rem; }
+.matrix-flag:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+tr.is-inert td { opacity: .5; }
+
+/* Type-to-confirm hurdle — reserved for the MOST destructive admin actions
+   (bank wipe reset): inside .krt-modal--danger, the confirm button stays
+   disabled until the user types the confirm word. Everything else keeps the
+   standard click-confirm modal. */
+.krt-modal .confirm-input { width: 100%; box-sizing: border-box; background: var(--color-surface-input); color: var(--color-gray-1); border: var(--border-hairline); padding: 7px 9px; font-size: 0.8rem; margin-top: 8px; font-family: var(--font-body); }
+.krt-modal .confirm-input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
