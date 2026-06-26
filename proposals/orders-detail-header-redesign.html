@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auftragsdetails — Kopf-Redesign (Vorher/Nachher)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 32px 26px 80px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 23px; margin: 12px 0 6px; }
+  .lead { font-weight: 300; max-width: 100ch; margin: 0; font-size: 13.5px; }
+  .lead b { color: var(--color-gray-1); }
+  .variant { margin-top: 40px; }
+  .vhead { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin-bottom: 16px; }
+  .vhead .vnum { font-family: var(--font-headline); font-weight: 900; color: var(--color-accent-dark); font-size: 24px; line-height: 1; }
+  .vhead h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 16px; margin: 0; }
+  .vhead .vsub { color: var(--color-gray-2); font-size: 12.5px; }
+
+  /* page-frame chrome to evoke the real screen */
+  .od-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .od-head h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 18px; margin: 0; }
+  .od-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-xs2 { min-height: 34px; padding: 0.3rem 0.7rem; font-size: 0.7rem; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+
+  /* current (IST) kv list rendering */
+  .ist .kv-list { margin-bottom: 2rem; }
+  .squadron-badge { display: inline-flex; align-items: center; padding: 0.1rem 0.6rem; border: 1px solid var(--color-primary); border-radius: 999px; color: var(--color-primary); font-size: 0.72rem; font-weight: 700; }
+  .squadron-badge-muted { color: var(--color-gray-2); border-color: var(--color-gray-3); }
+  .order-kind-badge { display: inline-flex; align-items: center; padding: 0.1rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; border: 1px solid; }
+  .order-kind-item { color: var(--color-info); border-color: var(--color-info); }
+  .od-status-select { background: var(--color-surface-input); color: #fff; border: 1px solid var(--color-gray-3); padding: 0.45rem 2rem 0.45rem 0.7rem; font-family: var(--font-body); font-size: 0.95rem; min-height: 40px;
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23E77E23' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.65rem center; }
+
+  /* status pill (read + as header summary) */
+  .od-status { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-headline); font-size: 0.72rem; letter-spacing: .06em; text-transform: uppercase; }
+  .od-status::before { content: ''; width: 8px; height: 8px; }
+  .st-open::before { background: var(--color-info); } .st-open { color: var(--color-info); }
+  .st-prog::before { background: var(--color-warning); } .st-prog { color: var(--color-warning); }
+  .st-done::before { background: var(--color-success); } .st-done { color: var(--color-success); }
+
+  .data-table { width: 100%; border-collapse: collapse; background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); margin-top: 0.5rem; }
+  .data-table th { background: var(--color-surface-input); color: var(--color-gray-1); font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; text-align: left; padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--color-primary); }
+  .data-table td { padding: 0.6rem 0.8rem; font-size: 0.85rem; border-bottom: 1px solid var(--color-gray-3); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .text-warning { color: var(--color-warning); }
+  .scroll-cut { position: relative; }
+  .scroll-cut::after { content: 'weiter scrollen zur Item-Tabelle ↓'; display: block; text-align: center; font-size: 11px; color: var(--color-gray-2); font-family: var(--font-mono); padding: 10px 0 2px; }
+
+  /* improved header: facts bar + grouped card */
+  .od-titlebar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 2px; }
+  .od-id { font-family: var(--font-mono); font-size: 0.95rem; color: var(--color-gray-2); }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; }
+  @media (max-width: 760px) { .meta-grid { grid-template-columns: 1fr 1fr; } }
+  .meta-grid .grp { border-top: 2px solid var(--color-gray-3); padding-top: 9px; margin-top: 4px; }
+  .meta-grid .grp-h { font-size: 0.6rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; color: var(--color-gray-2); margin-bottom: 8px; }
+  .kv2 { display: grid; grid-template-columns: max-content 1fr; gap: 5px 14px; align-items: baseline; }
+  .kv2 .k { color: var(--color-gray-2); font-size: 0.75rem; font-weight: 700; }
+  .kv2 .v { color: #fff; font-size: 0.92rem; }
+  .comment-block { margin-top: 14px; border-left: 3px solid var(--color-primary); background: var(--color-surface-input); padding: 9px 13px; font-size: 0.9rem; font-weight: 300; }
+  .comment-block .cl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--color-gray-2); margin-bottom: 3px; }
+
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 860px) { .pc { grid-template-columns: 1fr; } }
+  .pc ul { margin: 0; padding: 12px 14px; list-style: none; display: flex; flex-direction: column; gap: 7px; border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .pc li { display: block; position: relative; padding-left: 20px; font-size: 13px; font-weight: 300; }
+  .pc b { color: #fff; font-weight: 700; }
+  .pros li::before { content: '✓'; color: var(--color-success); font-weight: 700; position: absolute; left: 0; top: 0; }
+  .cons li::before { content: '✕'; color: #ff6b6b; font-weight: 700; position: absolute; left: 0; top: 0; }
+  .pc .h { font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; padding-left: 0; }
+  .pros .h { color: var(--color-success); } .cons .h { color: #ff6b6b; }
+  .pros .h::before, .cons .h::before { content: none; }
+  .reco { margin-top: 40px; border: 1px solid var(--color-success); background: rgba(35,158,51,0.08); padding: 14px 18px; }
+  .reco h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-success); text-transform: uppercase; letter-spacing: .04em; font-size: 14px; margin: 0 0 8px; }
+  .reco p { margin: 0 0 7px; font-size: 13.5px; font-weight: 300; max-width: 105ch; }
+  .reco b { color: #fff; }
+  .measure-flag { font-size: 11px; font-family: var(--font-mono); color: var(--color-gray-2); margin-top: 8px; }
+  .measure-flag b { color: var(--color-warning); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Audit · /orders/{id} · Kopfbereich „Auftragsdetails"</div>
+  <h1 class="t">Auftragsdetails — Kopf entschlacken</h1>
+  <p class="lead">Der Datenkern (Logo, HUD-Klammern, gerundete Einheits-Badges, blaues ITEM-Badge, neutrale Labels) ist <b>sauber im Kartell-Design</b>. Das Problem ist nicht die Optik, sondern die <b>Dichte</b>: 10 Felder als eine einspaltige Liste + <code>margin-bottom:2rem</code> erzeugen ~640&nbsp;px Kopfhöhe — Status und die bestellten Items liegen weit unter dem Falz. Ziel: gleiche Information, halbe Höhe, klarere Hierarchie.</p>
+
+  <!-- ============ IST ============ -->
+  <div class="variant ist">
+    <div class="vhead"><span class="vnum">IST</span><h2>Aktueller Kopf</h2><span class="vsub">eine 2-spaltige kv-list über 10 Zeilen</span></div>
+    <div class="hud-box">
+      <dl class="kv-list kv-ruled">
+        <dt>ID</dt><dd><span class="od-id" style="color:#fff;">#67</span></dd>
+        <dt>Erstellt am</dt><dd>4.6.2026</dd>
+        <dt>Vergangene Tage</dt><dd><span class="text-warning">16 Tage</span></dd>
+        <dt>Priorität</dt><dd>1</dd>
+        <dt>Bearbeitende Einheit</dt><dd><span class="squadron-badge">AGN</span></dd>
+        <dt>Auftraggeber</dt><dd><span class="squadron-badge">RAG</span></dd>
+        <dt>Handle</dt><dd>RagnarrV, Dimostrazzjo</dd>
+        <dt>Auftragsart</dt><dd><span class="order-kind-badge order-kind-item">Item</span></dd>
+        <dt>Status</dt><dd><select class="od-status-select"><option>In Bearbeitung</option></select></dd>
+        <dt class="kv-row-wide">Kommentar</dt>
+        <dd class="kv-row-wide">Grundversorgung von FPS-Waffen für die Staffel Ragnar</dd>
+      </dl>
+    </div>
+    <p class="measure-flag">Kopfhöhe ≈ <b>640 px</b> · „Bestellte Items" beginnt erst danach</p>
+  </div>
+
+  <!-- ============ VORSCHLAG A ============ -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">A</span><h2>Facts-Bar + gruppierte Meta-Karte</h2><span class="vsub">Schlüsselwerte oben, Rest in 3 logischen Gruppen</span></div>
+    <div class="hud-box" style="padding:0;">
+      <div class="od-head" style="padding:14px 16px 12px;">
+        <div class="od-titlebar"><h3>Auftrag #67</h3><span class="order-kind-badge order-kind-item">Item</span><span class="od-status st-prog">In Bearbeitung</span></div>
+        <div class="od-actions">
+          <button class="btn btn-ghost btn-xs2">Zurück</button>
+          <button class="btn btn-outline btn-xs2"><svg class="krt-icon"><use href="#i-edit"/></svg> Items bearbeiten</button>
+          <button class="btn btn-quiet-danger btn-xs2"><svg class="krt-icon"><use href="#i-trash"/></svg> Löschen</button>
+        </div>
+      </div>
+      <div class="facts-bar">
+        <span><span class="fact-k">Erstellt</span><span class="fact-v">04.06.2026</span></span>
+        <span><span class="fact-k">Vergangen</span><span class="fact-v" style="color:var(--color-warning);">16 Tage</span></span>
+        <span><span class="fact-k">Priorität</span><span class="fact-v">1</span></span>
+        <span><span class="fact-k">Auftraggeber</span><span class="fact-v"><span class="squadron-badge">RAG</span></span></span>
+        <span><span class="fact-k">Bearbeitet von</span><span class="fact-v"><span class="squadron-badge">AGN</span></span></span>
+        <span><span class="fact-k">Status</span><span class="fact-v"><span class="od-status st-prog">In Bearbeitung</span></span></span>
+      </div>
+      <div style="padding:14px 16px 16px;">
+        <div class="meta-grid">
+          <div class="grp"><div class="grp-h">Auftrag</div>
+            <div class="kv2"><span class="k">ID</span><span class="v" style="font-family:var(--font-mono);">#67</span>
+              <span class="k">Art</span><span class="v"><span class="order-kind-badge order-kind-item">Item</span></span>
+              <span class="k">Priorität</span><span class="v">1</span></div></div>
+          <div class="grp"><div class="grp-h">Zeit</div>
+            <div class="kv2"><span class="k">Erstellt</span><span class="v">04.06.2026</span>
+              <span class="k">Vergangen</span><span class="v" style="color:var(--color-warning);">16 Tage</span></div></div>
+          <div class="grp"><div class="grp-h">Beteiligte</div>
+            <div class="kv2"><span class="k">Auftraggeber</span><span class="v"><span class="squadron-badge">RAG</span></span>
+              <span class="k">Einheit</span><span class="v"><span class="squadron-badge">AGN</span></span>
+              <span class="k">Handle</span><span class="v">RagnarrV, Dimostrazzjo</span></div></div>
+        </div>
+        <div class="comment-block"><div class="cl">Kommentar</div>Grundversorgung von FPS-Waffen für die Staffel Ragnar</div>
+        <div style="margin-top:16px; display:flex; align-items:center; gap:12px;">
+          <span class="grp-h" style="margin:0;">Status setzen</span>
+          <select class="od-status-select" style="min-height:36px;"><option>In Bearbeitung</option><option>Offen</option><option>Abgeschlossen</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cut"></div>
+    <table class="data-table">
+      <thead><tr><th>Item</th><th>Bauplan</th><th>Anzahl</th><th>Geliefert</th><th>Ausstehend</th></tr></thead>
+      <tbody>
+        <tr><td>A03 Sniper Rifle</td><td style="font-family:var(--font-mono); font-size:.78rem; color:var(--color-gray-2);">BP_CRAFT_gmni_sniper_ballistic_01</td><td>5</td><td>0</td><td class="text-warning">5</td></tr>
+        <tr><td>P6-LR Sniper Rifle</td><td style="font-family:var(--font-mono); font-size:.78rem; color:var(--color-gray-2);">BP_CRAFT_behr_sniper_ballistic_01</td><td>5</td><td>0</td><td class="text-warning">5</td></tr>
+      </tbody>
+    </table>
+    <p class="measure-flag">Kopfhöhe ≈ <b style="color:var(--color-success);">300 px</b> · Items ~340 px früher sichtbar</p>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>~Halbe Kopfhöhe</b> — Items rücken über den Falz.</li>
+        <li>Facts-Bar beantwortet die häufigsten Fragen (Alter, Prio, Status, wer) ohne Scrollen — bestehendes DS-Idiom (<code>.facts-bar</code>).</li>
+        <li>Logische Gruppen (Auftrag / Zeit / Beteiligte) statt undifferenzierter 10er-Liste.</li>
+        <li>Status doppelt: als Anzeige oben (jeder) + als Select unten (Logistiker) — wie heute rollengetrennt.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li>Status erscheint zweimal (Anzeige + Editor) — bewusst, kann aber redundant wirken.</li>
+        <li>3-Spalten-Grid braucht Umbruch-Regeln für schmale Viewports (enthalten).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ VORSCHLAG B ============ -->
+  <div class="variant">
+    <div class="vhead"><span class="vnum">B</span><h2>Kompakt, einspaltig-zweispaltig</h2><span class="vsub">ohne Facts-Bar — minimaler Eingriff, nur kv-list 2-spaltig</span></div>
+    <div class="hud-box">
+      <div class="od-titlebar" style="margin-bottom:14px;"><h3 style="font-size:16px;">Auftrag #67</h3><span class="order-kind-badge order-kind-item">Item</span><span class="od-status st-prog">In Bearbeitung</span><span style="margin-left:auto;" class="od-id">erstellt 04.06.2026 · <span style="color:var(--color-warning);">16 Tage</span></span></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 40px;">
+        <div class="kv2">
+          <span class="k">Priorität</span><span class="v">1</span>
+          <span class="k">Auftraggeber</span><span class="v"><span class="squadron-badge">RAG</span></span>
+          <span class="k">Bearb. Einheit</span><span class="v"><span class="squadron-badge">AGN</span></span>
+        </div>
+        <div class="kv2">
+          <span class="k">Handle</span><span class="v">RagnarrV, Dimostrazzjo</span>
+          <span class="k">Status</span><span class="v"><select class="od-status-select" style="min-height:34px; padding-top:.3rem; padding-bottom:.3rem;"><option>In Bearbeitung</option></select></span>
+        </div>
+      </div>
+      <div class="comment-block"><div class="cl">Kommentar</div>Grundversorgung von FPS-Waffen für die Staffel Ragnar</div>
+    </div>
+    <p class="measure-flag">Kopfhöhe ≈ <b style="color:var(--color-success);">270 px</b> · kleinster Umbau (nur Kopf-Markup, keine neuen DS-Teile)</p>
+    <div class="pc">
+      <ul class="pros"><li class="h">Vorteile</li>
+        <li><b>Kleinster Eingriff:</b> nur die kv-list im Header wird 2-spaltig + Titelzeile — keine neue Komponente.</li>
+        <li>Datum/Alter wandern als Sekundärinfo in die Titelzeile (rechts).</li>
+        <li>Ruhig, ohne doppelten Status.</li>
+      </ul>
+      <ul class="cons"><li class="h">Nachteile</li>
+        <li>Keine Facts-Bar → Schlüsselwerte etwas weniger plakativ als in A.</li>
+        <li>Bei sehr vielen Feldern skaliert die Gruppierung aus A besser.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reco">
+    <h3>Empfehlung</h3>
+    <p><b>Vorschlag A.</b> Die Facts-Bar (bereits im DS) trägt genau die Werte, die man beim Öffnen eines Auftrags zuerst sucht — Alter, Priorität, beteiligte Einheiten, Status — und die gruppierte Meta-Karte halbiert die Kopfhöhe, sodass die bestellten Items über den Falz rücken. <b>B</b> ist der risikoarme Zwischenschritt, falls nur ein kleiner PR gewünscht ist (reines Kopf-Markup, keine neuen Bausteine).</p>
+    <p>Beibehalten in beiden: Logo-/HUD-Klammern, gerundete Einheits-Badges, blaues ITEM-Badge, neutrale Labels, der rollengetrennte Status-Select (Logistiker editiert, alle anderen sehen die Anzeige), der AJAX-Header-Swap (<code>#order-header-results</code>) und die UTC→Lokalzeit-Spans. Keine neuen Farben, kein zusätzliches Orange auf Datenwerten.</p>
+  </div>
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+</body>
+</html>

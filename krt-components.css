@@ -675,6 +675,27 @@ input[type="radio"]:checked::after {
 .facts-bar .fact-k { color: var(--color-gray-2); text-transform: uppercase; font-size: 0.62rem; letter-spacing: .08em; font-weight: var(--fw-bold); margin-right: 5px; }
 .facts-bar .fact-v { color: var(--color-white); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
 
+/* ------------------------------------------------------- META GROUP GRID -- */
+/* Detail-page header that would otherwise be a tall single-column kv-list.
+   Group related fields into 2–3 labelled columns so the header collapses to
+   ~half height and the page's primary content rises above the fold. Pair with
+   a .facts-bar (high-signal values) + a status pill in the title row.
+   Comment/description goes in .annotation, not as another kv row. */
+.meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; }
+@media (max-width: 760px) { .meta-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .meta-grid { grid-template-columns: 1fr; } }
+.meta-grid .meta-group { border-top: 2px solid var(--color-gray-3); padding-top: 9px; margin-top: 4px; }
+.meta-grid .meta-group-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: .12em; font-weight: var(--fw-bold); color: var(--color-gray-2); margin-bottom: 8px; }
+/* compact two-column key/value used inside a meta-group (denser than .kv-list) */
+.kv-compact { display: grid; grid-template-columns: max-content 1fr; gap: 5px 14px; align-items: baseline; }
+.kv-compact .kv-key { color: var(--color-gray-2); font-size: 0.75rem; font-weight: var(--fw-bold); }
+.kv-compact .kv-val { color: var(--color-white); font-size: 0.92rem; overflow-wrap: anywhere; }
+
+/* Annotation block — a labelled note/comment with an orange left rule.
+   For free-text that shouldn't compete with structured kv data. */
+.annotation { border-left: 3px solid var(--color-primary); background: var(--color-surface-input); padding: 9px 13px; font-weight: 300; white-space: pre-wrap; }
+.annotation .annotation-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: .1em; font-weight: var(--fw-bold); color: var(--color-gray-2); margin-bottom: 3px; }
+
 /* ---------------------------------------------------------------- MODAL -- */
 /* KRT modal: surface + orange top edge + HUD corner brackets on a blurred
    scrim. Rules: exactly ONE filled CTA per modal (right), Cancel = .btn-ghost,
@@ -814,3 +835,72 @@ tr.is-inert td { opacity: .5; }
    standard click-confirm modal. */
 .krt-modal .confirm-input { width: 100%; box-sizing: border-box; background: var(--color-surface-input); color: var(--color-gray-1); border: var(--border-hairline); padding: 7px 9px; font-size: 0.8rem; margin-top: 8px; font-family: var(--font-body); }
 .krt-modal .confirm-input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+
+/* ====================================================================== */
+/* EINSATZ / MISSION OVERVIEW PATTERNS                                     */
+/* Canonised from the participant-overview redesign (#818). A member must  */
+/* grasp an Einsatz in ~10s: status, when/where/who, free slots, the one   */
+/* sign-up action, the run order. Three building blocks below.            */
+/* ====================================================================== */
+
+/* ------------------------------------------------------ STATUS BADGE (LG) -- */
+/* The page-level lifecycle marker for a detail header — louder than the
+   row-level .status-pill. A square block (brand has zero radius): a 3px
+   left edge + a square status dot + uppercase enum. The hue is carried by
+   the same status-* classes (info/success/warning/gray/danger) used on the
+   pill, applied here against a faint tint fill so it reads at a glance from
+   across the header. Pair with the title, never with body data. */
+.status-badge { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0.85rem; font-family: var(--font-headline); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.82rem; line-height: 1; color: var(--color-gray-1); background: var(--color-surface-input); border: var(--border-hairline); border-left: 3px solid currentColor; }
+.status-badge::before { content: ''; width: 10px; height: 10px; background: currentColor; flex: 0 0 auto; }
+.status-badge .status-badge-text { color: var(--color-white); }
+/* hue per lifecycle state — reuse the pill semantics. The element's text
+   color drives the dot + left edge; the label stays bright white. */
+.status-badge.status-planned   { color: var(--color-info-text);    background: rgba(53,93,220,0.10); }
+.status-badge.status-active    { color: var(--color-success-text); background: rgba(35,158,51,0.10); }
+.status-badge.status-briefing  { color: var(--color-warning);      background: rgba(255,210,63,0.10); }
+.status-badge.status-completed { color: var(--color-gray-1);       background: var(--color-surface-input); }
+.status-badge.status-cancelled { color: var(--color-danger-text);  background: rgba(163,0,10,0.12); }
+
+/* -------------------------------------------------------- ATTENDANCE ------ */
+/* Participation is OPEN-ENDED — an Einsatz has no maximum and no fixed slots,
+   so the overview never shows "free slots" or a name list. It answers one
+   question instead: how many signed up, and how many of them have checked in.
+   A big registered headcount + a "davon Y eingecheckt" sub-line, with an
+   optional check-in meter (green = eingecheckt, gray track = ausstehend).
+   Orange is NOT spent here — it stays on the Anmelden CTA beside it. */
+.attendance { display: flex; flex-direction: column; gap: 0.4rem; min-width: 200px; }
+.attendance-count { display: flex; align-items: baseline; gap: 0.5rem; }
+.attendance-count .att-n { font-family: var(--font-headline); font-weight: var(--fw-black); font-size: 1.9rem; line-height: 1; color: var(--color-white); font-variant-numeric: tabular-nums; }
+.attendance-count .att-label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; font-weight: var(--fw-bold); color: var(--color-gray-2); }
+.attendance-sub { font-size: 0.82rem; color: var(--color-gray-1); }
+.attendance-sub b { color: var(--color-success-text); font-variant-numeric: tabular-nums; }
+/* optional check-in progress: eingecheckt (green) of total registered (track) */
+.attendance-meter { height: 8px; background: var(--color-surface-input); border: var(--border-hairline); display: flex; overflow: hidden; }
+.attendance-meter i { display: block; height: 100%; background: var(--color-success); }
+
+/* ----------------------------------------------------------- ABLAUF STEPS - */
+/* The run order ("Durchführung") as a numbered, scannable checklist instead of
+   a prose paragraph — the single biggest readability win in #818. An ordered
+   list with a square step token + a connecting rail; an optional time/where on
+   the right. States: --done (past, green check), --now (current phase, orange
+   ring + faint tint), default (upcoming). Built as <ol> so it stays a list for
+   AT and degrades to "1. 2. 3." with no CSS. */
+.ablauf { list-style: none; margin: 0; padding: 0; counter-reset: ablauf; }
+.ablauf .step { position: relative; display: flex; align-items: flex-start; gap: 0.85rem; padding: 0 0 1.1rem 0; counter-increment: ablauf; }
+.ablauf .step:last-child { padding-bottom: 0; }
+/* connecting rail between tokens */
+.ablauf .step:not(:last-child)::before { content: ''; position: absolute; left: 14px; top: 30px; bottom: 0; width: 2px; background: var(--color-gray-3); }
+.ablauf .step-num { flex: 0 0 auto; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-gray-2); background: var(--color-bg-black); color: var(--color-gray-1); font-family: var(--font-headline); font-weight: var(--fw-bold); font-size: 0.9rem; font-variant-numeric: tabular-nums; position: relative; z-index: 1; }
+.ablauf .step-num::before { content: counter(ablauf); }
+.ablauf .step-body { display: flex; flex-direction: column; gap: 0.15rem; padding-top: 0.25rem; min-width: 0; }
+.ablauf .step-title { color: var(--color-white); font-weight: var(--fw-bold); }
+.ablauf .step-meta { font-size: 0.76rem; color: var(--color-gray-2); }
+.ablauf .step-meta .data-value { font-size: 0.72rem; padding: 0.05rem 0.4rem; }
+/* done — completed phase */
+.ablauf .step--done .step-num { border-color: var(--color-success); color: var(--color-success-text); background: rgba(35,158,51,0.10); }
+.ablauf .step--done .step-num::before { content: '✔'; font-size: 0.85rem; }
+.ablauf .step--done .step-title { color: var(--color-gray-1); }
+.ablauf .step--done:not(:last-child)::before { background: var(--color-success); }
+/* now — the current phase, the one thing to look at */
+.ablauf .step--now .step-num { border-color: var(--color-primary); color: var(--color-primary); box-shadow: var(--glow-primary); }
+.ablauf .step--now .step-title { color: var(--color-primary); }

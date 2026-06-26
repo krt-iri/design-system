@@ -215,6 +215,25 @@ under `proposals/mission-*.html` and the implementation order
   for wipe-reset-grade actions). Built for the bank epic (#556) — mocks under
   `proposals/bank-*.html`.
   Specimens: `preview/components-kpi-sparkline.html`, `preview/components-bank-patterns.html`.
+- **Einsatz overview patterns** — the participant-facing overview of an *Einsatz*
+  (a single mission; an Operation rolls several up). Built so a member grasps it
+  in ~10s: `.status-badge` (+ `status-planned/-active/-briefing/-completed/-cancelled`)
+  is the loud page-level lifecycle marker (louder than the row-level
+  `.status-pill`); `.attendance` / `.attendance-meter` shows participation —
+  **open-ended, no maximum and no fixed slots**, so the overview never lists
+  names or "free slots", only the registered headcount and how many of them have
+  checked in (green meter = eingecheckt, gray track = ausstehend; orange stays on
+  the CTA, never the meter); `.ablauf` / `.step` (+ `--done` / `--now`) renders
+  the run order ("Durchführung") as a numbered, scannable `<ol>` checklist
+  instead of prose. One filled `.btn--cta` ("Anmelden") in the header/hero only.
+  Built for issue **#818** — final/locked design (Variante B · Dashboard-Grid):
+  `proposals/einsatz-uebersicht-final.html`; the 3-variant exploration
+  (Briefing-Karte, Dashboard-Grid, role-view) stays at
+  `proposals/einsatz-uebersicht-varianten.html`.
+  The "Mission auf einen Blick" briefing is a fixed 6-field key/value table:
+  Ziel (free text, max 250), Teamspeak (time), Serverjoin (time), Treffpunkt
+  (free text), Dauer (computed = Ende − Teamspeak), Einsatzleiter (username).
+  Specimen: `preview/components-einsatz-overview.html`.
 
 ### Button icons
 

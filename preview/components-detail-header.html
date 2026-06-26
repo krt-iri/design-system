@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Detail header (meta-group)" subtitle="Facts-Bar + gruppierte Meta-Karte statt langer kv-list" viewport="700x300" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 16px 18px; }
+  .krt-icon { width: 1em; height: 1em; fill: none; }
+  .od-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 0 0 10px; }
+  .od-title h3 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: .05em; font-size: 15px; margin: 0; }
+  .badge-item { display: inline-flex; padding: 0.1rem 0.6rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--color-info); color: var(--color-info); }
+  .sb { display: inline-flex; padding: 0.1rem 0.55rem; border: 1px solid var(--color-primary); border-radius: 999px; color: var(--color-primary); font-size: 0.7rem; font-weight: 700; }
+  .od-status { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-headline); font-size: 0.7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-warning); }
+  .od-status::before { content: ''; width: 8px; height: 8px; background: var(--color-warning); }
+</style>
+</head>
+<body>
+  <p class="pv-label">Detail-Kopf — Titelzeile + Facts-Bar + 3 Meta-Gruppen + Annotation</p>
+  <div class="hud-box" style="padding:0;">
+    <div class="od-title" style="padding:12px 14px 0;"><h3>Auftrag #67</h3><span class="badge-item">Item</span><span class="od-status">In Bearbeitung</span></div>
+    <div class="facts-bar" style="margin-top:10px;">
+      <span><span class="fact-k">Vergangen</span><span class="fact-v" style="color:var(--color-warning);">16 Tage</span></span>
+      <span><span class="fact-k">Priorität</span><span class="fact-v">1</span></span>
+      <span><span class="fact-k">Auftraggeber</span><span class="fact-v"><span class="sb">RAG</span></span></span>
+      <span><span class="fact-k">Einheit</span><span class="fact-v"><span class="sb">AGN</span></span></span>
+    </div>
+    <div style="padding:12px 14px 14px;">
+      <div class="meta-grid">
+        <div class="meta-group"><div class="meta-group-title">Auftrag</div>
+          <div class="kv-compact"><span class="kv-key">ID</span><span class="kv-val" style="font-family:var(--font-mono);">#67</span><span class="kv-key">Art</span><span class="kv-val"><span class="badge-item">Item</span></span></div></div>
+        <div class="meta-group"><div class="meta-group-title">Zeit</div>
+          <div class="kv-compact"><span class="kv-key">Erstellt</span><span class="kv-val">04.06.2026</span><span class="kv-key">Vergangen</span><span class="kv-val" style="color:var(--color-warning);">16 Tage</span></div></div>
+        <div class="meta-group"><div class="meta-group-title">Beteiligte</div>
+          <div class="kv-compact"><span class="kv-key">Handle</span><span class="kv-val">RagnarrV, Dimostrazzjo</span></div></div>
+      </div>
+      <div class="annotation" style="margin-top:12px;"><div class="annotation-label">Kommentar</div>Grundversorgung von FPS-Waffen für die Staffel Ragnar</div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:10px;">.meta-grid &gt; .meta-group(.meta-group-title) · .kv-compact · .annotation — halbiert die Kopfhöhe einer langen kv-list.</p>
+</body>
+</html>
