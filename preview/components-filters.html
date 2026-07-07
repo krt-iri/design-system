@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Filter & Suche" subtitle="Multi-Select, Combobox, Autocomplete, SCU-Hint" viewport="700x440" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+  .fld-cap { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-2); margin-bottom: 7px; }
+  /* Specimen: render the normally-absolute popovers in flow so the static
+     thumbnail shows them without clipping. */
+  .multi-select-options { position: static; }
+  .krt-combobox__listbox { position: static; box-shadow: none; }
+  .autocomplete-items { position: static; }
+  /* Specimen: force the hover-only SCU tooltip visible, with room above it. */
+  .scu-demo { margin-top: 46px; }
+  .scu-demo .scu-hint__bubble { opacity: 1; visibility: visible; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Filter- & Such-Komponenten</p>
+  <div class="grid">
+    <div>
+      <span class="fld-cap">Multi-Select (offen)</span>
+      <div class="multi-select-container">
+        <div class="multi-select-header"><span class="selected-text">Agricium, Laranite</span></div>
+        <div class="multi-select-options open">
+          <label class="multi-select-option">Agricium <input type="checkbox" checked></label>
+          <label class="multi-select-option">Laranite <input type="checkbox" checked></label>
+          <label class="multi-select-option">Titanium <input type="checkbox"></label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="fld-cap">Searchable Select · Combobox</span>
+      <div class="krt-combobox">
+        <input class="krt-combobox__input" type="text" value="quan" aria-label="Material suchen">
+        <ul class="krt-combobox__listbox" role="listbox">
+          <li class="krt-combobox__option krt-combobox__option--active" role="option"><mark>Quan</mark>tanium</li>
+          <li class="krt-combobox__option" role="option" aria-selected="true"><mark>Quan</mark>tanium-Erz</li>
+          <li class="krt-combobox__notice">Weiter tippen …</li>
+        </ul>
+      </div>
+    </div>
+    <div class="scu-demo">
+      <span class="fld-cap">SCU-Hint Tooltip</span>
+      <label class="form-label-sm" style="display:inline-flex;align-items:center;">Menge<span class="scu-hint" tabindex="0">?<span class="scu-hint__bubble">Dezimale SCU erlaubt: cSCU = 0,01&nbsp;SCU, µSCU = 0,001&nbsp;SCU.</span></span></label>
+      <input type="number" value="128" style="width:120px;margin-top:6px;">
+    </div>
+    <div>
+      <span class="fld-cap">Autocomplete</span>
+      <div class="autocomplete-items">
+        <div class="autocomplete-active">Stanton · ARC-L1</div>
+        <div>Stanton · CRU-L1</div>
+        <div>Pyro · Ruin Station</div>
+      </div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:16px;">.multi-select-* · .krt-combobox* (--active, [aria-selected], &lt;mark&gt;, __notice) · .scu-hint + __bubble · .autocomplete-items / .autocomplete-active</p>
+</body>
+</html>

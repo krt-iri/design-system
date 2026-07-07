@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Presence & async" subtitle="Ladeanzeige, Live-Präsenz, Live-Sync-Pill" viewport="700x300" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 18px 20px; }
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+  .demo-head { display: inline-flex; align-items: center; }
+  .demo-head h4 { margin: 0; font-family: var(--font-headline); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-gray-1); font-size: 13px; }
+  /* the pill is position:fixed in the app — pin it inline for the specimen */
+  .mission-livesync-pill { position: static; }
+</style>
+</head>
+<body>
+  <p class="pv-label">Async-Feedback & Kollaborations-Präsenz</p>
+  <div class="stack">
+    <div class="krt-loading-indicator"><span class="krt-spinner"></span><span class="krt-loading-label">Aktualisiere Ergebnisse …</span></div>
+    <div class="demo-head"><h4>Crew-Planung</h4><span class="krt-presence-indicator"><span class="krt-presence-dot"></span><span class="krt-presence-count">2</span>&nbsp;bearbeiten</span></div>
+    <div><span class="mission-livesync-pill">↻&nbsp;Aktualisieren</span></div>
+  </div>
+  <p class="pv-mono" style="margin-top:16px;">.krt-loading-indicator + .krt-spinner · .krt-presence-indicator (-dot/-count) · .mission-livesync-pill. Reine Awareness — blockiert keine Eingabe.</p>
+</body>
+</html>

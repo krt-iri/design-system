@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meine Blueprints — DS-Redesign (/personal-inventory/blueprints)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  html, body { margin: 0; }
+  body { background: var(--color-bg-black); background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); padding: 26px 24px 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+
+  /* doc callout */
+  .delta { border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-bg-dark-gray); padding: 13px 16px; font-size: 12.5px; line-height: 1.6; margin-bottom: 22px; }
+  .delta b { color: var(--color-white); }
+  .delta code { font-family: var(--font-mono); color: var(--color-accent-light); font-size: 11.5px; }
+  .delta .lbl { display:inline-flex; align-items:center; gap:6px; color: var(--color-primary); font-weight:700; text-transform:uppercase; letter-spacing:.08em; font-size:11px; margin-bottom:6px; }
+
+  /* page head (greeting) — note the FIX: neutral labels, hairline (not full orange) */
+  .greeting { padding: 16px 20px; }
+  .bp-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+  .bp-head h1 { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: .05em; font-size: 22px; margin: 0; }
+  .bp-head .krt-subtitle { margin: 4px 0 0; color: var(--color-gray-2); font-size: 13px; font-weight: 300; }
+  .bp-addbar { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; }
+  .bp-search { position: relative; min-width: 260px; }
+  .bp-search input { width: 100%; box-sizing: border-box; min-height: 44px; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1); padding: 0 12px 0 38px; font-family: var(--font-body); }
+  .bp-search input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .bp-search .si { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-gray-2); display: inline-flex; pointer-events: none; }
+  .bp-search .si .krt-icon { width: 16px; height: 16px; }
+  .staging { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .staging .sl { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-2); }
+  .chip .chip-x { background: none; border: none; color: inherit; cursor: pointer; font-size: 13px; line-height: 1; padding: 0 0 0 2px; display: inline-flex; }
+
+  /* craft toolbar */
+  .craft-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 16px 0 0; }
+  .ref-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; color: var(--color-gray-1); font-size: 13px; }
+  .ref-toggle input { accent-color: var(--color-primary); width: 16px; height: 16px; }
+  .craft-hint { color: var(--color-gray-2); font-size: 11.5px; }
+  /* refinery toggle now lives INSIDE the collection box as a toolbar row */
+  .bp-box-toolbar { margin: 0 0 12px; padding-bottom: 12px; border-bottom: 1px solid var(--color-gray-3); }
+
+  /* collection wrapper — FIX: hud-box hairline, not full orange border */
+  .collection { margin-top: 16px; }
+
+  /* master list filter + rows */
+  .bp-master-filter { padding: 8px; border-bottom: 1px solid var(--color-gray-3); }
+  .bp-master-filter input { width: 100%; box-sizing: border-box; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1); padding: 7px 9px; min-height: 40px; font-family: var(--font-body); }
+  .bp-master-filter input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .master-rows { max-height: 420px; overflow-y: auto; }
+  /* FIX: note pencil as a real krt-icon; craft badge moved into the row (recognizability win) */
+  .master-row .mr-right { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+  .mr-note { color: var(--color-primary); display: inline-flex; }
+  .mr-note .krt-icon { width: 14px; height: 14px; }
+  .craft-badge { font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .03em; padding: 1px 6px; border: 1px solid transparent; white-space: nowrap; }
+  .craft-badge.ok { color: var(--color-success-text); border-color: rgba(46,188,61,.35); background: rgba(46,188,61,.10); }
+  .craft-badge.miss { color: var(--color-warning); border-color: rgba(255,210,63,.35); background: rgba(255,210,63,.10); }
+  .craft-badge.muted { color: var(--color-gray-2); border-color: var(--color-gray-3); }
+
+  /* detail pane */
+  .detail-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  .detail-name { font-weight: 700; color: var(--color-white); font-size: 1rem; }
+  .detail-acquired { font-size: .72rem; color: var(--color-gray-2); margin-top: 2px; }
+  .detail-actions { display: flex; gap: 5px; }
+  /* craft summary */
+  .craft-sum { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); margin-bottom: 14px; }
+  .craft-sum .cs-k { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--color-gray-2); font-weight: 700; }
+  .craft-sum .cs-v { font-weight: 700; color: var(--color-success-text); font-size: 14px; }
+  .craft-mats { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+  .craft-mat { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; padding: 5px 0; border-bottom: 1px solid rgba(40,40,40,.6); }
+  .craft-mat:last-child { border-bottom: none; }
+  .craft-mat.short .cm-name { color: var(--color-warning); }
+  .cm-figs { display: flex; gap: 14px; font-variant-numeric: tabular-nums; color: var(--color-gray-1); flex: none; }
+  .cm-q { color: var(--color-info-text); }
+  .detail-note { margin: 0; font-size: .82rem; background: var(--color-surface-input); border-left: 3px solid var(--color-primary); padding: 8px 11px; white-space: pre-line; }
+
+  /* the two before/after swatches */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  @media (max-width: 720px) { .ba { grid-template-columns: 1fr; } }
+  .ba .cell { border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); padding: 14px; }
+  .ba .cap { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin: 0 0 10px; }
+  .ba .cap.before { color: var(--color-danger-text, #ff6b6b); }
+  .ba .cap.after { color: var(--color-success-text); }
+  /* "before" sample styles (the deviations) */
+  .smp-label-orange { color: var(--color-primary); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+  .smp-box-orange { border: 1px solid var(--color-primary); padding: 10px; margin-top: 8px; font-size: 12px; }
+  .smp-chip-orange { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--color-primary); background: var(--color-surface-input); color: var(--color-gray-1); padding: 4px 6px 4px 10px; font-size: 12px; }
+  .smp-toggle-radius { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid var(--color-gray-3); border-radius:4px; color:var(--color-primary); margin-top:8px; }
+  /* "after" sample */
+  .smp-label-neutral { color: var(--color-gray-1); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+  .smp-toggle-square { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid var(--color-gray-3); color:var(--color-primary); margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="delta">
+    <div class="lbl"><svg class="krt-icon"><use href="#i-check"/></svg> DS-Redesign · /personal-inventory/blueprints</div>
+    Die Live-Seite ist bereits modern (Master-Detail + KRT-Modals). Geändert sind nur <b>Hygiene-Punkte</b> aus <code>personal-inventory.css</code>: Labels <b>neutral statt orange</b>, Sammlungs-Box als <b>Haarlinie statt Vollrahmen</b>, Staging als DS-<code>.chip</code>, Radius <b>0</b> — plus ein Erkennbarkeits-Gewinn: der <b>Craftbar-Badge wandert in die Master-Liste</b>. Keine neue Funktion, keine zusätzliche Fläche.
+  </div>
+
+  <!-- BEFORE / AFTER deltas -->
+  <div class="ba">
+    <div class="cell">
+      <p class="cap before">Vorher · Abweichungen</p>
+      <span class="smp-label-orange">Notiz</span>
+      <div class="smp-box-orange">Sammlungs-Box mit <b style="color:var(--color-primary)">vollem Orange-Rahmen</b> · oranges Label oben</div>
+      <div style="margin-top:10px;"><span class="smp-chip-orange">Aegis Gladius <span style="color:var(--color-gray-1)">✕</span></span> <span style="font-size:11px;color:var(--color-gray-2)">eigener <code style="font-size:10px">.krt-bp-chip</code></span></div>
+      <div class="smp-toggle-radius">▸</div> <span style="font-size:11px;color:var(--color-gray-2)">Toggle mit <code style="font-size:10px">radius:4px</code></span>
+    </div>
+    <div class="cell">
+      <p class="cap after">Nachher · DS-konform</p>
+      <span class="smp-label-neutral">Notiz</span>
+      <div class="hud-box" style="padding:10px; margin-top:8px; font-size:12px;">Sammlungs-Box als <b>.hud-box</b> (Haarlinie + Eckbrackets) · neutrales Label</div>
+      <div style="margin-top:10px;"><span class="chip chip--primary">Aegis Gladius <button class="chip-x" aria-label="Entfernen">✕</button></span> <span style="font-size:11px;color:var(--color-gray-2)">DS-<code style="font-size:10px">.chip</code></span></div>
+      <div class="smp-toggle-square">▸</div> <span style="font-size:11px;color:var(--color-gray-2)">Toggle <code style="font-size:10px">radius:0</code></span>
+    </div>
+  </div>
+
+  <!-- ===================== THE IMPROVED PAGE ===================== -->
+
+  <div class="greeting hud-box bp-head">
+    <div>
+      <h1>Meine Blueprints</h1>
+      <p class="krt-subtitle">42 Blueprints · 6 mit Notiz</p>
+    </div>
+    <div>
+      <div class="bp-addbar">
+        <div class="bp-search">
+          <span class="si"><svg class="krt-icon"><use href="#i-search"/></svg></span>
+          <input type="text" placeholder="Blueprint suchen und hinzufügen …">
+        </div>
+        <button class="btn btn--cta"><svg class="krt-icon"><use href="#i-plus"/></svg> Hinzufügen</button>
+        <button class="btn btn-ghost"><svg class="krt-icon"><use href="#i-upload"/></svg> JSON importieren</button>
+      </div>
+      <div class="staging">
+        <span class="sl">Auswahl</span>
+        <span class="chip chip--primary">Aegis Gladius <button class="chip-x" aria-label="Entfernen">✕</button></span>
+        <span class="chip chip--primary">RSI Scout <button class="chip-x" aria-label="Entfernen">✕</button></span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tab-nav" aria-label="Meine Blueprints" style="margin-top:16px;">
+    <a class="tab" href="#" onclick="return false">Items</a>
+    <a class="tab active" href="#" onclick="return false" aria-current="page">Blueprints <span class="tab-count">42</span></a>
+  </nav>
+
+  <div class="collection hud-box" style="padding:14px; margin-top:16px;">
+    <div class="craft-toolbar bp-box-toolbar">
+      <label class="ref-toggle"><input type="checkbox"> Raffinerie-Ertrag einrechnen</label>
+      <span class="craft-hint">Offene &amp; laufende Raffinerie-Aufträge einrechnen</span>
+    </div>
+    <div class="master-detail">
+      <!-- master list -->
+      <div class="master-list">
+        <div class="bp-master-filter">
+          <input type="search" placeholder="Liste filtern …">
+        </div>
+        <div class="master-rows" role="listbox" aria-label="Blueprints">
+          <button class="master-row is-active" role="option" aria-selected="true">
+            <span>Aegis Gladius</span>
+            <span class="mr-right"><span class="craft-badge ok">craftbar</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>Anvil Hornet F7C</span>
+            <span class="mr-right"><span class="mr-note" title="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></span><span class="craft-badge miss">2 fehlen</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>RSI Scout</span>
+            <span class="mr-right"><span class="craft-badge ok">craftbar</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>Drake Cutlass Black</span>
+            <span class="mr-right"><span class="craft-badge miss">1 fehlt</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>MISC Prospector</span>
+            <span class="mr-right"><span class="mr-note" title="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></span><span class="craft-badge ok">craftbar</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>Origin 325a</span>
+            <span class="mr-right"><span class="craft-badge muted">nur Items</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>Crusader Ares Ion</span>
+            <span class="mr-right"><span class="craft-badge miss">3 fehlen</span></span>
+          </button>
+          <button class="master-row" role="option" aria-selected="false">
+            <span>Aegis Sabre</span>
+            <span class="mr-right"><span class="craft-badge ok">craftbar</span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- detail pane -->
+      <div class="detail-pane">
+        <div class="detail-head">
+          <div>
+            <span class="detail-name">Aegis Gladius</span>
+            <div class="detail-acquired">Erhalten am 12.05.2026</div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn btn-ghost btn-icon" title="Notiz bearbeiten" aria-label="Notiz bearbeiten"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+            <button class="btn btn-quiet-danger btn-icon" title="Entfernen" aria-label="Entfernen"><svg class="krt-icon"><use href="#i-trash"/></svg></button>
+          </div>
+        </div>
+
+        <div class="craft-sum">
+          <span class="cs-k">Craftbarkeit</span>
+          <span class="cs-v"><svg class="krt-icon" style="color:var(--color-success-text)"><use href="#i-check"/></svg> Craftbar</span>
+          <span class="craft-hint">limitiert durch Bestand: 3×</span>
+        </div>
+
+        <h2 class="section-title">Zutaten &amp; Stat-Beitrag nach Zutat-Qualität</h2>
+        <div class="craft-mats">
+          <div class="craft-mat"><span class="cm-name">Aluminium</span><span class="cm-figs"><span>240 / 240 SCU</span><span class="cm-q">Q 720</span></span></div>
+          <div class="craft-mat"><span class="cm-name">Titanium</span><span class="cm-figs"><span>120 / 120 SCU</span><span class="cm-q">Q 690</span></span></div>
+          <div class="craft-mat short"><span class="cm-name">Tungsten</span><span class="cm-figs"><span>60 / 80 SCU</span><span class="cm-q">Q 640</span></span></div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="quality-block" style="min-width:0;">
+            <span class="quality-source">Aluminium · Qualität</span>
+            <div class="quality-row">
+              <input type="range" min="0" max="1000" value="720">
+              <span class="quality-value">720 <small>/1000</small></span>
+            </div>
+            <span class="quality-affects">beeinflusst: Hülle ×1.14 · Panzerung ×1.08</span>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:16px;">Notiz</h2>
+        <p class="detail-note">Vom Event-Drop; zweite Variante noch offen.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" fill="none"></circle><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+</svg>
+</body>
+</html>

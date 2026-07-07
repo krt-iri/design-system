@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Einsatz — Alle Seiten (finales Design)</title>
+<title>Operation — Detailseite (finales Design)</title>
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="../krt-components.css">
 <style>
@@ -191,106 +191,73 @@
   <header class="page-head">
     <div class="ph-left">
       <div>
-        <p class="ph-eyebrow">Einsatz · Mining</p>
-        <h1>RIF — Geomole Goes Steinekloppen</h1>
+        <p class="ph-eyebrow">Operation</p>
+        <h1>Tiefbau Yela</h1>
       </div>
-      <span class="badge-ring">RIF</span>
+      <span class="badge-ring">IRI</span>
       <span class="status-badge status-active"><span class="status-badge-text">Läuft</span></span>
     </div>
     <div class="ph-right">
-      <button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-user-plus"/></svg> Jetzt anmelden</button>
       <a class="btn btn-ghost" href="#" onclick="return false"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg> Zurück</a>
     </div>
   </header>
 
   <div class="facts-bar">
-    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-headset"/></svg><span class="fact-k">Teamspeak</span><span class="fact-v">19:30</span></span>
-    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-clock"/></svg><span class="fact-k">Serverjoin</span><span class="fact-v">20:00</span></span>
-    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-clock"/></svg><span class="fact-k">Ende</span><span class="fact-v">22:00</span></span>
-    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-user"/></svg><span class="fact-k">Leiter</span><span class="fact-v">Swing-By</span></span>
-    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-users"/></svg><span class="fact-k">Teilnehmer</span><span class="fact-v">13 <span style="font-size:0.78rem; font-weight:400; color:var(--color-gray-2);">· 8 eingecheckt</span></span></span>
+    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-clock"/></svg><span class="fact-k">Zeitraum</span><span class="fact-v">28.–30.05.</span></span>
+    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-list"/></svg><span class="fact-k">Einsätze</span><span class="fact-v">3</span></span>
+    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-users"/></svg><span class="fact-k">Teilnehmer</span><span class="fact-v">21</span></span>
+    <span class="fact"><svg class="krt-icon"><use href="#krt-icon-user"/></svg><span class="fact-k">Owner</span><span class="fact-v">Swing-By</span></span>
   </div>
 
-  <nav class="tab-nav" role="tablist" aria-label="Einsatz-Seiten">
+  <nav class="tab-nav" role="tablist" aria-label="Operation-Seiten">
     <button class="tab active" role="tab" aria-selected="true" data-tab="uebersicht">Übersicht</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="teilnehmer">Teilnehmer &amp; Einheiten <span class="tab-count">13</span></button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="finanzen">Finanzen &amp; Auszahlung <span class="tab-count">9</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="einsaetze">Einsätze <span class="tab-count">3</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="auszahlung">Auszahlung <span class="tab-count">21</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="finanzen">Finanzen</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="verwaltung">Verwaltung</button>
   </nav>
 
   <main class="content">
 
-    <!-- ============ ÜBERSICHT ============ -->
+    <!-- ÜBERSICHT -->
     <section class="tabpanel active" id="tab-uebersicht" role="tabpanel">
       <div class="grid2">
-        <!-- LINKS: Info-Boxen -->
         <div class="stack">
           <div class="panel">
-            <div class="ph"><span>Mission auf einen Blick</span></div>
+            <div class="ph"><span>Operation auf einen Blick</span></div>
             <div class="pbody">
               <dl class="briefing">
-                <dt>Ziel</dt><dd>Hand- &amp; Vehicle-Minables ab Qualität 700 sammeln — Fokus: Janalite, Hadanite, Beradon.</dd>
-                <dt>Teamspeak</dt><dd>19:30</dd>
-                <dt>Serverjoin</dt><dd>20:00</dd>
-                <dt>Treffpunkt</dt><dd>Lobby „Mining" → Sammelpunkt ARC-L1</dd>
-                <dt>Dauer</dt><dd>2 Std 30 Min</dd>
-                <dt>Einsatzleiter</dt><dd>Swing-By</dd>
+                <dt>Zeitraum</dt><dd>28.05. – 30.05.2026</dd>
+                <dt>Einsätze</dt><dd>3</dd>
+                <dt>Status</dt><dd>Läuft</dd>
+                <dt>Owner</dt><dd>Swing-By</dd>
+                <dt>Gesamtergebnis</dt><dd style="color:var(--color-success-text);">+5.940.000 aUEC</dd>
+                <dt>Gespendet</dt><dd style="color:var(--color-dept-profit,#239E33);">420.000 aUEC</dd>
               </dl>
             </div>
           </div>
           <div class="panel">
-            <div class="ph"><span>Weitere Leads</span></div>
+            <div class="ph"><span>Ergebnis je Einsatz</span></div>
             <div class="pbody">
-              <dl class="briefing">
-                <dt>Einsatzleiter (Stv.)</dt><dd>Hex.07</dd>
-                <dt>Mining Lead</dt><dd>Mara.K</dd>
-                <dt>Eskorte Lead</dt><dd>Dane_88</dd>
-              </dl>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="ph"><span>Funk</span></div>
-            <div class="pbody">
-              <dl class="briefing">
-                <dt>Flottenfunk</dt><dd><span class="data-value data-value--mono">123.450</span></dd>
-              </dl>
-              <p class="subhead"><span>Einheiten-Funk</span></p>
-              <dl class="briefing">
-                <dt>Geomole 1</dt><dd><span class="data-value data-value--mono">45.100</span></dd>
-              </dl>
+              <div class="holder-row"><span class="holder-name">Steinekloppen</span><span class="holder-bar"><i style="width:100%"></i></span><span class="holder-value">+3.260.000</span></div>
+              <div class="holder-row"><span class="holder-name">Konvoi Yela</span><span class="holder-bar"><i style="width:53%"></i></span><span class="holder-value">+1.720.000</span></div>
+              <div class="holder-row"><span class="holder-name">Übergabe ARC-L1</span><span class="holder-bar"><i style="width:30%"></i></span><span class="holder-value">+960.000</span></div>
+              <div class="holder-sum"><span>Gesamt</span><span style="color:var(--color-success-text);">+5.940.000 aUEC</span></div>
             </div>
           </div>
         </div>
-        <!-- RECHTS: Teilnehmer + Ablauf + Kalender -->
         <div class="stack">
           <div class="panel">
-            <div class="ph"><span>Teilnehmer</span></div>
-            <div class="pbody">
-              <div class="attendance">
-                <div class="attendance-count"><span class="att-n">13</span><span class="att-label">Teilnehmer</span></div>
-                <div class="attendance-meter"><i style="width:61.5%"></i></div>
-                <div class="attendance-sub">davon <b>8</b> eingecheckt · 5 ausstehend</div>
-              </div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="ph"><span>Ablauf</span></div>
-            <div class="pbody">
-              <ol class="ablauf">
-                <li class="step step--done"><span class="step-num"></span><span class="step-body"><span class="step-title">Briefing</span><span class="step-meta">TS · <span class="data-value data-value--mono">19:30</span></span></span></li>
-                <li class="step step--done"><span class="step-num"></span><span class="step-body"><span class="step-title">Teameinteilung</span></span></li>
-                <li class="step step--done"><span class="step-num"></span><span class="step-body"><span class="step-title">Abflug zu den Monden</span></span></li>
-                <li class="step step--now"><span class="step-num"></span><span class="step-body"><span class="step-title">Mining</span><span class="step-meta">aktuelle Phase</span></span></li>
-                <li class="step"><span class="step-num"></span><span class="step-body"><span class="step-title">Rückkehr Safespot</span></span></li>
-                <li class="step"><span class="step-num"></span><span class="step-body"><span class="step-title">Materialübergabe</span></span></li>
-                <li class="step"><span class="step-num"></span><span class="step-body"><span class="step-title">Ende</span></span></li>
-              </ol>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="ph"><span>Kalender</span></div>
-            <div class="pbody">
-              <a class="btn btn-outline" href="#" onclick="return false"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Kalender-Eintrag öffnen</a>
+            <div class="ph"><span>Einsätze</span><span class="ph-extra">3</span></div>
+            <div class="pbody" style="padding:0;">
+              <table class="mock">
+                <thead><tr><th>Einsatz</th><th>Status</th><th class="num">Ergebnis</th><th style="text-align:right">Aktion</th></tr></thead>
+                <tbody>
+                  <tr><td class="who">RIF — Geomole Goes Steinekloppen</td><td><span class="status-pill status-active">Läuft</span></td><td class="num" style="color:var(--color-success-text);">+3.260.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a></div></td></tr>
+                  <tr><td class="who">Eskorte Konvoi Yela</td><td><span class="status-pill status-completed">Beendet</span></td><td class="num" style="color:var(--color-success-text);">+1.720.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a></div></td></tr>
+                  <tr><td class="who">Raffinerie-Übergabe ARC-L1</td><td><span class="status-pill status-planned">Geplant</span></td><td class="num" style="color:var(--color-success-text);">+960.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a></div></td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -298,171 +265,108 @@
       <details class="more">
         <summary><svg class="krt-icon"><use href="#krt-icon-chevron-down"/></svg> Detaillierte Beschreibung anzeigen</summary>
         <div class="more-body">
-          <p class="desc">RIF zieht zum Steinekloppen aus: Wir verteilen uns auf die Moles (immer zu zweit), empfangen die ATLS-Geo zum Materialtransport und sammeln Hand- &amp; Vehicle-Minables ab Qualität 700. Fokus auf Janalite, Hadanite und Beradon. Nach dem Mining sammeln wir uns am Safespot, übergeben das Material gebündelt an das Raffinerie-Team und schließen mit Debrief.</p>
+          <p class="desc">Tiefbau Yela bündelt den Mining-Push am Yela-Ring: Steinekloppen mit den Geomoles, eskortierter Konvoi zum Safespot und die Raffinerie-Übergabe an ARC-L1. Finanzen, Auszahlung und Teilnahme werden über alle drei Einsätze zusammengeführt.</p>
         </div>
       </details>
     </section>
 
-    <!-- ============ TEILNEHMER & EINHEITEN ============ -->
-    <section class="tabpanel" id="tab-teilnehmer" role="tabpanel">
-      <div class="secrow">
-        <div class="attendance" style="min-width:260px;">
-          <div class="attendance-count"><span class="att-n">13</span><span class="att-label">Teilnehmer · 8 eingecheckt</span></div>
-          <div class="attendance-meter"><i style="width:61.5%"></i></div>
-        </div>
-        <span class="legend">⠿ ziehen · <b>Klick</b> Person → Klick Ziel = zuweisen · ✎ Bemerkung · Funktion an Bord über Dropdown · keine festen Größen</span>
-      </div>
-      <div class="board">
-        <!-- POOL -->
-        <div class="panel pool-zone">
-          <div class="ph"><span>Ohne Einheit</span><span class="ucount" id="c-pool">0</span></div>
-          <div class="dropzone" id="pool" data-zone="pool">
-            <div class="prow" draggable="true">
-              <span class="grip">⠿</span><span class="ck out" title="Nicht eingecheckt"></span>
-              <div class="pinfo"><div class="l1"><span class="pname">dane_88</span><span class="squadron-badge">RIF</span></div><div class="l2">wünscht Medic <span class="notemark" title="Bemerkung: Kann erst 19:15">✎</span></div></div>
-              <select class="role-sel" title="Funktion an Bord"><option>Medic</option><option>Mole</option><option>Escort</option><option>Hauler</option><option>Scout</option><option>—</option></select>
-              <div class="pact"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Abmelden"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div>
-            </div>
-            <div class="prow" draggable="true">
-              <span class="grip">⠿</span><span class="ck out" title="Nicht eingecheckt"></span>
-              <div class="pinfo"><div class="l1"><span class="pname">vey_2</span><span class="chip chip--muted" style="font-size:8.5px;">Gast</span></div><div class="l2">— <span class="notemark" title="Bemerkung: Gast von hex_07">✎</span></div></div>
-              <select class="role-sel" title="Funktion an Bord"><option>—</option><option>Mole</option><option>Escort</option><option>Hauler</option><option>Scout</option></select>
-              <div class="pact"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Abmelden"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div>
-            </div>
-            <div class="drophint">Hierher ziehen = Zuweisung entfernen</div>
-          </div>
-        </div>
-        <!-- UNITS -->
-        <div class="units">
-          <div class="panel unit" data-unit="mole1">
-            <div class="ph"><span class="uname">GEOMOLE 1 <small>— ARGO MOLE · Swing-By</small></span><span style="display:flex; gap:6px; align-items:center;"><span class="ucount" data-count="0">0</span><button class="btn btn-ghost btn-ic" title="Einheit bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Einheit löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></span></div>
-            <div class="dropzone" data-zone="unit">
-              <div class="prow" draggable="true">
-                <span class="grip">⠿</span><span class="ck in" title="Eingecheckt"></span>
-                <div class="pinfo"><div class="l1"><span class="pname">Swing-By</span><span class="squadron-badge">RIF</span><span class="chip chip--primary" style="font-size:8.5px;">Leitung</span></div><div class="l2">wünscht Pilot</div></div>
-                <select class="role-sel" title="Funktion an Bord"><option>Pilot</option><option>Mole</option><option>Scanner</option><option>Escort</option><option>Hauler</option><option>—</option></select>
-                <div class="pact"><button class="btn btn-ghost btn-ic" title="Check-Out"><svg class="krt-icon"><use href="#krt-icon-logout"/></svg></button><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button></div>
-              </div>
-              <div class="prow" draggable="true">
-                <span class="grip">⠿</span><span class="ck in" title="Eingecheckt"></span>
-                <div class="pinfo"><div class="l1"><span class="pname">Hex.07</span><span class="squadron-badge">RIF</span></div><div class="l2">wünscht Scanner</div></div>
-                <select class="role-sel" title="Funktion an Bord"><option selected="selected">Scanner</option><option>Pilot</option><option>Mole</option><option>Escort</option><option>—</option></select>
-                <div class="pact"><button class="btn btn-ghost btn-ic" title="Check-Out"><svg class="krt-icon"><use href="#krt-icon-logout"/></svg></button><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button></div>
-              </div>
-              <div class="drophint">Teilnehmer hierher ziehen — beliebig viele, Funktion frei wählbar</div>
-            </div>
-          </div>
-          <div class="panel unit" data-unit="escort">
-            <div class="ph"><span class="uname">ESKORTE <small>— Hammerhead · Mara.K</small> <span class="chip chip--warning" style="font-size:9px; margin-left:8px;" title="High Value Unit">HVU</span></span><span style="display:flex; gap:6px; align-items:center;"><span class="ucount" data-count="0">0</span><button class="btn btn-ghost btn-ic" title="Einheit bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Einheit löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></span></div>
-            <div class="dropzone" data-zone="unit">
-              <div class="prow" draggable="true">
-                <span class="grip">⠿</span><span class="ck out" title="Nicht eingecheckt"></span>
-                <div class="pinfo"><div class="l1"><span class="pname">Mara.K</span><span class="squadron-badge">RIF</span></div><div class="l2">wünscht Gunner <span class="notemark" title="Bemerkung: bringt Munition mit">✎</span></div></div>
-                <select class="role-sel" title="Funktion an Bord"><option>Gunner</option><option>Pilot</option><option>Escort</option><option>—</option></select>
-                <div class="pact"><button class="btn btn-success btn-ic" title="Check-In"><svg class="krt-icon"><use href="#krt-icon-login"/></svg></button><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button></div>
-              </div>
-              <div class="drophint">Teilnehmer hierher ziehen — beliebig viele, Funktion frei wählbar</div>
-            </div>
-          </div>
-          <button class="btn btn-ghost btn-xs2" style="align-self:flex-start;"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Einheit hinzufügen</button>
+    <!-- EINSÄTZE -->
+    <section class="tabpanel" id="tab-einsaetze" role="tabpanel">
+      <div class="panel">
+        <div class="ph"><span>Einsätze der Operation</span><button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Einsatz hinzufügen</button></div>
+        <div class="pbody" style="padding:0;">
+          <table class="mock">
+            <thead><tr><th>Einsatz</th><th>Status</th><th>Start</th><th class="num">Teilnehmer</th><th class="num">Ergebnis</th><th style="text-align:right">Aktion</th></tr></thead>
+            <tbody>
+              <tr><td class="who">RIF — Geomole Goes Steinekloppen</td><td><span class="status-pill status-active">Läuft</span></td><td>28.05. · 20:00</td><td class="num">13</td><td class="num" style="color:var(--color-success-text);">+3.260.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a><button class="btn btn-quiet-danger btn-ic" title="Aus Operation entfernen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td class="who">Eskorte Konvoi Yela</td><td><span class="status-pill status-completed">Beendet</span></td><td>29.05. · 19:30</td><td class="num">6</td><td class="num" style="color:var(--color-success-text);">+1.720.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a><button class="btn btn-quiet-danger btn-ic" title="Aus Operation entfernen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+              <tr><td class="who">Raffinerie-Übergabe ARC-L1</td><td><span class="status-pill status-planned">Geplant</span></td><td>30.05. · 21:00</td><td class="num">2</td><td class="num" style="color:var(--color-success-text);">+960.000</td><td><div class="act"><a class="btn btn-ghost btn-xs2" href="einsatz-seiten-final.html"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg> Öffnen</a><button class="btn btn-quiet-danger btn-ic" title="Aus Operation entfernen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- ============ FINANZEN & AUSZAHLUNG ============ -->
-    <section class="tabpanel" id="tab-finanzen" role="tabpanel">
-      <div class="sumstrip">
-        <div class="sum is-total"><div class="sk">Gesamtergebnis</div><div class="sv pos">+2.380.000</div><div class="sd">aUEC · 9 Einträge</div></div>
-        <div class="sum"><div class="sk">Einnahmen</div><div class="sv pos">+2.730.000</div><div class="sd">6 Einträge</div></div>
-        <div class="sum"><div class="sk">Ausgaben</div><div class="sv neg">−350.000</div><div class="sd">3 Einträge · inkl. Raffinerie</div></div>
-        <div class="sum"><div class="sk">Auszahlung / Kopf</div><div class="sv">≈ 183.000</div><div class="sd">aUEC · 13 Teilnehmer</div></div>
+    <!-- AUSZAHLUNG -->
+    <section class="tabpanel" id="tab-auszahlung" role="tabpanel">
+      <div class="alert alert-warning" role="status" style="margin-bottom:18px;">
+        <strong>Vorläufige Werte.</strong> Die Anteile sind noch nicht endgültig, solange nicht alle Einsätze eine tatsächliche Start- und Endzeit haben.
       </div>
-      <div class="grid2">
-        <div class="panel">
-          <div class="ph"><span>Finanzen</span><button class="btn btn--cta btn-xs2"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Neuer Eintrag</button></div>
-          <div class="pbody" style="padding:0;">
-            <table class="mock">
-              <thead><tr><th>Nutzer</th><th>Typ</th><th class="num">Betrag</th><th style="text-align:right">Aktion</th></tr></thead>
-              <tbody>
-                <tr><td class="who">Swing-By</td><td><span class="chip chip--success">Einnahme</span></td><td class="num">+1.820.000</td><td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
-                <tr><td class="who">Mara.K</td><td><span class="chip chip--success">Einnahme</span></td><td class="num">+910.000</td><td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
-                <tr><td class="who">Hex.07</td><td><span class="chip chip--danger">Ausgabe</span></td><td class="num">−112.000</td><td><div class="act"><button class="btn btn-ghost btn-ic" title="Bearbeiten"><svg class="krt-icon"><use href="#krt-icon-edit"/></svg></button><button class="btn btn-quiet-danger btn-ic" title="Löschen"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg></button></div></td></tr>
-                <tr><td class="who">Dane_88</td><td><span class="chip chip--danger">Ausgabe</span></td><td class="num"><a class="reflink" href="#" onclick="return false">−138.000</a></td><td><span class="hint" title="Aus Raffinerieauftrag — dort bearbeiten">auto</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="ph"><span>Auszahlung</span></div>
-          <div class="pbody" style="padding:0;">
-            <table class="mock">
-              <thead><tr><th>Nutzer</th><th class="num">Anteil</th><th>Auszahlungsart</th></tr></thead>
-              <tbody>
-                <tr><td class="who">Swing-By</td><td class="num">100,0 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td></tr>
-                <tr><td class="who">Mara.K</td><td class="num">87,5 %</td><td><select class="pay-sel"><option selected="selected">Spenden</option><option>Auszahlen</option></select></td></tr>
-                <tr><td class="who">Hex.07</td><td class="num">75,0 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td></tr>
-                <tr><td class="who">vey_2 <span class="chip chip--muted" style="font-size:8.5px;">Gast</span></td><td class="num">50,0 %</td><td><select class="pay-sel" disabled="disabled" title="Nur Manager oder die Person selbst"><option>Auszahlen</option></select></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <details class="eco" open="open" style="margin-top:18px;">
-        <summary>Wirtschaft — Raffinerieaufträge &amp; Lager <span style="display:flex; gap:10px; align-items:center;"><span class="chip chip--data" style="font-size:9px;"><strong>2</strong> Aufträge · <strong>3</strong> Lager</span><span class="chev">▶</span></span></summary>
+      <div class="panel">
+        <div class="ph"><span>Auszahlung</span><span class="ph-extra">21 Teilnehmer</span></div>
         <div class="pbody" style="padding:0;">
           <table class="mock">
-            <thead><tr><th>Nutzer</th><th>Standort</th><th>Status</th><th>Material</th><th class="num">Menge</th><th class="num">Qual.</th></tr></thead>
+            <thead><tr><th>Nutzer</th><th class="num">Anteil</th><th>Auszahlungsart</th><th class="num">Betrag</th><th>Bezahlt</th></tr></thead>
             <tbody>
-              <tr><td class="who">Dane_88</td><td>ARC-L1 · Refinery</td><td><span class="chip chip--info">In Arbeit</span></td><td>Janalite</td><td class="num">12.800 SCU</td><td class="num">796</td></tr>
-              <tr><td class="who">Hex.07</td><td>Lorville · L19</td><td><span class="chip chip--success">Fertig</span></td><td>Hadanite</td><td class="num">6.050 SCU</td><td class="num">740</td></tr>
+              <tr><td class="who">Swing-By</td><td class="num">100,0 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td><td class="num">1.420.000</td><td><label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;"><input type="checkbox" checked="checked" style="width:18px;height:18px;accent-color:var(--color-primary);"><span class="hint" style="color:var(--color-dept-profit,#239E33);">Swing-By</span></label></td></tr>
+              <tr><td class="who">Hex.07</td><td class="num">92,0 %</td><td><select class="pay-sel"><option selected="selected">Spenden</option><option>Auszahlen</option></select></td><td class="num">1.180.000</td><td><label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;"><input type="checkbox" style="width:18px;height:18px;accent-color:var(--color-primary);"><span class="hint">offen</span></label></td></tr>
+              <tr><td class="who">Mara.K</td><td class="num">80,0 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td><td class="num">980.000</td><td><label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;"><input type="checkbox" style="width:18px;height:18px;accent-color:var(--color-primary);"><span class="hint">offen</span></label></td></tr>
+              <tr><td class="who">Dane_88</td><td class="num">65,0 %</td><td><select class="pay-sel"><option>Auszahlen</option><option>Spenden</option></select></td><td class="num">720.000</td><td><label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;"><input type="checkbox" checked="checked" style="width:18px;height:18px;accent-color:var(--color-primary);"><span class="hint" style="color:var(--color-dept-profit,#239E33);">Swing-By</span></label></td></tr>
+              <tr><td class="who">vey_2 <span class="chip chip--muted" style="font-size:8.5px;">Gast</span></td><td class="num">50,0 %</td><td><select class="pay-sel" disabled="disabled" title="Nur Manager oder die Person selbst"><option>Auszahlen</option></select></td><td class="num">410.000</td><td><label style="display:inline-flex;align-items:center;gap:7px;"><input type="checkbox" disabled="disabled" style="width:18px;height:18px;"><span class="hint">offen</span></label></td></tr>
+              <tr><td colspan="5" style="color:var(--color-gray-2); font-size:11px;">+ 16 weitere … · Anteil aus Check-in-Zeiten der Einsätze, Auszahlungsart je Person</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p style="margin:14px 0 0; text-align:right; font-family:'Lato',sans-serif; font-weight:700; color:var(--color-dept-profit,#239E33);">Spenden gesamt: 420.000 aUEC</p>
+    </section>
+
+    <!-- FINANZEN -->
+    <section class="tabpanel" id="tab-finanzen" role="tabpanel">
+      <div class="sumstrip">
+        <div class="sum is-total"><div class="sk">Gesamtergebnis</div><div class="sv pos">+5.940.000</div><div class="sd">aUEC · 3 Einsätze</div></div>
+        <div class="sum"><div class="sk">Einnahmen</div><div class="sv pos">+6.610.000</div><div class="sd">14 Einträge</div></div>
+        <div class="sum"><div class="sk">Ausgaben</div><div class="sv neg">−670.000</div><div class="sd">5 Einträge · inkl. Raffinerie</div></div>
+        <div class="sum"><div class="sk">Gespendet</div><div class="sv">420.000</div><div class="sd">aUEC</div></div>
+      </div>
+      <details class="eco" open="open">
+        <summary>RIF — Geomole Goes Steinekloppen <span style="display:flex; gap:10px; align-items:center;"><span style="color:var(--color-success-text);">+3.260.000 aUEC</span><span class="chev">▶</span></span></summary>
+        <div class="pbody" style="padding:0;">
+          <table class="mock">
+            <thead><tr><th>Typ</th><th>Nutzer</th><th>Notiz</th><th class="num">Betrag</th></tr></thead>
+            <tbody>
+              <tr><td><span class="chip chip--success">Einnahme</span></td><td class="who">Swing-By</td><td class="notec">Janalite-Verkauf ARC-L1</td><td class="num" style="color:var(--color-success-text);">+2.480.000</td></tr>
+              <tr><td><span class="chip chip--success">Einnahme</span></td><td class="who">Mara.K</td><td class="notec">Hadanite-Beifang</td><td class="num" style="color:var(--color-success-text);">+920.000</td></tr>
+              <tr><td><span class="chip chip--danger">Ausgabe</span></td><td class="who">Dane_88</td><td class="notec"><a class="reflink" href="#" onclick="return false">Raffinerieauftrag</a></td><td class="num" style="color:var(--color-danger-text,#ff6b6b);">−140.000</td></tr>
             </tbody>
           </table>
         </div>
       </details>
+      <details class="eco" style="margin-top:12px;">
+        <summary>Eskorte Konvoi Yela <span style="display:flex; gap:10px; align-items:center;"><span style="color:var(--color-success-text);">+1.720.000 aUEC</span><span class="chev">▶</span></span></summary>
+        <div class="pbody" style="padding:0;">
+          <table class="mock"><thead><tr><th>Typ</th><th>Nutzer</th><th>Notiz</th><th class="num">Betrag</th></tr></thead>
+            <tbody><tr><td><span class="chip chip--success">Einnahme</span></td><td class="who">Hex.07</td><td class="notec">Eskorten-Prämie</td><td class="num" style="color:var(--color-success-text);">+1.720.000</td></tr></tbody></table>
+        </div>
+      </details>
+      <details class="eco" style="margin-top:12px;">
+        <summary>Raffinerie-Übergabe ARC-L1 <span style="display:flex; gap:10px; align-items:center;"><span style="color:var(--color-success-text);">+960.000 aUEC</span><span class="chev">▶</span></span></summary>
+        <div class="pbody" style="padding:0;">
+          <table class="mock"><thead><tr><th>Typ</th><th>Nutzer</th><th>Notiz</th><th class="num">Betrag</th></tr></thead>
+            <tbody><tr><td><span class="chip chip--success">Einnahme</span></td><td class="who">Swing-By</td><td class="notec">Refinery-Ausschüttung</td><td class="num" style="color:var(--color-success-text);">+960.000</td></tr></tbody></table>
+        </div>
+      </details>
     </section>
 
-    <!-- ============ VERWALTUNG ============ -->
+    <!-- VERWALTUNG -->
     <section class="tabpanel" id="tab-verwaltung" role="tabpanel">
       <div class="grid2">
-        <!-- Details -->
         <div class="panel">
           <div class="ph"><span>Details</span></div>
           <div class="pbody">
-            <div class="fg"><label>Name</label><input type="text" value="RIF — Geomole Goes Steinekloppen"></div>
-            <div class="fg"><label>Ziel (Freitext)</label><textarea maxlength="250" id="zielInput" oninput="document.getElementById('zielCount').textContent=this.value.length">Hand- und Vehicle-Minables ab Qualität 700 sammeln — Fokus: Janalite, Hadanite, Beradon.</textarea><div class="charhint"><span id="zielCount">88</span> / 250 Zeichen</div></div>
-            <div class="fg"><label>Status</label><select><option>Geplant</option><option selected="selected">Läuft</option><option>Beendet</option><option>Abgesagt</option></select></div>
+            <div class="fg"><label>Name</label><input type="text" value="Tiefbau Yela"></div>
             <div class="frow">
-              <div class="fg"><label>Teamspeak</label><input type="time" value="19:30"></div>
-              <div class="fg"><label>Serverjoin</label><input type="time" value="20:00"></div>
+              <div class="fg"><label>Status</label><select><option>Geplant</option><option selected="selected">Läuft</option><option>Beendet</option><option>Abgesagt</option></select></div>
+              <div class="fg"><label>Owner</label><div class="withbtn"><select><option>Swing-By</option><option>Hex.07</option></select><button class="btn btn-outline btn-xs2">Übertragen</button></div></div>
             </div>
-            <div class="frow">
-              <div class="fg"><label>Ende</label><input type="time" value="22:00"></div>
-              <div class="fg"><label>Treffpunkt (Freitext)</label><input type="text" value="Lobby „Mining" → ARC-L1"></div>
-            </div>
-            <div class="frow">
-              <div class="fg"><label>Flottenfunk</label><input type="text" value="123.450"></div>
-              <div class="fg"><label>Bodenfunk</label><input type="text" value="88.200"></div>
-            </div>
+            <div class="fg"><label>Zeitraum</label><input type="text" value="28.05. – 30.05.2026" disabled="disabled"><p class="hint" style="margin-top:5px;">Ergibt sich aus den Start- und Endzeiten der zugeordneten Einsätze.</p></div>
           </div>
         </div>
-
-        <!-- Ablauf-Editor (NEW) + Organisation -->
-        <div class="stack">
-          <div class="panel">
-            <div class="ph"><span>Ablauf — Schritte setzen</span><span class="ph-extra" id="aeCount">7 Schritte</span></div>
-            <div class="pbody">
-              <div class="ae-list" id="aeList"></div>
-              <button class="btn btn-ghost btn-xs2" id="aeAdd" style="margin-top:12px;"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Schritt hinzufügen</button>
-              <p class="hint" style="margin-top:10px;">Reihenfolge per <b>⠿ Ziehen</b> oder ▲▼; Titel + optionale Zeit/Ort frei editierbar. Diese Schritte erscheinen 1:1 als Ablauf-Checkliste in der Übersicht.</p>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="ph"><span>Owner &amp; Manager</span></div>
-            <div class="pbody">
-              <div class="fg"><label>Einsatz-Owner</label><div class="withbtn"><select><option>Swing-By</option><option>Hex.07</option></select><button class="btn btn-outline btn-xs2">Übertragen</button></div></div>
-              <div class="fg" style="margin-bottom:6px;"><label>Manager</label><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="chip chip--data"><strong>Hex.07</strong> <button class="btn btn-quiet-danger" style="min-height:18px; min-width:18px; padding:0 3px; font-size:10px;" title="Entfernen" aria-label="Entfernen">✕</button></span><span class="chip chip--data"><strong>Mara.K</strong> <button class="btn btn-quiet-danger" style="min-height:18px; min-width:18px; padding:0 3px; font-size:10px;" title="Entfernen" aria-label="Entfernen">✕</button></span></div></div>
-              <div class="withbtn"><select><option>rix.o</option><option>dane_88</option></select><button class="btn btn-ghost btn-xs2"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Hinzufügen</button></div>
-            </div>
+        <div class="panel">
+          <div class="ph"><span>Manager</span></div>
+          <div class="pbody">
+            <div class="fg" style="margin-bottom:6px;"><label>Operation-Manager</label><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="chip chip--data"><strong>Hex.07</strong> <button class="btn btn-quiet-danger" style="min-height:18px; min-width:18px; padding:0 3px; font-size:10px;" title="Entfernen" aria-label="Entfernen">✕</button></span><span class="chip chip--data"><strong>Mara.K</strong> <button class="btn btn-quiet-danger" style="min-height:18px; min-width:18px; padding:0 3px; font-size:10px;" title="Entfernen" aria-label="Entfernen">✕</button></span></div></div>
+            <div class="withbtn"><select><option>rix.o</option><option>dane_88</option></select><button class="btn btn-ghost btn-xs2"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg> Hinzufügen</button></div>
           </div>
         </div>
       </div>
@@ -482,34 +386,33 @@
             <button type="button" class="btn btn-ghost btn-xs2" data-md-line="- " title="Liste">• Liste</button>
             <button type="button" class="btn btn-ghost btn-xs2" data-md-link title="Link">Link</button>
           </div>
-          <textarea id="mdInput" class="md-input" rows="9">## Lage
-RIF zieht zum Steinekloppen aus.
+          <textarea id="mdInput" class="md-input" rows="9">## Ziel
+Mining-Push am Yela-Ring, über drei Einsätze zusammengeführt.
 
-## Auftrag
-- Verteilen auf die Moles (immer zu zweit)
-- Empfang ATLS-Geo zum Materialtransport
-- Sammeln ab **Qualität 700** — Fokus _Janalite, Hadanite, Beradon_
+## Ablauf der Operation
+- Steinekloppen mit den Geomoles
+- Eskortierter Konvoi zum Safespot
+- Raffinerie-Übergabe an ARC-L1
 
-## Abschluss
-Sammeln am Safespot, Übergabe ans Raffinerie-Team, kurzer Debrief.</textarea>
+## Abrechnung
+Finanzen und Auszahlung laufen **operationweit** zusammen; Spenden werden separat ausgewiesen.</textarea>
           <div id="mdPreview" class="md-preview" style="display:none;"></div>
-          <p class="hint" style="margin-top:8px;">Markdown wird unterstützt — Überschriften (#), Listen (-), **fett**, _kursiv_, [Text](Link).</p>
         </div>
       </div>
       <div class="footacts">
-        <button class="btn btn-quiet-danger"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg> Einsatz löschen</button>
+        <button class="btn btn-quiet-danger"><svg class="krt-icon"><use href="#krt-icon-trash"/></svg> Operation löschen</button>
         <span class="rolehint">Rollenbasiert sichtbar · eine gefüllte Speichern-CTA</span>
         <button class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg> Speichern</button>
       </div>
     </section>
 
     <div class="lockbar">
-      <span class="tag"><svg class="krt-icon"><use href="#krt-icon-success"/></svg> Finales Design</span>
-      <span>Variante B als Shell für alle Einsatz-Seiten (#818) · Verwaltung mit Ablauf-Editor.</span>
+      <span class="tag"><svg class="krt-icon"><use href="#krt-icon-success"/></svg> Modernisiert</span>
+      <span>Operation-Detailseite im Design der Einsatz-Detailseite (#818-Shell).</span>
     </div>
   </main>
 
-  <!-- ===================== ICON SPRITE ===================== -->
+
   <svg style="display:none" aria-hidden="true">
     <symbol id="krt-icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"></circle><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
     <symbol id="krt-icon-headset" viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path><path d="M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M18 18v1a3 3 0 0 1-3 3h-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path></symbol>

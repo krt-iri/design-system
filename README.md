@@ -18,14 +18,21 @@ produce on-brand interfaces, mockups and assets.
 This system was reverse-engineered from the real product and its official brand
 manual. If you have access, explore these to go deeper:
 
-- **GitHub — `krt-iri/basetool`** · <https://github.com/krt-iri/basetool>
+- **GitHub — `krt-profit/basetool`** · <https://github.com/krt-profit/basetool>
   The full Spring Boot + Thymeleaf app. The visual source of truth is
   `frontend/src/main/resources/static/css/styles.css` (ported here into
-  `colors_and_type.css` + `krt-components.css`), the templates under
+  `colors_and_type.css` + `krt-components.css`) plus the per-feature stylesheets
+  (`bank.css`, `personal-inventory.css`, `org-chart.css`, `materials-overview.css`,
+  `promotion-admin.css`, `leitung.css`), the templates under
   `frontend/.../templates/`, and the i18n copy in
   `frontend/.../messages_en.properties` / `messages_de.properties`.
   Brand assets live in `design/` (logos, fonts) and the custom Keycloak theme in
   `keycloak-theme/krt-theme/`.
+  *(The org was renamed `krt-iri` → `krt-profit`; older links may still read `krt-iri`.)*
+- **GitHub — `krt-profit/design-system`** · a mirror of this project. Product and
+  design system cross-pollinate: patterns proven in `proposals/` land in the
+  product, and shared components that grew up in the product are ported back here
+  (see the *Sync log* below).
 - **Corporate Design Manual V2** (`docs/Styleguide.md` + the uploaded
   `KRT_Styleguide_V2.pdf`, dated 21.02.2016, *Restricted — internal use only*).
   This is the **authoritative** source for colors, type and the logo. Where the
@@ -34,6 +41,23 @@ manual. If you have access, explore these to go deeper:
 
 Reading the repo directly will always yield higher-fidelity recreations than
 working from screenshots — start from `styles.css` and the templates.
+
+**Sync log — 2026-07.** Brought the design system up to date with the product's
+shared component layer. Design tokens were already in sync (the product has even
+adopted the manual-based Bereichsfarbe names as primary). Added six reusable
+patterns that had grown up in the app and were missing here:
+
+- **Loading indicator** — `.krt-loading-indicator` + `.krt-spinner` (async live-filter overlays).
+- **Presence / live-sync** — `.krt-presence-indicator` (pulsing dot + count) and the fixed
+  `.mission-livesync-pill`: collaborative "someone is editing / a peer changed this" awareness (Stufe 3). Awareness only, never blocks input.
+- **Multi-select dropdown** — `.multi-select-*` (checkbox filter used across inventory + materials).
+- **Autocomplete + searchable combobox** — `.autocomplete-items` and `.krt-combobox*` (type-to-filter with `<mark>` matches, flip-up variant, notice rows).
+- **SCU hint tooltip** — `.scu-hint` + `.scu-hint__bubble`: the house inline-help idiom ("?" disc → HUD tooltip).
+- **Rendered Markdown** — `.markdown-content` for server-rendered user prose (mission descriptions, order/offer remarks).
+
+Specimens: `preview/components-presence.html`, `preview/components-filters.html`,
+`preview/components-markdown.html`. Class names match the product 1:1 so markup
+stays portable in both directions.
 
 ---
 

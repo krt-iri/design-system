@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mein Profil — Profit Basetool</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  html, body { margin: 0; }
+  body { background: var(--color-bg-black); background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+  .btn { white-space: nowrap; }
+  .btn .krt-icon { width: 1.05em; height: 1.05em; margin-right: 0.45em; }
+
+  /* app header (sticky) */
+  header.app { position: sticky; top: 0; z-index: 30; background: var(--color-bg-dark-gray); border-bottom: 2px solid var(--color-primary); padding: 11px 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .h-nav { display: flex; align-items: center; gap: 15px; }
+  .h-burger { display: inline-flex; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .h-burger span { width: 22px; height: 2px; background: var(--color-primary); display: block; }
+  .h-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .h-brand img { height: 36px; display: block; }
+  .h-brand .lt { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 15px; }
+  .h-ctx { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: var(--color-gray-2); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+  /* page column */
+  main { max-width: 760px; margin: 0 auto; padding: 28px 22px 64px; }
+  .pf-title { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 24px; margin: 0 0 3px; }
+  .pf-sub { color: var(--color-gray-2); font-size: 13.5px; margin: 0 0 24px; }
+
+  /* identity block */
+  .id-band { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .id-tile { flex: 0 0 auto; width: 74px; height: 74px; display: grid; place-items: center; background: var(--color-surface-input); border: 1px solid var(--color-gray-3);
+    font-family: var(--font-headline); font-weight: 900; font-size: 29px; letter-spacing: 0.02em; color: var(--color-primary); text-transform: uppercase; }
+  .id-main { min-width: 0; }
+  .id-name { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.03em; font-size: 22px; margin: 0; line-height: 1.1; }
+  .id-handle { color: var(--color-gray-2); font-size: 13px; margin: 4px 0 0; }
+  .id-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+
+  /* read-only fact grid */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-gray-3); border: 1px solid var(--color-gray-3); margin-top: 14px; }
+  @media (max-width: 560px) { .facts { grid-template-columns: 1fr 1fr; } }
+  .facts .f { background: var(--color-bg-dark-gray); padding: 12px 14px; min-width: 0; }
+  .facts .fk { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-gray-2); font-weight: 700; margin: 0 0 4px; }
+  .facts .fv { color: var(--color-white); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .facts .fv.email { font-size: 13.5px; font-weight: 700; }
+
+  /* editable cards */
+  .stack { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .card-help { color: var(--color-gray-2); font-size: 12.5px; font-weight: 300; text-align: right; }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.55; width: 100%; }
+  input.w-full, select.w-full { width: 100%; }
+  select.w-360 { width: 100%; max-width: 340px; }
+
+  .form-hint { color: var(--color-gray-2); font-size: 12.5px; line-height: 1.5; margin: 7px 0 0; max-width: 64ch; }
+  .form-hint .krt-icon { color: var(--color-primary); width: 14px; height: 14px; margin-right: 4px; vertical-align: -0.18em; }
+  .form-hint b { color: var(--color-gray-1); font-weight: 700; }
+
+  .card-foot { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--color-gray-3); }
+  .card-foot .saved { display: inline-flex; align-items: center; gap: 6px; color: var(--color-gray-2); font-size: 12px; }
+  .card-foot .saved .krt-icon { color: var(--color-success-text); width: 14px; height: 14px; }
+
+  .check-row { display: flex; gap: 12px; align-items: flex-start; }
+  .check-row input[type="checkbox"] { margin-top: 2px; flex: none; }
+  .check-row label { color: var(--color-gray-1); font-weight: 700; font-size: 14px; margin: 0; cursor: pointer; }
+
+  /* account / security */
+  .acct-note { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--color-gray-1); line-height: 1.55; margin: 0; }
+  .acct-note .krt-icon { color: var(--color-primary); width: 17px; height: 17px; flex: none; margin-top: 1px; }
+  .acct-note b { color: var(--color-white); }
+  .acct-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px; }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="h-nav">
+    <button class="h-burger" type="button" aria-label="Menü"><span></span><span></span><span></span></button>
+    <a class="h-brand" href="#" onclick="return false"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></a>
+  </div>
+  <span class="h-ctx">Kontext · <span class="squadron-badge">IRI</span></span>
+</header>
+
+<main>
+  <h1 class="pf-title">Mein Profil</h1>
+  <p class="pf-sub">Deine Stammdaten und persönlichen Voreinstellungen.</p>
+
+  <!-- ===== Identität (read-only) ===== -->
+  <div class="card card--accent">
+    <div class="id-band">
+      <div class="id-tile">VA</div>
+      <div class="id-main">
+        <p class="id-name">Valk</p>
+        <p class="id-handle">@valk</p>
+        <div class="id-chips">
+          <span class="chip chip--primary">Commander</span>
+          <span class="squadron-badge">IRIDIUM · IRI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="f"><p class="fk">E-Mail</p><div class="fv email">valk@iridium.kartell</div></div>
+    <div class="f"><p class="fk">Beitrittsdatum</p><div class="fv">12.08.2024</div></div>
+    <div class="f"><p class="fk">Monate bei der Staffel</p><div class="fv">22</div></div>
+  </div>
+
+  <!-- ===== Einstellungen (je eine CTA) ===== -->
+  <div class="stack">
+
+    <!-- Eigene Daten -->
+    <form class="card" onsubmit="return false">
+      <div class="card-head"><h2 class="card-title">Eigene Daten</h2><span class="card-help">Anzeigename &amp; freie Notiz</span></div>
+      <div class="form-group">
+        <label class="form-label" for="displayName">Anzeigename</label>
+        <input id="displayName" name="displayName" type="text" class="w-full" value="Valk">
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label" for="description">Beschreibung</label>
+        <textarea id="description" name="description">Mining- &amp; Refinery-Lead. Erreichbar Mo/Mi/Fr ab 19:30 (TS). Schwerpunkt Quantanium-Routen Pyro ↔ Stanton.</textarea>
+      </div>
+      <div class="card-foot">
+        <button type="submit" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+        <span class="saved"><svg class="krt-icon"><use href="#krt-icon-success"/></svg>Speichert nur diesen Block</span>
+      </div>
+    </form>
+
+    <!-- Standard-Auszahlung -->
+    <form class="card" onsubmit="return false">
+      <div class="card-head"><h2 class="card-title">Standard-Auszahlung</h2><span class="card-help">Voreinstellung bei der Anmeldung</span></div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label" for="defaultPayoutPreference">Standard-Auszahlungspräferenz</label>
+        <select id="defaultPayoutPreference" name="defaultPayoutPreference" class="w-360">
+          <option>Auszahlung</option>
+          <option>Spenden</option>
+        </select>
+        <p class="form-hint"><svg class="krt-icon"><use href="#krt-icon-info"/></svg>Bei jeder Missionsanmeldung vorausgewählt. Pro Mission weiterhin änderbar.</p>
+      </div>
+      <div class="card-foot">
+        <button type="submit" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Präferenz speichern</button>
+      </div>
+    </form>
+
+    <!-- Blueprint-Freigabe -->
+    <form class="card" onsubmit="return false">
+      <div class="card-head"><h2 class="card-title">Blueprint-Freigabe</h2></div>
+      <div class="check-row">
+        <input id="shareBlueprintsGlobally" name="shareBlueprintsGlobally" type="checkbox" checked>
+        <div>
+          <label for="shareBlueprintsGlobally">Meine Blueprints für alle OrgUnits verfügbar machen</label>
+          <p class="form-hint">Wenn aktiviert, zählen deine Blueprints in den Verfügbarkeits-Ansichten <b>aller</b> OrgUnits — nicht nur in deiner eigenen.</p>
+        </div>
+      </div>
+      <div class="card-foot">
+        <button type="submit" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+      </div>
+    </form>
+
+    <!-- Zugang & Sicherheit -->
+    <div class="card card--inset">
+      <div class="card-head"><h2 class="card-title">Zugang &amp; Sicherheit</h2></div>
+      <p class="acct-note"><svg class="krt-icon"><use href="#krt-icon-info"/></svg><span>Passwort, E-Mail-Adresse und Zwei-Faktor-Authentifizierung werden zentral in <b>Keycloak</b> verwaltet.</span></p>
+      <div class="acct-actions">
+        <a href="#" onclick="return false" class="btn btn-outline" target="_blank" rel="noopener"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg>In Keycloak verwalten</a>
+        <a href="#" onclick="return false" class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg>Zurück</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- KRT icon sprite (inlined for a self-contained mockup) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="krt-icon-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"></circle><path d="M12 11v6M12 7v0.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-success" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+</svg>
+
+</body>
+</html>

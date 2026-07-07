@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Org-Einheits-Bank — Varianten (/org-unit-bank)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  html, body { margin: 0; }
+  body { background: var(--color-bg-black); background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); padding: 30px 24px 100px; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+
+  /* doc chrome */
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 24px; margin: 12px 0 8px; }
+  .lead { font-weight: 300; max-width: 95ch; margin: 0 0 6px; font-size: 14px; line-height: 1.65; }
+  .lead b { color: var(--color-gray-1); font-weight: 700; } .lead code { font-size: 12.5px; }
+  .cols2 { display: grid; grid-template-columns: 1.05fr 1fr; gap: 26px; margin: 26px 0 4px; align-items: start; }
+  @media (max-width: 860px) { .cols2 { grid-template-columns: 1fr; gap: 18px; } }
+  .block-h { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--color-gray-3); }
+  .prob, .sys { display: flex; gap: 11px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 11px; }
+  .prob .n { flex: 0 0 auto; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-gray-2); color: var(--color-gray-2); font-weight: 700; font-size: 12px; }
+  .prob b, .sys b { color: var(--color-white); }
+  .prob .fix { color: var(--color-success-text); }
+  .sys .k { flex: 0 0 auto; color: var(--color-primary); margin-top: 1px; }
+
+  .vh { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--color-primary); padding-bottom: 7px; margin: 52px 0 18px; flex-wrap: wrap; }
+  .vh h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 17px; margin: 0; }
+  .vh .vtag { color: var(--color-primary); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .vh .vsub { color: var(--color-gray-2); font-size: 12.5px; }
+  .vh .rec { margin-left: auto; color: var(--color-bg-black); background: var(--color-primary); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 9px; }
+
+  /* app frame */
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 26px rgba(0,0,0,0.55); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 2px solid var(--color-primary); padding: 11px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .s-nav { display: flex; align-items: center; gap: 14px; }
+  .s-burger { display: inline-flex; flex-direction: column; gap: 4px; }
+  .s-burger span { width: 22px; height: 2px; background: var(--color-primary); display: block; }
+  .s-brand { display: inline-flex; align-items: center; gap: 10px; }
+  .s-brand img { height: 34px; display: block; }
+  .s-brand .lt { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 14px; }
+
+  /* page */
+  .pf { padding: 22px 22px 28px; }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .pf-title { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 22px; margin: 0 0 3px; }
+  .pf-sub { color: var(--color-gray-2); font-size: 13px; margin: 0; max-width: 70ch; }
+  .btn .krt-icon { width: 1.05em; height: 1.05em; margin-right: 0.45em; }
+  .btn { white-space: nowrap; }
+  .kpi-delta { white-space: nowrap; }
+  .tabwrap { margin-bottom: 16px; }
+  [data-tabpanel][hidden] { display: none; }
+
+  /* card grid (A) */
+  .acc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(266px, 1fr)); gap: 14px; }
+  .acc-card { cursor: default; gap: 10px; }
+  .acc-card .ac-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .acc-card .kpi-value { font-size: 1.55rem; }
+  .acc-card .ac-trend { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+  .acc-foot { margin-top: 2px; padding-top: 10px; border-top: 1px solid var(--color-gray-3); }
+  .acc-foot .btn { width: 100%; justify-content: center; }
+
+  /* target progress */
+  .ou-target { width: 100%; }
+  .ou-bar { height: 8px; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); position: relative; margin-top: 6px; }
+  .ou-bar i { position: absolute; inset: 0 auto 0 0; background: var(--color-primary); }
+  .ou-target-meta { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--color-gray-2); margin-top: 5px; }
+  .ou-target-meta b { color: var(--color-gray-1); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* dense list (B) */
+  .ou-list { border: 1px solid var(--color-gray-3); background: var(--color-bg-dark-gray); }
+  .ou-row { display: grid; grid-template-columns: 1.5fr 120px 1.1fr 150px 120px; gap: 16px; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--color-gray-3); }
+  .ou-row:last-child { border-bottom: none; }
+  .ou-row:hover { background: rgba(255,255,255,0.02); }
+  .ou-row .r-name { font-weight: 700; color: var(--color-white); font-size: 14px; }
+  .ou-row .r-sub { font-size: 11px; color: var(--color-gray-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .ou-row .r-bal { text-align: right; font-family: var(--font-headline); font-weight: 700; font-size: 18px; color: var(--color-white); font-variant-numeric: tabular-nums; }
+  .ou-row .r-act { text-align: right; }
+  .ou-rowhead { display: grid; grid-template-columns: 1.5fr 120px 1.1fr 150px 120px; gap: 16px; padding: 9px 16px; background: var(--color-surface-input); border-bottom: 2px solid var(--color-primary); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--color-gray-1); }
+  .ou-rowhead .e { text-align: right; }
+  @media (max-width: 760px) { .ou-row, .ou-rowhead { grid-template-columns: 1fr 1fr; } .ou-rowhead .e, .ou-row .r-bal, .ou-row .r-act { text-align: left; } }
+
+  /* hero (C) */
+  .ou-hero { border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-bg-dark-gray); padding: 18px 20px; display: grid; grid-template-columns: 1fr auto; gap: 22px; align-items: center; }
+  @media (max-width: 720px) { .ou-hero { grid-template-columns: 1fr; } }
+  .ou-hero .h-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-gray-2); font-weight: 700; }
+  .ou-hero .h-name { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.03em; font-size: 18px; margin: 3px 0 2px; }
+  .ou-hero .h-sub { font-size: 11.5px; color: var(--color-gray-2); font-variant-numeric: tabular-nums; }
+  .ou-hero .h-bal { font-family: var(--font-headline); font-weight: 700; font-size: 30px; color: var(--color-white); font-variant-numeric: tabular-nums; margin: 10px 0 4px; }
+  .ou-hero .h-actions { display: flex; flex-direction: column; gap: 9px; align-items: stretch; min-width: 210px; }
+  .secline { font-family: var(--font-headline); font-weight: 700; color: var(--color-gray-1); text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; margin: 18px 0 10px; }
+  .sec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .sec-tile { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 12px 14px; }
+  .sec-tile .st-name { font-weight: 700; color: var(--color-white); font-size: 13px; }
+  .sec-tile .st-sub { font-size: 10.5px; color: var(--color-gray-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .sec-tile .st-bal { font-family: var(--font-headline); font-weight: 700; font-size: 19px; color: var(--color-white); font-variant-numeric: tabular-nums; margin-top: 8px; }
+  .sec-tile .st-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; }
+  .viewonly { font-size: 10.5px; color: var(--color-gray-2); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .amt { font-variant-numeric: tabular-nums; } .unit { color: var(--color-gray-2); font-weight: 400; font-size: 0.62em; }
+  .right { text-align: right; }
+  .ref-note { font-size: 12px; color: var(--color-gray-2); padding: 14px 2px; }
+  .ref-note b { color: var(--color-gray-1); }
+
+  /* detail */
+  .bank-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 820px) { .bank-facts { grid-template-columns: 1fr 1fr; } }
+  .det-back { color: var(--color-gray-2); font-size: 12px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+  .det-back:hover { color: var(--color-primary); }
+  .det-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin: 8px 0 14px; }
+  .vis-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--color-surface-input); }
+  .vis-row:last-child { border-bottom: none; }
+  .vis-row .v-label { font-size: 13px; color: var(--color-gray-1); }
+  .vis-grants { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+  .sub-h { font-family: var(--font-headline); font-weight: 700; color: var(--color-gray-1); text-transform: uppercase; letter-spacing: 0.05em; font-size: 12px; margin: 16px 0 8px; }
+
+  /* inline modal showcase */
+  .modal-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 820px) { .modal-stage { grid-template-columns: 1fr; } }
+  .modal-stage .krt-modal { position: relative; }
+  .modal-frame { display: flex; flex-direction: column; gap: 8px; }
+  .modal-frame .mf-cap { font-size: 12px; color: var(--color-gray-2); }
+  .bank-form-row { margin-bottom: 12px; }
+  .bank-form-row label { display:block; color: var(--color-gray-1); font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .bank-form-row input, .bank-form-row select { width: 100%; }
+  .bank-field-hint { display: block; color: var(--color-gray-2); font-size: 11.5px; margin-top: 5px; }
+  .dt-row { display: flex; gap: 8px; } .dt-row input { width: 100%; }
+  h3.modal-title { font-family: var(--font-headline); font-weight: 700; font-size: 0.9rem; color: var(--color-white); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Bank · /org-unit-bank · Org-Einheits-Bank (Epic #666)</p>
+  <h1 class="t">Org-Einheits-Bank — auf den Stand des KRT Design Systems</h1>
+  <p class="lead">Die mitglieder-seitige Bank-Ansicht: Kontostände aller einsehbaren Konten, Detail-Verlauf je Konto, und Ein-/Auszahlungs­anträge. Heute trägt <b>jede Konto-Karte ihre eigene gefüllte orange CTA</b> (eine Wand aus Orange), einen aussagelosen „Aktiv"-Chip, und stapelt sehr viel pro Karte; „Meine Anträge" hängt darunter an derselben Seite. Unten drei Varianten der Übersicht (alle mit <b>Tabs</b> + <b>einer</b> seitenweiten CTA), plus ein Vorschlag für das <b>Konto-Detail</b>. Bitte eine Übersichts-Variante wählen — dann finalisiere ich beide Seiten + den Umsetzungsauftrag.</p>
+
+  <div class="cols2">
+    <div>
+      <h3 class="block-h">Befund — heutige Seiten</h3>
+      <div class="prob"><span class="n">1</span><div><b>Jede Karte = gefüllte CTA.</b> Bei 3–6 Konten eine Wand aus Orange, gegen die Action-Hierarchie. <span class="fix">→ Eine CTA oben, Konto-Auswahl im Modal (nur antragsberechtigte).</span></div></div>
+      <div class="prob"><span class="n">2</span><div><b>Status-Chip „Aktiv"</b> auf jeder Karte — die Seite zeigt ohnehin nur aktive Konten. <span class="fix">→ Weglassen.</span></div></div>
+      <div class="prob"><span class="n">3</span><div><b>Karte überladen:</b> Name · No · OrgUnit · Status · Saldo · Delta · Sparkline · Ziel-Bar · Detail · Antrag gestapelt. <span class="fix">→ Klare Zonen, ein Hero-Saldo.</span></div></div>
+      <div class="prob"><span class="n">4</span><div><b>„Meine Anträge" auf derselben Seite</b> — lange Seite, mischt Lesen &amp; Verwalten. <span class="fix">→ Eigener Tab.</span></div></div>
+      <div class="prob"><span class="n">5</span><div><b>Detail-Sichtbarkeit = viele „Freigeben"-Buttons</b> (gefüllt orange). <span class="fix">→ Status-Chip „Freigegeben" + ruhige Toggles.</span></div></div>
+      <div class="prob"><span class="n">6</span><div><b>Leere Zustände als nackter Text.</b> <span class="fix">→ DS-Komponente <code>.empty-state</code>.</span></div></div>
+    </div>
+    <div>
+      <h3 class="block-h">System — für alle Varianten gleich</h3>
+      <div class="sys"><span class="k">▸</span><div><b>Tabs:</b> „Konten" und „Meine Anträge" — Verlauf-Lesen getrennt vom eigenen Antrags-Status.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Eine gefüllte CTA</b> pro Seite („Ein-/Auszahlung beantragen"); im Modal wählt man das Konto (nur Konten mit <code>canRequest</code>).</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Karten-Zonen:</b> Kopf → Hero-Saldo → Trend (Delta + Sparkline) → Ziel-Fortschritt → ruhiger Detail-Link.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Orange = Aktion + Identität.</b> Salden hell &amp; tabellarisch; Status/Trend über Ton-Chips bzw. <code>--pos/--neg</code>.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Detail:</b> read-only Verlauf + ruhige Verantwortungs-Einstellungen; Sichtbarkeit als Toggles, nicht als CTA-Wand.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Empty-States</b> via DS, aUEC tabellarisch, Touch-Ziele ≥ 44 px.</div></div>
+    </div>
+  </div>
+
+  <!-- ============================================ VARIANTE A ============= -->
+  <div class="vh"><span class="vtag">Variante A</span><h2>Karten-Raster + Tabs</h2><span class="vsub">gleichwertige Konten, ruhiges Raster</span><span class="rec">Empfehlung</span></div>
+
+  <div class="screen" data-tabs>
+    <div class="s-head">
+      <div class="s-nav"><span class="s-burger"><span></span><span></span><span></span></span><span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span></div>
+    </div>
+    <div class="pf">
+      <div class="page-head">
+        <div><h1 class="pf-title">Bank meiner Org-Einheit</h1><p class="pf-sub">Kontostände und Ein-/Auszahlungsanträge deiner Org-Einheit.</p></div>
+        <button class="btn btn--cta" type="button"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg>Ein-/Auszahlung beantragen</button>
+      </div>
+
+      <div class="tabwrap"><div class="tab-nav" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="konten">Konten <span class="tab-count">3</span></button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="antraege">Meine Anträge <span class="tab-count">3</span></button>
+      </div></div>
+
+      <div data-tabpanel="konten">
+        <div class="acc-grid">
+          <!-- card with target -->
+          <div class="kpi-card acc-card">
+            <div class="ac-head"><div><div class="kpi-title">Staffel IRIDIUM</div><div class="kpi-sub">KB-0001 · IRI</div></div></div>
+            <div><div class="kpi-label">Kontostand</div><div class="kpi-value">1.850.000 <span class="unit">aUEC</span></div></div>
+            <div class="ac-trend"><span class="kpi-delta kpi-delta--pos">▲ +420.000 / 30 T</span>
+              <svg width="92" height="24" viewBox="0 0 96 26" aria-hidden="true"><polyline points="0,20 16,18 32,19 48,13 64,12 80,7 96,4" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="ou-target"><div class="kpi-label">Ziel 10.000.000 aUEC</div><div class="ou-bar"><i style="width:18.5%"></i></div><div class="ou-target-meta"><span><b>18,5 %</b> erreicht</span><span>noch <b>8.150.000</b></span></div></div>
+            <div class="acc-foot"><a class="btn btn-ghost" href="#" onclick="return false">Details &amp; Verlauf</a></div>
+          </div>
+          <!-- card no target, negative -->
+          <div class="kpi-card acc-card">
+            <div class="ac-head"><div><div class="kpi-title">Bereich Profit</div><div class="kpi-sub">KB-0003 · PRF</div></div></div>
+            <div><div class="kpi-label">Kontostand</div><div class="kpi-value">1.000.000 <span class="unit">aUEC</span></div></div>
+            <div class="ac-trend"><span class="kpi-delta kpi-delta--neg">▼ −120.000 / 30 T</span>
+              <svg width="92" height="24" viewBox="0 0 96 26" aria-hidden="true"><polyline points="0,7 16,9 32,8 48,13 64,12 80,17 96,19" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="acc-foot"><a class="btn btn-ghost" href="#" onclick="return false">Details &amp; Verlauf</a></div>
+          </div>
+          <!-- cartel account, view-only -->
+          <div class="kpi-card acc-card">
+            <div class="ac-head"><div><div class="kpi-title">DAS KARTELL</div><div class="kpi-sub">KB-0002 · Sonderkonto</div></div></div>
+            <div><div class="kpi-label">Kontostand</div><div class="kpi-value">1.612.500 <span class="unit">aUEC</span></div></div>
+            <div class="ac-trend"><span class="kpi-delta kpi-delta--pos">▲ +85.000 / 30 T</span>
+              <svg width="92" height="24" viewBox="0 0 96 26" aria-hidden="true"><polyline points="0,16 16,15 32,16 48,13 64,14 80,12 96,10" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="acc-foot"><a class="btn btn-ghost" href="#" onclick="return false">Details &amp; Verlauf</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-tabpanel="antraege" hidden>
+        <table class="data-table">
+          <thead><tr><th>Typ</th><th class="right">Betrag</th><th>Status</th><th>Halter</th><th>Erstellt</th><th>Aktion</th></tr></thead>
+          <tbody>
+            <tr><td>Einzahlung</td><td class="right amt">250.000 aUEC</td><td><span class="chip chip--warning">Ausstehend</span></td><td>—</td><td class="amt">17.06.2026 14:02</td><td><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Zurückziehen</a></td></tr>
+            <tr><td>Auszahlung</td><td class="right amt">80.000 aUEC</td><td><span class="chip chip--success">Bestätigt</span></td><td>cmdr.valk</td><td class="amt">14.06.2026 19:30</td><td>—</td></tr>
+            <tr><td>Einzahlung</td><td class="right amt">5.000 aUEC</td><td><span class="chip chip--muted">Abgelehnt</span> <span style="color:var(--color-gray-2);font-size:12px;">— Beleg fehlt</span></td><td>—</td><td class="amt">10.06.2026 21:05</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ VARIANTE B ============= -->
+  <div class="vh"><span class="vtag">Variante B</span><h2>Kompakte Konten-Liste</h2><span class="vsub">dichte Zeilen — gut bei vielen Konten</span></div>
+
+  <div class="screen" data-tabs>
+    <div class="s-head">
+      <div class="s-nav"><span class="s-burger"><span></span><span></span><span></span></span><span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span></div>
+    </div>
+    <div class="pf">
+      <div class="page-head">
+        <div><h1 class="pf-title">Bank meiner Org-Einheit</h1><p class="pf-sub">Kontostände und Ein-/Auszahlungsanträge deiner Org-Einheit.</p></div>
+        <button class="btn btn--cta" type="button"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg>Ein-/Auszahlung beantragen</button>
+      </div>
+      <div class="tabwrap"><div class="tab-nav" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="konten">Konten <span class="tab-count">3</span></button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="antraege">Meine Anträge <span class="tab-count">3</span></button>
+      </div></div>
+
+      <div data-tabpanel="konten">
+        <div class="ou-list">
+          <div class="ou-rowhead"><span>Konto</span><span>Trend 30 T</span><span class="e">Kontostand</span><span>Ziel</span><span class="e">Aktion</span></div>
+          <div class="ou-row">
+            <div><div class="r-name">Staffel IRIDIUM</div><div class="r-sub">KB-0001 · IRI</div></div>
+            <div><span class="kpi-delta kpi-delta--pos">▲ +420.000</span><br><svg width="86" height="20" viewBox="0 0 96 26" aria-hidden="true" style="margin-top:3px;"><polyline points="0,20 24,18 48,13 72,8 96,4" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="r-bal">1.850.000 <span class="unit">aUEC</span></div>
+            <div class="ou-target"><div class="ou-bar"><i style="width:18.5%"></i></div><div class="ou-target-meta"><span><b>18,5 %</b></span><span>von 10 Mio</span></div></div>
+            <div class="r-act"><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Details</a></div>
+          </div>
+          <div class="ou-row">
+            <div><div class="r-name">Bereich Profit</div><div class="r-sub">KB-0003 · PRF</div></div>
+            <div><span class="kpi-delta kpi-delta--neg">▼ −120.000</span><br><svg width="86" height="20" viewBox="0 0 96 26" aria-hidden="true" style="margin-top:3px;"><polyline points="0,8 24,9 48,13 72,17 96,19" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="r-bal">1.000.000 <span class="unit">aUEC</span></div>
+            <div style="color:var(--color-gray-2);font-size:11px;">— kein Ziel</div>
+            <div class="r-act"><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Details</a></div>
+          </div>
+          <div class="ou-row">
+            <div><div class="r-name">DAS KARTELL</div><div class="r-sub">KB-0002 · Sonderkonto</div></div>
+            <div><span class="kpi-delta kpi-delta--pos">▲ +85.000</span><br><svg width="86" height="20" viewBox="0 0 96 26" aria-hidden="true" style="margin-top:3px;"><polyline points="0,16 24,15 48,13 72,12 96,10" fill="none" stroke="#E77E23" stroke-width="1.5"/></svg></div>
+            <div class="r-bal">1.612.500 <span class="unit">aUEC</span></div>
+            <div style="color:var(--color-gray-2);font-size:11px;">— kein Ziel</div>
+            <div class="r-act"><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Details</a></div>
+          </div>
+        </div>
+      </div>
+      <div data-tabpanel="antraege" hidden>
+        <p class="ref-note">Tab <b>„Meine Anträge"</b> identisch zu Variante A (gleiche DS-Tabelle mit Status-Ton-Chips).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ VARIANTE C ============= -->
+  <div class="vh"><span class="vtag">Variante C</span><h2>Eigenes Konto als Hero + Neben-Konten</h2><span class="vsub">Hierarchie nach Zuständigkeit</span></div>
+
+  <div class="screen" data-tabs>
+    <div class="s-head">
+      <div class="s-nav"><span class="s-burger"><span></span><span></span><span></span></span><span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span></div>
+    </div>
+    <div class="pf">
+      <div class="page-head"><div><h1 class="pf-title">Bank meiner Org-Einheit</h1><p class="pf-sub">Dein zuständiges Konto im Fokus, weitere einsehbare Konten darunter.</p></div></div>
+      <div class="tabwrap"><div class="tab-nav" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true" data-tab="konten">Konten <span class="tab-count">3</span></button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="antraege">Meine Anträge <span class="tab-count">3</span></button>
+      </div></div>
+
+      <div data-tabpanel="konten">
+        <div class="ou-hero">
+          <div>
+            <div class="h-eyebrow">Dein Konto · Antrag möglich</div>
+            <div class="h-name">Staffel IRIDIUM</div>
+            <div class="h-sub">KB-0001 · IRI</div>
+            <div class="h-bal">1.850.000 <span class="unit">aUEC</span></div>
+            <span class="kpi-delta kpi-delta--pos">▲ +420.000 / 30 T</span>
+            <div class="ou-target" style="margin-top:12px; max-width:420px;"><div class="kpi-label">Ziel 10.000.000 aUEC</div><div class="ou-bar"><i style="width:18.5%"></i></div><div class="ou-target-meta"><span><b>18,5 %</b> erreicht</span><span>noch <b>8.150.000</b></span></div></div>
+          </div>
+          <div class="h-actions">
+            <button class="btn btn--cta" type="button"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg>Ein-/Auszahlung beantragen</button>
+            <a class="btn btn-ghost" href="#" onclick="return false">Details &amp; Verlauf</a>
+          </div>
+        </div>
+
+        <div class="secline">Weitere einsehbare Konten</div>
+        <div class="sec-grid">
+          <div class="sec-tile">
+            <div class="st-name">Bereich Profit</div><div class="st-sub">KB-0003 · PRF</div>
+            <div class="st-bal">1.000.000 <span class="unit">aUEC</span></div>
+            <div class="st-foot"><span class="kpi-delta kpi-delta--neg">▼ −120.000</span><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Details</a></div>
+          </div>
+          <div class="sec-tile">
+            <div class="st-name">DAS KARTELL</div><div class="st-sub">KB-0002 · Sonderkonto</div>
+            <div class="st-bal">1.612.500 <span class="unit">aUEC</span></div>
+            <div class="st-foot"><span class="kpi-delta kpi-delta--pos">▲ +85.000</span><a class="btn btn-xs btn-ghost" href="#" onclick="return false">Details</a></div>
+          </div>
+        </div>
+      </div>
+      <div data-tabpanel="antraege" hidden>
+        <p class="ref-note">Tab <b>„Meine Anträge"</b> identisch zu Variante A. <br>Hat die einsehbare Person <b>kein</b> antragsberechtigtes Konto, entfällt der Hero-CTA und ein ruhiger Hinweis erscheint stattdessen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ KONTO-DETAIL =========== -->
+  <div class="vh"><span class="vtag">In Scope</span><h2>Konto-Detail — Vorschlag</h2><span class="vsub">/org-unit-bank/accounts/{id} · read-only Verlauf + Verantwortung</span></div>
+
+  <div class="screen">
+    <div class="s-head">
+      <div class="s-nav"><span class="s-burger"><span></span><span></span><span></span></span><span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span></div>
+    </div>
+    <div class="pf">
+      <a class="det-back" href="#" onclick="return false"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg>Zurück zur Übersicht</a>
+      <div class="det-head">
+        <div><h1 class="pf-title" style="margin-top:8px;">Staffel IRIDIUM</h1>
+          <div style="display:flex; gap:8px; align-items:center; margin-top:4px;"><span class="chip">Staffel</span><span style="color:var(--color-gray-2); font-size:12px;" class="amt">KB-0001</span></div></div>
+        <button class="btn btn-ghost" type="button"><svg class="krt-icon"><use href="#krt-icon-download"/></svg>Kontoauszug</button>
+      </div>
+
+      <div class="bank-facts">
+        <div class="kpi-total"><div class="kpi-label">Kontosaldo</div><div class="kpi-value">1.850.000 <span class="unit">aUEC</span></div></div>
+        <div class="kpi-total"><div class="kpi-label">Zielkontostand</div><div class="kpi-value">10.000.000 <span class="unit">aUEC</span></div><div class="ou-bar" style="margin-top:7px;"><i style="width:18.5%"></i></div></div>
+        <div class="kpi-total"><div class="kpi-label">± 30 Tage</div><div class="kpi-value kpi-delta--pos">+420.000</div></div>
+        <div class="kpi-total"><div class="kpi-label">Buchungen</div><div class="kpi-value">128</div></div>
+      </div>
+
+      <!-- responsibility settings (holder/OL only) -->
+      <div class="hud-box" style="margin-top:18px;">
+        <h2 style="font-size:1rem;">Verantwortung &amp; Sichtbarkeit</h2>
+        <p style="color:var(--color-gray-2); font-size:12.5px; margin:.25rem 0 0;">Nur für verantwortliche Halter / die Org-Leitung.</p>
+
+        <div class="sub-h">Kontostandsziel</div>
+        <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px; max-width:340px;"><label class="form-label" for="d-target">Zielkontostand (aUEC)</label><input id="d-target" type="number" value="10000000" style="width:100%;"></div>
+          <button class="btn btn--cta" type="button"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Ziel speichern</button>
+        </div>
+        <p style="color:var(--color-gray-2); font-size:11.5px; margin:7px 0 0;">Leer lassen und speichern entfernt das Ziel.</p>
+
+        <div class="sub-h">Sichtbarkeit — wer darf dieses Konto sehen</div>
+        <div class="vis-grants">
+          <div class="vis-row"><span class="v-label">Logistiker</span><span style="display:flex; gap:8px; align-items:center;"><span class="chip chip--success"><svg class="krt-icon" style="width:.85em;height:.85em;"><use href="#krt-icon-success"/></svg> Freigegeben</span><button class="btn btn-xs btn-ghost" type="button">Entfernen</button></span></div>
+          <div class="vis-row"><span class="v-label">Missionsmanager</span><button class="btn btn-xs btn-outline" type="button">Freigeben</button></div>
+          <div class="vis-row"><span class="v-label">Alle Mitglieder der Org-Einheit</span><button class="btn btn-xs btn-outline" type="button">Freigeben</button></div>
+        </div>
+        <div class="sub-h">Einzelne Nutzer</div>
+        <div class="vis-grants" style="margin-bottom:10px;">
+          <div class="vis-row"><span class="v-label amt">greluc</span><button class="btn btn-xs btn-ghost" type="button">Entfernen</button></div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px; max-width:340px;"><label class="form-label" for="d-user">Nutzer freigeben</label><select id="d-user" style="width:100%;"><option>Nutzer wählen …</option><option>cmdr.valk</option><option>mara</option></select></div>
+          <button class="btn btn-outline" type="button"><svg class="krt-icon"><use href="#krt-icon-plus"/></svg>Freigeben</button>
+        </div>
+      </div>
+
+      <!-- booking history -->
+      <h2 style="font-size:1rem; margin:22px 0 0;">Buchungshistorie</h2>
+      <p style="color:var(--color-gray-2); font-size:12px; margin:.25rem 0 0;">Halter aus Datenschutzgründen ausgeblendet (REQ-BANK-038).</p>
+      <table class="data-table">
+        <thead><tr><th>Datum</th><th>Typ</th><th>Notiz</th><th class="right">Betrag</th></tr></thead>
+        <tbody>
+          <tr><td class="amt">10.06.2026 18:30</td><td><span class="chip chip--success">Einzahlung</span></td><td>Missionsertrag „Operation Tiefschlag"</td><td class="right"><span class="kpi-delta kpi-delta--pos amt">+250.000</span></td></tr>
+          <tr><td class="amt">08.06.2026 21:10</td><td><span class="chip chip--warning">Auszahlung</span></td><td>Schiffskauf-Erstattung</td><td class="right"><span class="kpi-delta kpi-delta--neg amt">−80.000</span><br><span style="color:var(--color-gray-2); font-size:11px;">Gebühr 1.600 · netto 78.400</span></td></tr>
+          <tr><td class="amt">05.06.2026 17:45</td><td><span class="chip">Transfer → KB-0002</span></td><td>Quartals-Abführung</td><td class="right"><span class="kpi-delta kpi-delta--neg amt">−120.000</span></td></tr>
+          <tr><td class="amt">01.06.2026 12:00</td><td><span class="chip chip--danger">Storno</span></td><td>Korrektur Doppelbuchung</td><td class="right"><span class="kpi-delta kpi-delta--neg amt">−15.000</span></td></tr>
+        </tbody>
+      </table>
+      <div style="display:flex; justify-content:center; gap:6px; margin-top:14px;">
+        <a class="btn btn-xs btn-ghost" href="#" onclick="return false">‹ Zurück</a>
+        <span class="btn btn-xs" style="background:var(--color-primary); color:var(--color-bg-black);">1</span>
+        <a class="btn btn-xs btn-ghost" href="#" onclick="return false">2</a>
+        <a class="btn btn-xs btn-ghost" href="#" onclick="return false">Weiter ›</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ MODALE ================= -->
+  <div class="vh"><span class="vtag">Modale</span><h2>Antrag &amp; Kontoauszug</h2><span class="vsub">eine gefüllte CTA je Modal</span></div>
+  <div class="modal-stage">
+    <div class="modal-frame">
+      <span class="mf-cap">Ein-/Auszahlung beantragen — <b style="color:var(--color-gray-1);">mit Konto-Auswahl</b> (nur antragsberechtigte Konten)</span>
+      <div class="krt-modal">
+        <div class="krt-modal-head"><h3 class="modal-title">Ein-/Auszahlung beantragen</h3><span style="color:var(--color-gray-2); cursor:default;">✕</span></div>
+        <div class="krt-modal-body">
+          <div class="bank-form-row"><label for="m-acc">Konto</label><select id="m-acc"><option>Staffel IRIDIUM (KB-0001)</option></select><span class="bank-field-hint">Nur Konten, für die du antragsberechtigt bist.</span></div>
+          <div class="bank-form-row"><label for="m-type">Vorgang</label><select id="m-type"><option>Einzahlung</option><option>Auszahlung</option></select></div>
+          <div class="bank-form-row"><label for="m-amt">Betrag (aUEC)</label><input id="m-amt" type="number" placeholder="z. B. 250000"><span class="bank-field-hint">Nur ganze aUEC-Beträge.</span></div>
+          <div class="bank-form-row" style="margin-bottom:6px;"><label for="m-note">Notiz</label><input id="m-note" type="text" placeholder="optional"></div>
+          <p class="bank-field-hint">Der Antrag wird erst verbucht, wenn ihn ein Bankmitarbeiter bestätigt.</p>
+        </div>
+        <div class="krt-modal-foot"><button class="btn btn-ghost" type="button">Abbrechen</button><button class="btn btn--cta" type="button">Antrag stellen</button></div>
+      </div>
+    </div>
+    <div class="modal-frame">
+      <span class="mf-cap">Kontoauszug — Halter-redigiertes PDF (Detail-Seite)</span>
+      <div class="krt-modal">
+        <div class="krt-modal-head"><h3 class="modal-title">Kontoauszug exportieren</h3><span style="color:var(--color-gray-2); cursor:default;">✕</span></div>
+        <div class="krt-modal-body">
+          <p class="bank-field-hint" style="margin-bottom:12px;">Zeitraum in deiner Lokalzeit.</p>
+          <div class="bank-form-row"><label for="s-from">Von</label><div class="dt-row"><input id="s-from" type="date"><input type="time" aria-label="Von Uhrzeit"></div></div>
+          <div class="bank-form-row" style="margin-bottom:6px;"><label for="s-to">Bis</label><div class="dt-row"><input id="s-to" type="date"><input type="time" aria-label="Bis Uhrzeit"></div></div>
+        </div>
+        <div class="krt-modal-foot"><button class="btn btn-ghost" type="button">Abbrechen</button><button class="btn btn--cta" type="button"><svg class="krt-icon"><use href="#krt-icon-download"/></svg>PDF herunterladen</button></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="lead" style="margin-top:46px;"><b>Empfehlung:</b> Variante&nbsp;A — gleichwertiges, ruhiges Karten-Raster, klare Zonen, eine CTA, Anträge im eigenen Tab. <b>B</b> ist die dichte Alternative für viele Konten, <b>C</b> betont das eigene zuständige Konto. Sag mir die Übersichts-Variante (oder einen Mix), dann finalisiere ich <code>org-unit-bank-final.html</code> + <code>org-unit-bank-account-detail-final.html</code> + den Umsetzungsauftrag.</p>
+
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="krt-icon-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"></circle><path d="M12 11v6M12 7v0.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-success" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-download" viewBox="0 0 24 24"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+</svg>
+
+<script>
+  document.querySelectorAll('.screen[data-tabs]').forEach(function (scr) {
+    var tabs = scr.querySelectorAll('.tab-nav .tab');
+    var panels = scr.querySelectorAll('[data-tabpanel]');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (x) { x.classList.toggle('active', x === t); x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+        var k = t.getAttribute('data-tab');
+        panels.forEach(function (p) { p.hidden = p.getAttribute('data-tabpanel') !== k; });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

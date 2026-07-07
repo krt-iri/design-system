@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profilseite — Varianten (/profile)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  html, body { margin: 0; }
+  body { background: var(--color-bg-black); background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px;
+    color: var(--color-gray-1); padding: 30px 24px 100px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .krt-icon { width: 1em; height: 1em; fill: none; vertical-align: -0.15em; }
+
+  /* ---- doc chrome (matches the other proposal mockups) ---- */
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  h1.t { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 24px; margin: 12px 0 8px; }
+  .lead { font-weight: 300; max-width: 92ch; margin: 0 0 6px; font-size: 14px; line-height: 1.65; }
+  .lead b { color: var(--color-gray-1); font-weight: 700; }
+  .lead a { color: var(--color-primary); }
+
+  /* findings + system blocks */
+  .cols2 { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; margin: 26px 0 4px; align-items: start; }
+  @media (max-width: 820px) { .cols2 { grid-template-columns: 1fr; gap: 18px; } }
+  .block-h { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.06em; font-size: 13px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--color-gray-3); }
+  .prob { display: flex; gap: 11px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 11px; }
+  .prob .n { flex: 0 0 auto; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-gray-2); color: var(--color-gray-2); font-weight: 700; font-size: 12px; }
+  .prob b { color: var(--color-white); }
+  .prob .fix { color: var(--color-success-text); }
+  .sys { display: flex; gap: 11px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 11px; }
+  .sys .k { flex: 0 0 auto; color: var(--color-primary); margin-top: 1px; }
+  .sys b { color: var(--color-white); }
+
+  /* variant section heading */
+  .vh { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--color-primary); padding-bottom: 7px; margin: 52px 0 18px; flex-wrap: wrap; }
+  .vh h2 { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.04em; font-size: 17px; margin: 0; }
+  .vh .vtag { color: var(--color-primary); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .vh .vsub { color: var(--color-gray-2); font-size: 12.5px; }
+  .vh .rec { margin-left: auto; color: var(--color-bg-black); background: var(--color-primary); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 9px; }
+
+  /* the app frame each mockup sits in */
+  .screen { border: 1px solid var(--color-gray-3); background: var(--color-bg-black); box-shadow: 0 0 26px rgba(0,0,0,0.55); }
+  .s-head { background: var(--color-bg-dark-gray); border-bottom: 2px solid var(--color-primary); padding: 11px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; position: relative; }
+  .s-nav { display: flex; align-items: center; gap: 14px; }
+  .s-burger { display: inline-flex; flex-direction: column; gap: 4px; }
+  .s-burger span { width: 22px; height: 2px; background: var(--color-primary); display: block; }
+  .s-brand { display: inline-flex; align-items: center; gap: 10px; }
+  .s-brand img { height: 34px; display: block; }
+  .s-brand .lt { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.05em; font-size: 14px; }
+  .s-ctx { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: var(--color-gray-2); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+
+  /* page body wrapper inside a screen — forms read best on a capped column */
+  .pf { max-width: 760px; margin: 0 auto; padding: 26px 22px 30px; }
+  .pf-title { font-family: var(--font-headline); font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 22px; margin: 0 0 2px; }
+  .pf-sub { color: var(--color-gray-2); font-size: 13px; margin: 0 0 22px; }
+
+  /* identity block */
+  .id-tile { flex: 0 0 auto; width: 72px; height: 72px; display: grid; place-items: center; background: var(--color-surface-input); border: 1px solid var(--color-gray-3);
+    font-family: var(--font-headline); font-weight: 900; font-size: 28px; letter-spacing: 0.02em; color: var(--color-primary); text-transform: uppercase; }
+  .id-name { font-family: var(--font-headline); font-weight: 700; color: var(--color-white); text-transform: uppercase; letter-spacing: 0.03em; font-size: 21px; margin: 0; line-height: 1.1; }
+  .id-handle { color: var(--color-gray-2); font-size: 13px; margin: 3px 0 0; }
+  .id-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+
+  /* read-only fact grid */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-gray-3); border: 1px solid var(--color-gray-3); }
+  @media (max-width: 560px) { .facts { grid-template-columns: 1fr 1fr; } }
+  .facts .f { background: var(--color-bg-dark-gray); padding: 11px 13px; }
+  .facts .fk { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-gray-2); font-weight: 700; margin: 0 0 4px; }
+  .facts .fv { color: var(--color-white); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+
+  /* form helpers */
+  .form-hint { color: var(--color-gray-2); font-size: 12.5px; line-height: 1.5; margin: 6px 0 0; max-width: 62ch; }
+  .form-hint .krt-icon { color: var(--color-primary); width: 14px; height: 14px; margin-right: 4px; }
+  .card-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--color-gray-3); }
+  .card-foot .saved { display: inline-flex; align-items: center; gap: 6px; color: var(--color-gray-2); font-size: 12px; }
+  .card-help { color: var(--color-gray-2); font-size: 12.5px; font-weight: 300; }
+  .check-row { display: flex; gap: 11px; align-items: flex-start; }
+  .check-row label { color: var(--color-gray-1); font-weight: 700; font-size: 14px; margin: 0; cursor: pointer; }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+  .field-cap { display: block; color: var(--color-gray-1); font-weight: 700; font-size: 13px; margin-bottom: 7px; }
+  textarea { resize: vertical; min-height: 96px; line-height: 1.55; }
+
+  /* account / security row */
+  .acct-note { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--color-gray-1); line-height: 1.55; }
+  .acct-note .krt-icon { color: var(--color-primary); width: 17px; height: 17px; flex: none; margin-top: 1px; }
+  .acct-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .btn .krt-icon { width: 1.05em; height: 1.05em; margin-right: 0.45em; }
+
+  /* variant B — HUD console panels */
+  .panel { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); }
+  .panel .ph { padding: 10px 14px; background: var(--color-surface-input); border-left: 4px solid var(--color-primary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--color-gray-1); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .panel .ph .ph-x { color: var(--color-gray-2); font-weight: 700; }
+  .panel .pbody { padding: 16px; }
+  .hud-id { display: flex; gap: 18px; align-items: center; }
+
+  /* variant C — lean */
+  .lean .id-line { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--color-gray-3); flex-wrap: wrap; }
+  .lean .id-tile { width: 54px; height: 54px; font-size: 20px; }
+  .lean .sec { padding: 20px 0; border-bottom: 1px solid var(--color-gray-3); }
+  .lean .sec:last-of-type { border-bottom: none; }
+  .lean .section-title { margin: 0 0 14px; }
+  .lean .inline-facts { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 4px; }
+  .lean .inline-facts span { font-size: 12.5px; color: var(--color-gray-2); }
+  .lean .inline-facts b { color: var(--color-white); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Profile · /profile</p>
+  <h1 class="t">Profilseite — auf den Stand des KRT Design Systems gebracht</h1>
+  <p class="lead">Die aktuelle <code>profile.html</code> presst <b>schreibgeschützte Identitätsdaten</b> (Username, E-Mail, Rang …) und <b>drei eigenständige Formulare</b> (Eigene Daten, Auszahlung, Blueprint-Freigabe) in <b>eine einzige <code>kv-list</code></b> mit drei untereinander stehenden „Speichern"-Buttons. Das ist dicht und schwer zu lesen — man erkennt nicht, was zusammengehört. Unten drei Varianten, alle einspaltig, gebaut aus DS-Bausteinen (<code>.card</code>, <code>.hud-box</code>, <code>.panel-header</code>, <code>.btn--cta</code>, <code>.squadron-badge</code>, <code>.chip</code>). Bitte eine auswählen — die finalisiere ich dann.</p>
+
+  <div class="cols2">
+    <div>
+      <h3 class="block-h">Befund — heutige Seite</h3>
+      <div class="prob"><span class="n">1</span><div><b>Alles in einer Liste.</b> Lesedaten und drei Formulare in derselben <code>kv-list</code> → keine Hierarchie. <span class="fix">→ Identität oben, jede Einstellung als eigene Sektion.</span></div></div>
+      <div class="prob"><span class="n">2</span><div><b>Drei „Speichern" untereinander</b> ohne sichtbare Trennung der Kontexte. <span class="fix">→ Je Sektion genau eine CTA, klar zugeordnet.</span></div></div>
+      <div class="prob"><span class="n">3</span><div><b>Kein Identitäts-Anker.</b> Wer bin ich, welcher Rang, welche Staffel? <span class="fix">→ Identitäts-Block mit Initialen-Kachel + Badges.</span></div></div>
+      <div class="prob"><span class="n">4</span><div><b>Formulare als <code>&lt;dd&gt;</code></b> einer Definitionsliste — semantisch falsch und eng. <span class="fix">→ Echte Sektionen mit Luft.</span></div></div>
+      <div class="prob"><span class="n">5</span><div><b>Keycloak-Link unscheinbar</b>, obwohl Passwort/E-Mail/2FA dort liegen. <span class="fix">→ Eigene „Zugang &amp; Sicherheit"-Sektion mit Hinweis.</span></div></div>
+    </div>
+    <div>
+      <h3 class="block-h">System — für alle Varianten gleich</h3>
+      <div class="sys"><span class="k">▸</span><div><b>Zwei Zonen:</b> oben „Wer du bist" (read-only Identität), darunter „Was du einstellst" (Formulare).</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Eine CTA pro Kontext</b> — gefülltes Orange (<code>.btn--cta</code>) nur für die eine Speichern-Aktion je Sektion.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Orange = Aktion + Identität</b> (Initialen, Rang, CTA, Links). Labels neutral-grau, Werte hell-weiß (<code>--data-fg</code>).</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Spalte auf 760&nbsp;px gekappt</b> — Formulare und Fließtext bleiben gut lesbar statt über die volle Breite zu laufen.</div></div>
+      <div class="sys"><span class="k">▸</span><div><b>Scharfe Ecken, Hairlines, Bloom</b> — nur Badges/Chips sind rund. Touch-Ziele ≥ 44&nbsp;px, Inline-Fehler über <code>.field-error</code>.</div></div>
+    </div>
+  </div>
+
+  <!-- =================================================== VARIANTE A ===== -->
+  <div class="vh">
+    <span class="vtag">Variante A</span>
+    <h2>Identitäts-Band + Einstellungs-Karten</h2>
+    <span class="vsub">ruhig, modern, gut skalierbar</span>
+    <span class="rec">Empfehlung</span>
+  </div>
+
+  <div class="screen">
+    <div class="s-head">
+      <div class="s-nav">
+        <span class="s-burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span>
+      </div>
+      <span class="s-ctx">Kontext · <span class="squadron-badge">IRI</span></span>
+    </div>
+
+    <div class="pf">
+      <h1 class="pf-title">Mein Profil</h1>
+      <p class="pf-sub">Deine Stammdaten und persönlichen Voreinstellungen.</p>
+
+      <!-- identity band -->
+      <div class="card card--accent" style="display:flex; gap:18px; align-items:center;">
+        <div class="id-tile">VA</div>
+        <div style="min-width:0;">
+          <p class="id-name">Valk</p>
+          <p class="id-handle">@valk</p>
+          <div class="id-chips">
+            <span class="chip chip--primary">Commander</span>
+            <span class="squadron-badge">IRIDIUM · IRI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="facts" style="margin-top:14px;">
+        <div class="f"><p class="fk">E-Mail</p><div class="fv" style="font-size:13.5px;">valk@iridium.kartell</div></div>
+        <div class="f"><p class="fk">Beitrittsdatum</p><div class="fv">12.08.2024</div></div>
+        <div class="f"><p class="fk">Monate bei der Staffel</p><div class="fv">22</div></div>
+      </div>
+
+      <!-- editable cards -->
+      <div class="stack" style="margin-top:22px;">
+
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Eigene Daten</h3><span class="card-help">Frei wählbarer Anzeigename &amp; Notiz</span></div>
+          <div class="form-group">
+            <label class="form-label" for="a-dn">Anzeigename</label>
+            <input id="a-dn" type="text" class="w-full" value="Valk" style="width:100%;">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="a-desc">Beschreibung</label>
+            <textarea id="a-desc" class="w-full" style="width:100%;">Mining- &amp; Refinery-Lead. Erreichbar Mo/Mi/Fr ab 19:30 (TS). Schwerpunkt Quantanium-Routen Pyro ↔ Stanton.</textarea>
+          </div>
+          <div class="card-foot">
+            <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+            <span class="saved"><svg class="krt-icon" style="color:var(--color-success-text);"><use href="#krt-icon-success"/></svg>Speichert nur diesen Block</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Standard-Auszahlung</h3><span class="card-help">Voreinstellung bei der Anmeldung</span></div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="a-pay">Standard-Auszahlungspräferenz</label>
+            <select id="a-pay" style="width:100%; max-width:320px;">
+              <option>Auszahlung</option>
+              <option>Spenden</option>
+            </select>
+            <p class="form-hint"><svg class="krt-icon"><use href="#krt-icon-info"/></svg>Bei jeder Missionsanmeldung vorausgewählt. Pro Mission weiterhin änderbar.</p>
+          </div>
+          <div class="card-foot">
+            <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Präferenz speichern</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3 class="card-title">Blueprint-Freigabe</h3></div>
+          <div class="check-row">
+            <input id="a-bp" type="checkbox" checked>
+            <div>
+              <label for="a-bp">Meine Blueprints für alle OrgUnits verfügbar machen</label>
+              <p class="form-hint">Wenn aktiviert, zählen deine Blueprints in den Verfügbarkeits-Ansichten <b style="color:var(--color-gray-1);">aller</b> OrgUnits — nicht nur in deiner eigenen.</p>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+          </div>
+        </div>
+
+        <div class="card card--inset">
+          <div class="card-head"><h3 class="card-title">Zugang &amp; Sicherheit</h3></div>
+          <p class="acct-note"><svg class="krt-icon"><use href="#krt-icon-info"/></svg><span>Passwort, E-Mail-Adresse und Zwei-Faktor-Authentifizierung werden zentral in <b style="color:var(--color-white);">Keycloak</b> verwaltet.</span></p>
+          <div class="acct-actions">
+            <a href="#" onclick="return false" class="btn btn-outline"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg>In Keycloak verwalten</a>
+            <a href="#" onclick="return false" class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg>Zurück</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================== VARIANTE B ===== -->
+  <div class="vh">
+    <span class="vtag">Variante B</span>
+    <h2>HUD-Konsole</h2>
+    <span class="vsub">stärkste Markenbindung — <code>.hud-box</code> + <code>.panel-header</code></span>
+  </div>
+
+  <div class="screen">
+    <div class="s-head">
+      <div class="s-nav">
+        <span class="s-burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span>
+      </div>
+      <span class="s-ctx">Kontext · <span class="squadron-badge">IRI</span></span>
+    </div>
+
+    <div class="pf">
+      <div class="greeting"><h1 style="font-size:22px;">Mein Profil</h1></div>
+
+      <!-- identity as hud-box -->
+      <div class="hud-box hud-id">
+        <div class="id-tile" style="border-color:var(--color-primary);">VA</div>
+        <div style="min-width:0; flex:1;">
+          <p class="id-name">Valk <span style="color:var(--color-gray-2); font-weight:700; font-size:13px; letter-spacing:0;">@valk</span></p>
+          <div class="id-chips">
+            <span class="chip chip--primary">Commander</span>
+            <span class="squadron-badge">IRIDIUM · IRI</span>
+          </div>
+        </div>
+        <dl class="kv-list" style="grid-template-columns:max-content max-content; gap:0.4rem 1rem; margin:0;">
+          <dt>E-Mail</dt><dd style="font-size:0.95rem;">valk@iridium.kartell</dd>
+          <dt>Beitritt</dt><dd style="font-size:0.95rem;">12.08.2024</dd>
+          <dt>Monate</dt><dd style="font-size:0.95rem;">22</dd>
+        </dl>
+      </div>
+
+      <div class="stack" style="margin-top:18px;">
+
+        <div class="panel">
+          <div class="ph"><span>Eigene Daten</span></div>
+          <div class="pbody">
+            <div class="form-group">
+              <label class="form-label" for="b-dn">Anzeigename</label>
+              <input id="b-dn" type="text" value="Valk" style="width:100%;">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="b-desc">Beschreibung</label>
+              <textarea id="b-desc" style="width:100%;">Mining- &amp; Refinery-Lead. Erreichbar Mo/Mi/Fr ab 19:30 (TS). Schwerpunkt Quantanium-Routen Pyro ↔ Stanton.</textarea>
+            </div>
+            <div class="card-foot">
+              <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><span>Standard-Auszahlung</span></div>
+          <div class="pbody">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="b-pay">Standard-Auszahlungspräferenz</label>
+              <select id="b-pay" style="width:100%; max-width:320px;">
+                <option>Auszahlung</option>
+                <option>Spenden</option>
+              </select>
+              <p class="form-hint"><svg class="krt-icon"><use href="#krt-icon-info"/></svg>Bei jeder Missionsanmeldung vorausgewählt. Pro Mission weiterhin änderbar.</p>
+            </div>
+            <div class="card-foot">
+              <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Präferenz speichern</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><span>Blueprint-Freigabe</span><span class="ph-x">aktiv</span></div>
+          <div class="pbody">
+            <div class="check-row">
+              <input id="b-bp" type="checkbox" checked>
+              <div>
+                <label for="b-bp">Meine Blueprints für alle OrgUnits verfügbar machen</label>
+                <p class="form-hint">Wenn aktiviert, zählen deine Blueprints in den Verfügbarkeits-Ansichten <b style="color:var(--color-gray-1);">aller</b> OrgUnits — nicht nur in deiner eigenen.</p>
+              </div>
+            </div>
+            <div class="card-foot">
+              <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="ph"><span>Zugang &amp; Sicherheit</span></div>
+          <div class="pbody">
+            <p class="acct-note"><svg class="krt-icon"><use href="#krt-icon-info"/></svg><span>Passwort, E-Mail-Adresse und Zwei-Faktor-Authentifizierung werden zentral in <b style="color:var(--color-white);">Keycloak</b> verwaltet.</span></p>
+            <div class="acct-actions">
+              <a href="#" onclick="return false" class="btn btn-outline"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg>In Keycloak verwalten</a>
+              <a href="#" onclick="return false" class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg>Zurück</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================== VARIANTE C ===== -->
+  <div class="vh">
+    <span class="vtag">Variante C</span>
+    <h2>Reduziert</h2>
+    <span class="vsub">maximale Lesbarkeit, minimale Chrome — Sektionen nur durch Hairlines</span>
+  </div>
+
+  <div class="screen">
+    <div class="s-head">
+      <div class="s-nav">
+        <span class="s-burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="s-brand"><img src="../assets/krt.webp" alt="DAS KARTELL"><span class="lt">Profit Basetool</span></span>
+      </div>
+      <span class="s-ctx">Kontext · <span class="squadron-badge">IRI</span></span>
+    </div>
+
+    <div class="pf lean">
+      <h1 class="pf-title">Mein Profil</h1>
+      <p class="pf-sub">Deine Stammdaten und persönlichen Voreinstellungen.</p>
+
+      <div class="id-line">
+        <div class="id-tile">VA</div>
+        <div style="flex:1; min-width:0;">
+          <p class="id-name">Valk <span style="color:var(--color-gray-2); font-weight:700; font-size:13px; letter-spacing:0;">@valk</span></p>
+          <div class="id-chips" style="margin-top:8px;">
+            <span class="chip chip--primary">Commander</span>
+            <span class="squadron-badge">IRIDIUM · IRI</span>
+          </div>
+          <div class="inline-facts">
+            <span>E-Mail: <b>valk@iridium.kartell</b></span>
+            <span>Beitritt: <b>12.08.2024</b></span>
+            <span>Monate: <b>22</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h3 class="section-title">Eigene Daten</h3>
+        <div class="form-group">
+          <label class="form-label" for="c-dn">Anzeigename</label>
+          <input id="c-dn" type="text" value="Valk" style="width:100%;">
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label" for="c-desc">Beschreibung</label>
+          <textarea id="c-desc" style="width:100%;">Mining- &amp; Refinery-Lead. Erreichbar Mo/Mi/Fr ab 19:30 (TS). Schwerpunkt Quantanium-Routen Pyro ↔ Stanton.</textarea>
+        </div>
+        <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+      </div>
+
+      <div class="sec">
+        <h3 class="section-title">Standard-Auszahlung</h3>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label" for="c-pay">Standard-Auszahlungspräferenz</label>
+          <select id="c-pay" style="width:100%; max-width:320px;">
+            <option>Auszahlung</option>
+            <option>Spenden</option>
+          </select>
+          <p class="form-hint"><svg class="krt-icon"><use href="#krt-icon-info"/></svg>Bei jeder Missionsanmeldung vorausgewählt. Pro Mission weiterhin änderbar.</p>
+        </div>
+        <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Präferenz speichern</button>
+      </div>
+
+      <div class="sec">
+        <h3 class="section-title">Blueprint-Freigabe</h3>
+        <div class="check-row" style="margin-bottom:14px;">
+          <input id="c-bp" type="checkbox" checked>
+          <div>
+            <label for="c-bp">Meine Blueprints für alle OrgUnits verfügbar machen</label>
+            <p class="form-hint">Wenn aktiviert, zählen deine Blueprints in den Verfügbarkeits-Ansichten <b style="color:var(--color-gray-1);">aller</b> OrgUnits — nicht nur in deiner eigenen.</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn--cta"><svg class="krt-icon"><use href="#krt-icon-save"/></svg>Speichern</button>
+      </div>
+
+      <div class="sec">
+        <h3 class="section-title">Zugang &amp; Sicherheit</h3>
+        <p class="acct-note"><svg class="krt-icon"><use href="#krt-icon-info"/></svg><span>Passwort, E-Mail-Adresse und Zwei-Faktor-Authentifizierung werden zentral in <b style="color:var(--color-white);">Keycloak</b> verwaltet.</span></p>
+        <div class="acct-actions">
+          <a href="#" onclick="return false" class="btn btn-outline"><svg class="krt-icon"><use href="#krt-icon-external-link"/></svg>In Keycloak verwalten</a>
+          <a href="#" onclick="return false" class="btn btn-ghost"><svg class="krt-icon"><use href="#krt-icon-arrow-left"/></svg>Zurück</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="lead" style="margin-top:46px;"><b>Empfehlung:</b> Variante&nbsp;A — der Identitäts-Block trennt „wer du bist" sauber von den Einstellungen, jede Einstellung ist eine eigene Karte mit genau einer CTA, und es bleibt ruhig genug, um nicht überladen zu wirken. Sag mir, welche du möchtest (oder einen Mix), dann baue ich die finale <code>profile-final.html</code> + den Umsetzungsauftrag fürs Repo.</p>
+
+</div>
+
+<!-- KRT icon sprite (inlined for a self-contained mockup) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="krt-icon-save" viewBox="0 0 24 24"><path d="M5 4h11l4 4v12H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M9 4v4h5V4" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path><path d="M8 20v-6h8v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"></circle><path d="M12 11v6M12 7v0.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-success" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+  <symbol id="krt-icon-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+  <symbol id="krt-icon-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></symbol>
+</svg>
+
+</body>
+</html>
