@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Lagereintrag-Zuordnung (Split)" subtitle="Menge getrennt je Auftrag/Einsatz — Chips + „+ Zuordnen“ (Variante C)" viewport="760x460" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { padding: 20px 22px; }
+  .fld-cap { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--color-gray-2); margin-bottom: 7px; }
+  .demo { display: grid; gap: 20px; max-width: 690px; }
+  /* specimen: render popovers in flow so the thumbnail shows them */
+  .assoc-pop { position: static; }
+  .mi { width: 110px; background: var(--color-bg-dark-gray); color: var(--color-white); border: 1px solid var(--color-gray-3); padding: .4rem .45rem; text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-body); }
+</style>
+</head>
+<body>
+  <p class="pv-label">Lagereintrag — Menge getrennt je Auftrag/Einsatz (Variante C)</p>
+  <div class="demo">
+    <div>
+      <span class="fld-cap">Auftrag · zwei Positionen · Rest 0</span>
+      <div class="assoc-split">
+        <span class="assoc-chip assoc-chip--order">#1042 · <span class="assoc-chip__amt">1.000</span></span>
+        <span class="assoc-chip assoc-chip--order">#1039 · <span class="assoc-chip__amt">1.480</span></span>
+        <span class="assoc-add-wrap"><button class="assoc-add" aria-label="Auftrag hinzufügen">+</button></span>
+        <span class="chip chip--success" style="font-size:.58rem">Rest 0</span>
+      </div>
+    </div>
+    <div>
+      <span class="fld-cap">Einsatz · unverteilter Rest erlaubt</span>
+      <div class="assoc-split">
+        <span class="assoc-chip assoc-chip--mission">Nachtfalke · <span class="assoc-chip__amt">1.000</span></span>
+        <span class="assoc-add-wrap"><button class="assoc-add">+ Zuordnen</button></span>
+        <span class="chip chip--muted" style="font-size:.58rem">Rest 1.480 frei</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start">
+      <div>
+        <span class="fld-cap">„+ Zuordnen“ → Suche</span>
+        <div class="krt-combobox assoc-pop" style="width:auto">
+          <input class="krt-combobox__input" type="text" value="titan" aria-label="Auftrag suchen">
+          <ul class="krt-combobox__listbox" role="listbox">
+            <li class="krt-combobox__option krt-combobox__option--active" role="option"><span class="krt-combobox__label">#1051 <mark>Titan</mark>-Nachschub Hurston</span></li>
+            <li class="krt-combobox__notice">Weiter tippen …</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <span class="fld-cap">Chip-Klick → Mengen-Editor</span>
+        <div class="assoc-pop assoc-pop__menge" style="width:auto">
+          <label>Menge (SCU)</label>
+          <div class="assoc-menge-row"><input class="mi" value="1.000"><button class="btn btn-quiet-danger" style="font-size:.68rem">Entfernen</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="pv-mono" style="margin-top:14px;">.assoc-split · .assoc-chip(--order/--mission) + .assoc-chip__amt · .assoc-add(-wrap) · .assoc-pop(.__menge) · Rest = .chip(--success/--muted/--danger)</p>
+</body>
+</html>

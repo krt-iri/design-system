@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Lagereintrag — Mengen-Aufteilung (Varianten)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  doc-page:not(:defined) { visibility: hidden; }
+  html, body { margin: 0; background: var(--color-bg-black); }
+  .doc { background: var(--color-bg-black); color: var(--color-gray-1); padding: 0.55in 0.6in; font-family: var(--font-body); font-weight: 300; }
+
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 10px; color: var(--color-gray-2); display: flex; align-items: center; gap: 9px; }
+  .eyebrow::before { content: ''; width: 26px; height: 2px; background: var(--color-primary); }
+  h1 { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.03em; font-size: 23px; margin: 10px 0 6px; break-after: avoid; }
+  .intro { font-size: 12.5px; line-height: 1.5; margin: 0; max-width: 78ch; }
+  .intro b { color: var(--color-white); font-weight: 700; }
+
+  .decided { display: flex; gap: 12px; align-items: flex-start; margin: 16px 0 6px; border: 1px solid var(--color-success); border-left: 4px solid var(--color-success); background: rgba(35,158,51,0.10); padding: 11px 13px; break-inside: avoid; }
+  .decided .badge { flex: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; color: var(--color-success); border: 1px solid var(--color-success); padding: 3px 8px; }
+  .decided p { margin: 0; font-size: 12px; line-height: 1.5; } .decided p b { color: var(--color-white); font-weight: 700; }
+
+  h2 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; color: var(--color-white); margin: 0 0 3px; break-after: avoid; }
+  .variant { margin-top: 20px; break-inside: avoid; }
+  .vtag { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 10.5px; padding: 4px 10px; margin-bottom: 9px; color: var(--color-primary); border: 1px solid var(--color-primary); background: rgba(231,126,35,0.10); }
+  .vtag .key { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border: 1px solid currentColor; font-size: 11px; }
+  .desc { font-size: 12px; line-height: 1.5; margin: 0 0 10px; max-width: 82ch; } .desc b { color: var(--color-white); font-weight: 700; }
+
+  /* static allocation example */
+  .pex { border: 1px solid var(--color-gray-3); background: var(--color-surface-input); padding: 11px 13px; break-inside: avoid; }
+  .pex .frame { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-gray-2); margin-bottom: 9px; }
+  .pex .frame b { color: var(--color-white); font-variant-numeric: tabular-nums; }
+  .splits { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .scol .scap { font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; font-size: 10.5px; margin-bottom: 6px; }
+  .scol.order .scap { color: var(--color-primary); } .scol.mission .scap { color: var(--color-info); }
+  .arow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--color-gray-3); }
+  .arow .amt { color: var(--color-white); font-variant-numeric: tabular-nums; font-size: 11.5px; }
+  .arow .amt .u { color: var(--color-gray-2); font-size: 9px; }
+  .stot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 7px; font-size: 10.5px; color: var(--color-gray-2); }
+  .stot .v b { color: var(--color-white); font-variant-numeric: tabular-nums; }
+  .chip .chip-label { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cinline { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .achip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 7px; font-weight: 700; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.04em; border: 1px solid var(--color-gray-3); }
+  .achip.order { color: var(--color-primary); border-color: var(--color-primary); background: rgba(231,126,35,0.10); }
+  .achip.mission { color: var(--color-info); border-color: var(--color-info); background: rgba(53,93,220,0.15); }
+  .achip .amt { color: var(--color-white); font-variant-numeric: tabular-nums; }
+
+  .proscons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin: 11px 0 0; break-inside: avoid; }
+  .pch { font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; font-size: 10px; margin: 0 0 5px; }
+  .pch.pro { color: var(--color-success); } .pch.con { color: var(--color-danger-text); }
+  ul.pc { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+  ul.pc li { display: flex; gap: 8px; font-size: 11.5px; line-height: 1.35; align-items: flex-start; }
+  ul.pc li::before { content: ''; width: 5px; height: 5px; margin-top: 5px; flex: none; }
+  ul.pc.pro li::before { background: var(--color-success); } ul.pc.con li::before { background: var(--color-danger); }
+  ul.pc b { color: var(--color-white); font-weight: 700; }
+
+  .rec { margin-top: 22px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-surface-input); padding: 13px 15px; break-inside: avoid; }
+  .rec h3 { font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; font-size: 12px; color: var(--color-primary); margin: 0 0 6px; }
+  .rec p { margin: 0 0 5px; font-size: 12px; line-height: 1.5; } .rec p:last-child { margin: 0; } .rec p b { color: var(--color-white); font-weight: 700; }
+  .foot { margin-top: 22px; color: var(--color-gray-2); font-family: var(--font-mono); font-size: 10px; line-height: 1.6; border-top: 1px solid var(--color-gray-3); padding-top: 12px; }
+  .foot b { color: var(--color-gray-1); }
+  code { font-family: var(--font-mono); font-size: 0.9em; color: var(--color-gray-1); }
+</style>
+</head>
+<body>
+<doc-page size="letter" orientation="portrait" margin="0">
+<div class="doc">
+
+  <div class="eyebrow">Vorschlag v2 · Lagerverwaltung · Mengen-Aufteilung</div>
+  <h1>Lagereintrag — Menge getrennt je Auftrag &amp; Einsatz aufteilen</h1>
+  <p class="intro">Je Eintrag wird die <b>Gesamtmenge</b> (z.&nbsp;B. 2.480&nbsp;SCU) aufgeteilt — <b>getrennt</b> nach Aufträgen und nach Einsätzen. Beide Aufteilungen sind unabhängig und werden je gegen die Gesamtmenge abgeglichen (Verteilt / Rest). Aufträge = orange, Einsätze = blau. Offen ist nur noch die <b>Platzierung</b> (A/B/C).</p>
+
+  <div class="decided">
+    <span class="badge">Festgelegt</span>
+    <p><b>Modell G — getrennte Mengen.</b> Die Menge wird zweimal unabhängig erfasst (über Aufträge, über Einsätze); jede Zuordnung trägt ein eigenes Mengenfeld. <b>Abgleich:</b> unverteilter <b>Rest ist erlaubt</b> (Rest&nbsp;&gt;&nbsp;0 = neutral „… frei“, Rest&nbsp;0 = grün); nur <b>Über-Verteilung</b> (Rest&nbsp;&lt;&nbsp;0) ist unzulässig.</p>
+  </div>
+
+  <!-- VARIANTE A -->
+  <div class="variant">
+    <span class="vtag"><span class="key">A</span> Ausklappzeile · zwei getrennte Aufteilungen</span>
+    <h2>Inline-Ausklappzeile (kein Overlay) — Empfehlung</h2>
+    <p class="desc">Ein kompakter Button je Eintrag klappt unter der Zeile ein Panel mit <b>zwei nebeneinanderliegenden Aufteilungen</b> auf (links Aufträge, rechts Einsätze), je Liste Zuordnung + Menge und ein eigener Verteilt/Rest-Abgleich. Bleibt im Tabellenfluss; mehrere Einträge gleichzeitig offen.</p>
+    <div class="pex">
+      <div class="frame">Eintrag · Gesamtmenge <b>2.480 SCU</b> · Panel aufgeklappt</div>
+      <div class="splits">
+        <div class="scol order">
+          <div class="scap">Aufträge</div>
+          <div class="arow"><span class="chip chip--primary"><span class="chip-label">#1042 Quantanium-Konvoi</span></span><span class="amt">1.000 <span class="u">SCU</span></span></div>
+          <div class="arow"><span class="chip chip--primary"><span class="chip-label">#1039 Laranite-Bestellung</span></span><span class="amt">1.480 <span class="u">SCU</span></span></div>
+          <div class="stot"><span class="v">Verteilt <b>2.480</b> / 2.480</span><span class="chip chip--success">Rest 0</span></div>
+        </div>
+        <div class="scol mission">
+          <div class="scap">Einsätze</div>
+          <div class="arow"><span class="chip chip--info"><span class="chip-label">Operation Nachtfalke · 05.05.</span></span><span class="amt">1.000 <span class="u">SCU</span></span></div>
+          <div class="stot"><span class="v">Verteilt <b>1.000</b> / 2.480</span><span class="chip chip--muted">Rest 1.480 frei</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div><div class="pch pro">Vorteile</div><ul class="pc pro">
+        <li><b>Kein Overlay</b> — bleibt im Tabellenfluss; mehrere Einträge gleichzeitig offen.</li>
+        <li>Beide Aufteilungen nebeneinander sichtbar, jede mit eigenem Rest-Abgleich.</li>
+        <li>Sofort wirksam; Zeile geschlossen schmal (ein Button).</li>
+      </ul></div>
+      <div><div class="pch con">Nachteile</div><ul class="pc con">
+        <li>Offene Panels erhöhen die Höhe (wie Notizen); viele offen = lange Tabelle.</li>
+        <li>Zwei Listen brauchen Breite — auf schmalen Screens untereinander.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- VARIANTE B -->
+  <div class="variant">
+    <span class="vtag"><span class="key">B</span> Modal · zwei getrennte Aufteilungen</span>
+    <h2>Verwaltung im Modal</h2>
+    <p class="desc">Derselbe Button öffnet ein <b>Modal</b> mit den zwei getrennten Aufteilungen (Layout wie oben), inkl. „Speichern“/„Abbrechen“ — gesperrt bei Über-Verteilung. Die Eintrags-Zeile bleibt unter allen Umständen minimal.</p>
+    <div class="pex">
+      <div class="frame">Modal „Mengen aufteilen“ · Gesamtmenge <b>2.480 SCU</b></div>
+      <div class="splits">
+        <div class="scol order">
+          <div class="scap">Aufträge</div>
+          <div class="arow"><span class="chip chip--primary"><span class="chip-label">#1042 Quantanium-Konvoi</span></span><span class="amt">2.480 <span class="u">SCU</span></span></div>
+          <div class="stot"><span class="v">Verteilt <b>2.480</b> / 2.480</span><span class="chip chip--success">Rest 0</span></div>
+        </div>
+        <div class="scol mission">
+          <div class="scap">Einsätze</div>
+          <div class="arow"><span class="chip chip--info"><span class="chip-label">Nachtfalke · 05.05.</span></span><span class="amt">1.500 <span class="u">SCU</span></span></div>
+          <div class="arow"><span class="chip chip--info"><span class="chip-label">Aaron Halo · 12.05.</span></span><span class="amt">980 <span class="u">SCU</span></span></div>
+          <div class="stot"><span class="v">Verteilt <b>2.480</b> / 2.480</span><span class="chip chip--success">Rest 0</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div><div class="pch pro">Vorteile</div><ul class="pc pro">
+        <li>Zeile <b>maximal kompakt</b> — ein Button, egal wie viele Zuordnungen.</li>
+        <li>Viel Platz + eigener Rest-Balken je Dimension; bewusstes Speichern.</li>
+        <li>Vertrautes <code>.krt-modal</code>-Idiom (eine CTA, Abbrechen, Esc).</li>
+      </ul></div>
+      <div><div class="pch con">Nachteile</div><ul class="pc con">
+        <li>Aufteilung erst nach Klick sichtbar; Modal je Eintrag wirkt schwerer.</li>
+        <li>Nur ein Eintrag gleichzeitig bearbeitbar (kein Vergleich nebeneinander).</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- VARIANTE C -->
+  <div class="variant">
+    <span class="vtag"><span class="key">C</span> Inline · Chips mit Mengen-Label</span>
+    <h2>Chips mit Menge, direkt im Eintrag</h2>
+    <p class="desc">Die leichteste Variante: je Gruppe stehen die Zuordnungen als Chips <b>mit Menge</b> direkt in der Zeile; Klick auf einen Chip öffnet einen Mini-Editor, „+ Zuordnen“ fügt hinzu. Ein kleiner Rest-Chip je Gruppe zeigt den Abgleich.</p>
+    <div class="pex">
+      <div class="frame">Eintrag · Gesamtmenge <b>2.480 SCU</b> · Chips in der Zeile</div>
+      <div style="display:grid;gap:9px">
+        <div>
+          <div class="scol order" style="margin-bottom:2px"><div class="scap">Auftrag</div></div>
+          <div class="cinline">
+            <span class="achip order">#1042 · <span class="amt">1.000</span></span>
+            <span class="achip order">#1039 · <span class="amt">1.480</span></span>
+            <span class="chip chip--success" style="font-size:9px">Rest 0</span>
+          </div>
+        </div>
+        <div>
+          <div class="scol mission" style="margin-bottom:2px"><div class="scap">Einsatz</div></div>
+          <div class="cinline">
+            <span class="achip mission">Nachtfalke · <span class="amt">1.000</span></span>
+            <span class="chip chip--muted" style="font-size:9px">Rest 1.480 frei</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div><div class="pch pro">Vorteile</div><ul class="pc pro">
+        <li><b>Alles sichtbar</b> ohne Klick; kein Overlay, kein Ausklappen.</li>
+        <li>Menge direkt am Chip; schnell für 1–2 Zuordnungen je Gruppe.</li>
+      </ul></div>
+      <div><div class="pch con">Nachteile</div><ul class="pc con">
+        <li><b>Wird eng</b> — Chip + Menge + Rest je Gruppe blähen die Zeile bei mehreren Zuordnungen.</li>
+        <li>Mengen-Bearbeitung im Mini-Popover ist fummeliger als ein Tabellenfeld.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="rec">
+    <h3>Empfehlung &amp; offene Frage</h3>
+    <p><b>Empfehlung: Variante A (Ausklappzeile).</b> Zeigt beide getrennten Aufteilungen ohne Overlay im Tabellenfluss, hält die Zeile geschlossen schmal und erlaubt das Nebeneinander mehrerer offener Einträge. <b>Variante C</b> für <code>/inventory/my</code> mit meist 1–2 Zuordnungen je Gruppe; <b>Variante B</b> (Modal), wenn die Zeile unter allen Umständen minimal bleiben soll.</p>
+    <p><b>Offen:</b> die Platzierung (A/B/C). Danach: Design-System ergänzen und Umsetzungs-Auftrag (Repo + Submodul + Produkt) schreiben.</p>
+  </div>
+
+  <p class="foot">
+    Gilt für /inventory/my, /inventory/all und das Einbuchen-Formular. Datenmodell (Modell G): zwei getrennte Zuordnungstabellen je Eintrag — <code>{ jobOrderId, amount }</code> und <code>{ missionId, amount }</code>; je Tabelle Σ amount ≤ Gesamtmenge. Abgleich: Rest = Gesamtmenge − Σ; unverteilter Rest erlaubt, nur Über-Verteilung (Rest &lt; 0) unzulässig. Interaktives Mock: inventory-entry-multi-assign-quantity-varianten.html.
+  </p>
+
+</div>
+</doc-page>
+<script src="doc-page.js"></script>
+<script>
+addEventListener('load', () => {
+  (async () => {
+    try { await document.fonts.ready; } catch (e) {}
+    const imgs = Array.from(document.images).filter((i) => !i.complete);
+    await Promise.race([
+      Promise.allSettled(imgs.map((i) => i.decode())),
+      new Promise((r) => setTimeout(r, 8000)),
+    ]);
+    setTimeout(() => window.print(), 500);
+  })();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Lagereintrag — Mengen-Aufteilung" subtitle="Menge getrennt je Auftrag & Einsatz + Rest-Abgleich · 3 Platzierungen" viewport="1240x960" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorschlag — Lagereintrag: Menge getrennt je Auftrag &amp; Einsatz aufteilen</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 38px 30px 90px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .head { margin-bottom: 22px; }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  .head h1 { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 25px; margin: 13px 0 8px; }
+  .head p { font-weight: 300; max-width: 94ch; margin: 0; line-height: 1.55; }
+  .head p b { color: var(--color-white); font-weight: 700; }
+
+  .decided { display: flex; gap: 14px; align-items: flex-start; margin: 20px 0 6px; border: 1px solid var(--color-success); border-left: 4px solid var(--color-success); background: rgba(35,158,51,0.08); padding: 13px 16px; }
+  .decided .badge { flex: none; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--color-success); border: 1px solid var(--color-success); padding: 4px 9px; }
+  .decided p { margin: 0; font-weight: 300; font-size: 13.5px; line-height: 1.55; } .decided p b { color: var(--color-white); font-weight: 700; }
+
+  .block { margin-top: 42px; }
+  .block > h2 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; color: var(--color-white); margin: 0 0 4px; }
+  .block > .lead { font-weight: 300; font-size: 14px; margin: 0 0 16px; max-width: 94ch; line-height: 1.5; }
+  .block > .lead b { color: var(--color-white); font-weight: 700; }
+  .tag { display: inline-flex; align-items: center; gap: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; padding: 5px 12px; margin-bottom: 14px; font-family: var(--font-body); color: var(--color-primary); border: 1px solid var(--color-primary); background: rgba(231,126,35,0.10); }
+  .tag .key { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border: 1px solid currentColor; font-size: 12px; }
+
+  .proscons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 26px; margin: 16px 0 0; }
+  @media (max-width: 820px){ .proscons { grid-template-columns: 1fr; } }
+  .pc-head { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; margin: 0 0 7px; display: flex; align-items: center; gap: 8px; }
+  .pc-head.pro { color: var(--color-success); } .pc-head.con { color: var(--color-danger-text); }
+  .pc-head::before { content: ''; width: 22px; height: 2px; background: currentColor; }
+  ul.pc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+  ul.pc li { display: flex; gap: 9px; font-weight: 300; font-size: 13px; align-items: flex-start; line-height: 1.4; }
+  ul.pc li::before { content: ''; width: 6px; height: 6px; margin-top: 6px; flex: none; }
+  ul.pc.pro li::before { background: var(--color-success); } ul.pc.con li::before { background: var(--color-danger); }
+  ul.pc b { color: var(--color-white); font-weight: 700; }
+
+  .rec { margin-top: 34px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-surface-input); padding: 16px 18px; }
+  .rec h3 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px; color: var(--color-primary); margin: 0 0 8px; }
+  .rec p { margin: 0 0 6px; font-weight: 300; font-size: 13.5px; line-height: 1.55; max-width: 96ch; } .rec p:last-child { margin: 0; }
+  .rec p b { color: var(--color-white); font-weight: 700; }
+  .foot { margin-top: 40px; color: var(--color-gray-2); font-family: var(--font-mono); font-size: 12px; line-height: 1.7; border-top: 1px solid var(--color-gray-3); padding-top: 18px; }
+  .foot b { color: var(--color-gray-1); }
+
+  /* tree scaffolding */
+  .tree-wrap { --tree-cols: minmax(200px,1.4fr) minmax(230px,1.7fr) 118px 120px 150px; }
+  .krt-icon { width: 1.05em; height: 1.05em; fill: none; }
+  .tree-unit { color: var(--color-gray-2); font-size: 0.74rem; }
+
+  /* summary trigger button */
+  .alloc-btn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.3rem 0.6rem; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1); font-family: var(--font-body); font-size: 0.8rem; box-sizing: border-box; }
+  .alloc-btn:hover, .alloc-btn:focus-visible { border-color: var(--color-primary); outline: none; }
+  .alloc-btn .caret { color: var(--color-primary); font-size: 0.7rem; }
+  .alloc-btn.is-empty { color: var(--color-gray-2); border-style: dashed; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; font-weight: 700; }
+  .alloc-btn.is-empty:hover { color: var(--color-primary); }
+  .alloc-btn .chip { pointer-events: none; }
+  .count-txt { font-variant-numeric: tabular-nums; }
+
+  /* inline expand panel */
+  .alloc-panel-row { background: rgba(0,0,0,0.35); border-bottom: 1px solid var(--color-gray-3); }
+  .alloc-panel { margin: 0 0.8rem 0.7rem 3rem; background: var(--color-surface-input); border: 1px solid var(--color-gray-3); border-left: 3px solid var(--color-primary); padding: 0.85rem 1rem; }
+
+  /* two separate splits (Aufträge | Einsätze) */
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  @media (max-width: 720px){ .split-grid { grid-template-columns: 1fr; } }
+  .split-section { min-width: 0; }
+  .split-section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .split-cap { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; }
+  .split-cap.order { color: var(--color-primary); } .split-cap.mission { color: var(--color-info); }
+  .split-row { display: grid; grid-template-columns: 1fr 118px 30px; gap: 6px; align-items: center; margin-bottom: 6px; }
+  .split-empty { color: var(--color-gray-2); font-size: 0.78rem; font-style: italic; margin-bottom: 6px; }
+
+  .alloc-select { -webkit-appearance: none; appearance: none; cursor: pointer; width: 100%; min-width: 0; background: var(--color-bg-dark-gray); color: var(--color-gray-1); border: 1px solid var(--color-gray-3); padding: 0.4rem 1.4rem 0.4rem 0.5rem; font-family: var(--font-body); font-size: 0.8rem; text-overflow: ellipsis;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23E77E23' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.5rem center; }
+  .alloc-select:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .alloc-select.order { color: var(--color-primary); } .alloc-select.mission { color: var(--color-info); } .alloc-select.empty { color: var(--color-gray-2); }
+  .menge-wrap { display: inline-flex; align-items: baseline; gap: 4px; min-width: 0; }
+  .menge-input { width: 74px; background: var(--color-bg-dark-gray); color: var(--color-white); border: 1px solid var(--color-gray-3); padding: 0.4rem 0.45rem; font-family: var(--font-body); font-size: 0.82rem; text-align: right; font-variant-numeric: tabular-nums; box-sizing: border-box; }
+  .menge-input:focus { border-color: var(--color-primary); outline: none; box-shadow: var(--glow-primary); }
+  .menge-input.over { border-color: var(--color-danger); color: var(--color-danger-text); }
+  .rowdel { all: unset; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: var(--color-gray-2); font-size: 1rem; }
+  .rowdel:hover { color: var(--color-danger-text); }
+  .add-row { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.28rem 0.6rem; margin: 2px 0 10px; border: 1px dashed var(--color-gray-3); color: var(--color-gray-2); font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
+  .add-row:hover, .add-row:focus-visible { color: var(--color-primary); border-color: var(--color-primary); outline: none; }
+  .alloc-total { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 0.8rem; padding-top: 8px; border-top: 1px solid var(--color-gray-3); }
+  .alloc-total .verteilt { color: var(--color-gray-2); } .alloc-total .verteilt b { color: var(--color-white); font-variant-numeric: tabular-nums; }
+
+  /* modal */
+  .krt-modal.is-wide { max-width: 660px; }
+  .krt-modal-overlay[hidden] { display: none; }
+  .modal-note { margin: 0 0 14px; font-size: 0.8rem; font-weight: 300; color: var(--color-gray-2); line-height: 1.45; }
+
+  /* inline chips with amount (Variante C) */
+  .alloc-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+  .achip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; font-family: var(--font-body); font-weight: 700; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--color-gray-3); background: var(--color-surface-input); cursor: pointer; white-space: nowrap; }
+  .achip.order { color: var(--color-primary); border-color: var(--color-primary); background: rgba(231,126,35,0.10); }
+  .achip.mission { color: var(--color-info); border-color: var(--color-info); background: rgba(53,93,220,0.15); }
+  .achip .amt { color: var(--color-white); font-variant-numeric: tabular-nums; }
+  .achip:hover { box-shadow: var(--glow-primary); }
+  .chip-add { all: unset; cursor: pointer; display: inline-flex; align-items: center; padding: 0.12rem 0.5rem; font-family: var(--font-body); font-weight: 700; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-2); border: 1px dashed var(--color-gray-3); }
+  .chip-add:hover, .chip-add:focus-visible { color: var(--color-primary); border-color: var(--color-primary); outline: none; }
+  .addwrap { position: relative; display: inline-flex; }
+  .pop { position: absolute; top: calc(100% + 5px); left: 0; z-index: 60; width: 260px; background: var(--color-bg-dark-gray); border: 1px solid var(--color-primary); box-shadow: 0 4px 10px rgba(0,0,0,.6); }
+  .pop .krt-combobox { width: 100%; } .pop .krt-combobox__listbox { position: static; border: none; }
+  .menge-pop { padding: 10px; display: grid; gap: 8px; }
+  .menge-pop label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-gray-2); font-weight: 700; }
+  .menge-pop .row { display: flex; gap: 8px; align-items: center; }
+  .krt-combobox__label { min-width: 0; }
+  .demo-hint { display: inline-flex; align-items: center; gap: 7px; margin: 10px 0 0; font-family: var(--font-mono); font-size: 11px; color: var(--color-gray-2); }
+  .demo-hint::before { content: '▸'; color: var(--color-primary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Vorschlag v2 · Lagerverwaltung · Mengen-Aufteilung</div>
+    <h1>Lagereintrag — Menge getrennt je Auftrag &amp; Einsatz aufteilen</h1>
+    <p>Je Eintrag wird die <b>Gesamtmenge</b> (z.&nbsp;B. 2.480&nbsp;SCU) aufgeteilt — <b>getrennt</b> nach Aufträgen und nach Einsätzen. Beide Aufteilungen sind unabhängig; jede wird gegen die Gesamtmenge <b>abgeglichen</b> (Verteilt / Rest). Aufträge = <span class="chip chip--primary" style="vertical-align:middle">orange</span>, Einsätze = <span class="chip chip--info" style="vertical-align:middle">blau</span>. Offen ist nur noch die <b>Platzierung</b> — unten drei bedienbare Optionen.</p>
+  </div>
+
+  <div class="decided">
+    <span class="badge">Festgelegt</span>
+    <p><b>Modell G — getrennte Mengen.</b> Die Menge wird zweimal unabhängig erfasst: einmal über die Aufträge, einmal über die Einsätze (jede Summe soll die Gesamtmenge treffen). Es gibt keine gekoppelte „Position“ aus Auftrag+Einsatz. Jede Zuordnung trägt ein eigenes Mengenfeld.</p>
+  </div>
+
+  <!-- ===================== VARIANTE A ===================== -->
+  <div class="block">
+    <span class="tag"><span class="key">A</span> Ausklappzeile · zwei getrennte Aufteilungen</span>
+    <h2>Inline-Ausklappzeile (kein Overlay)</h2>
+    <p class="lead">Ein kompakter Button je Eintrag klappt unter der Zeile ein Panel auf mit <b>zwei nebeneinanderliegenden Aufteilungen</b>: links Aufträge, rechts Einsätze — je Liste Zeilen aus Zuordnung + Menge, „+“ und ein eigener <b>Verteilt/Rest</b>-Abgleich. Bleibt im Tabellenfluss; mehrere Einträge lassen sich gleichzeitig öffnen.</p>
+    <div class="tree-table tree-wrap" data-variant="A">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Aufteilung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">Lenoro</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">CRU-L1 Ambitious Dream Station</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">796</span><span class="tree-gauge-track"><span style="width:80%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">6,120 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="A1" data-total="2480"></div>
+        <div class="tree-cell tree-cell--num tree-amount">2.480 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="A2" data-total="3640"></div>
+        <div class="tree-cell tree-cell--num tree-amount">3.640 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Button klappt die zwei Aufteilungen auf · Menge tippen → Rest je Liste aktualisiert sich · „+“ / × verwalten Zeilen</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div><ul class="pc pro">
+        <li><b>Kein Overlay</b> — bleibt im Tabellenfluss; mehrere Einträge gleichzeitig offen.</li>
+        <li>Beide Aufteilungen nebeneinander sichtbar, jede mit eigenem Rest-Abgleich.</li>
+        <li>Sofort wirksam; Zeile bleibt geschlossen schmal (ein Button).</li>
+      </ul></div>
+      <div><div class="pc-head con">Nachteile</div><ul class="pc con">
+        <li>Offene Panels erhöhen die Höhe (wie Notizen); viele offen = lange Tabelle.</li>
+        <li>Zwei Listen brauchen etwas Breite — auf sehr schmalen Screens untereinander.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- ===================== VARIANTE B ===================== -->
+  <div class="block">
+    <span class="tag"><span class="key">B</span> Modal · zwei getrennte Aufteilungen</span>
+    <h2>Verwaltung im Modal</h2>
+    <p class="lead">Derselbe Button öffnet ein <b>Modal</b> mit den zwei getrennten Aufteilungen. Maximaler Platz, „Speichern“/„Abbrechen“, gesperrt bei Über-Verteilung. Die Eintrags-Zeile bleibt unter allen Umständen minimal.</p>
+    <div class="tree-table tree-wrap" data-variant="B">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Aufteilung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">P6</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Levski</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">812</span><span class="tree-gauge-track"><span style="width:81%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">9,900 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="B1" data-total="2480"></div>
+        <div class="tree-cell tree-cell--num tree-amount">2.480 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="B2" data-total="4120"></div>
+        <div class="tree-cell tree-cell--num tree-amount">4.120 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Button öffnet das Modal · je Liste verteilen · „Speichern“ ist bei Über-Verteilung (Rest &lt; 0) gesperrt</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div><ul class="pc pro">
+        <li>Zeile <b>maximal kompakt</b> — ein Button, egal wie viele Zuordnungen.</li>
+        <li>Viel Platz + eigener Rest-Balken je Dimension; bewusstes Speichern.</li>
+        <li>Vertrautes <code>.krt-modal</code>-Idiom (eine CTA, Abbrechen, Esc).</li>
+      </ul></div>
+      <div><div class="pc-head con">Nachteile</div><ul class="pc con">
+        <li>Aufteilung erst nach Klick sichtbar; Modal je Eintrag wirkt schwerer.</li>
+        <li>Nur ein Eintrag gleichzeitig bearbeitbar (kein Nebeneinander-Vergleich).</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- ===================== VARIANTE C ===================== -->
+  <div class="block">
+    <span class="tag"><span class="key">C</span> Inline · Chips mit Mengen-Label</span>
+    <span class="tag" style="color:var(--color-success);border-color:var(--color-success);background:rgba(35,158,51,0.12)">✓ Festgelegt — wird umgesetzt</span>
+    <h2>Chips mit Menge, direkt im Eintrag</h2>
+    <p class="lead">Die leichteste Variante: je Gruppe (Auftrag/Einsatz) stehen die Zuordnungen als Chips <b>mit Menge</b> („#1042 · 1.000“) direkt in der Zeile; Klick auf einen Chip öffnet einen Mini-Editor (Menge / entfernen), „+ Zuordnen“ fügt hinzu. Ein kleiner <b>Rest</b>-Chip je Gruppe zeigt den Abgleich. Gut für einfache Fälle.</p>
+    <div class="tree-table tree-wrap" data-variant="C">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Aufteilung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">weedyhimself</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">ARC-L1 Wide Forest Station</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">705</span><span class="tree-gauge-track"><span style="width:70%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">2,220 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="C1" data-total="2480"></div>
+        <div class="tree-cell tree-cell--num tree-amount">2.480 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main alloc-mount" data-key="C2" data-total="1220"></div>
+        <div class="tree-cell tree-cell--num tree-amount">1.220 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz" aria-label="Notiz"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Chip anklicken → Menge ändern/entfernen · „+ Zuordnen“ öffnet die Suche · Rest-Chip je Gruppe</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div><ul class="pc pro">
+        <li><b>Alles sichtbar</b> ohne Klick; kein Overlay, kein Ausklappen.</li>
+        <li>Menge steht direkt am Chip; schnell für 1–2 Zuordnungen je Gruppe.</li>
+      </ul></div>
+      <div><div class="pc-head con">Nachteile</div><ul class="pc con">
+        <li><b>Wird eng</b> — Chip + Menge + Rest je Gruppe blähen die Zeile bei mehreren Zuordnungen.</li>
+        <li>Mengen-Bearbeitung im Mini-Popover ist fummeliger als ein Tabellenfeld.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="rec" style="border-left-color:var(--color-success)">
+    <h3 style="color:var(--color-success)">Entscheidung &amp; Umsetzung</h3>
+    <p><b>Festgelegt: Variante C — Inline-Chips mit Menge.</b> Je Gruppe (Auftrag/Einsatz) stehen die Zuordnungen als Chips mit Menge direkt im Eintrag; Klick auf einen Chip öffnet den Mengen-Editor, „+ Zuordnen“ fügt hinzu, ein Rest-Chip je Gruppe zeigt den Abgleich. Auf beiden Seiten (<code>/inventory/my</code>, <code>/inventory/all</code>) und im Einbuchen-Formular.</p>
+    <p><b>Abgleich-Regel:</b> unverteilter <b>Rest ist erlaubt</b> (Rest&nbsp;&gt;&nbsp;0 = neutral „… frei“, Rest&nbsp;0 = grün); nur Über-Verteilung (Rest&nbsp;&lt;&nbsp;0) ist unzulässig. Mengen werden <b>getrennt</b> je Auftrag und je Einsatz erfasst (Modell G).</p>
+    <p>Umsetzung (Design-System-Repo → Submodul im Basetool → Produkt): <code>inventory-entry-multi-assign-claude-code-auftrag.md</code>. Kanonische Klassen: <code>.assoc-split</code>, <code>.assoc-chip(--order/--mission)</code> + <code>.assoc-chip__amt</code>, <code>.assoc-add(-wrap)</code>, <code>.assoc-pop</code>.</p>
+  </div>
+
+  <p class="foot">
+    Gilt für <b>/inventory/my</b>, <b>/inventory/all</b> und das Einbuchen-Formular.<br>
+    Datenmodell (Modell G): zwei getrennte Zuordnungstabellen je Eintrag — <code>{ jobOrderId, amount }</code> und <code>{ missionId, amount }</code>; je Tabelle Σ&nbsp;amount ≤ Gesamtmenge. Abgleich: Rest = Gesamtmenge − Σ; <b>unverteilter Rest erlaubt</b>, nur Über-Verteilung (Rest&nbsp;&lt;&nbsp;0) unzulässig.<br>
+    Bedienbares Mock — <b>Hinweis:</b> Werte in <code>&lt;select&gt;</code>/Zahlenfeldern erscheinen in DOM-Screenshots leer, sind im echten Browser aber gesetzt. Systemklassen <code>.tree-*</code>, <code>.chip*</code>, <code>.krt-modal*</code>, <code>.krt-combobox*</code>, <code>.btn*</code>; Mengenfelder sind ein neues, noch nicht ins System übernommenes Muster.
+  </p>
+</div>
+
+<!-- shared modal (Variante B) -->
+<div class="krt-modal-overlay" id="split-modal" hidden>
+  <div class="krt-modal is-wide" role="dialog" aria-modal="true" aria-labelledby="split-modal-title">
+    <div class="krt-modal-head">
+      <h2 id="split-modal-title">Mengen aufteilen</h2>
+      <button class="btn btn-ghost btn-icon" id="split-x" aria-label="Schließen" title="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="krt-modal-body">
+      <p class="modal-note">Gesamtmenge <b id="split-total">0</b> SCU — Aufträge und Einsätze getrennt verteilen. Jede Summe soll die Gesamtmenge treffen.</p>
+      <div class="split-grid" id="split-body"></div>
+    </div>
+    <div class="krt-modal-foot">
+      <button class="btn btn-ghost" id="split-cancel">Abbrechen</button>
+      <button class="btn btn--cta" id="split-save"><svg class="krt-icon"><use href="#i-save"/></svg> <span>Speichern</span></button>
+    </div>
+  </div>
+</div>
+
+<template id="__bundler_thumbnail" data-bg-color="#000000">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect x="300" y="250" width="600" height="90" fill="none" stroke="#282828" stroke-width="4"/>
+    <rect x="304" y="254" width="360" height="82" fill="#E77E23" opacity="0.85"/>
+    <rect x="300" y="380" width="600" height="90" fill="none" stroke="#282828" stroke-width="4"/>
+    <rect x="304" y="384" width="230" height="82" fill="#355DDC" opacity="0.85"/>
+    <rect x="300" y="250" width="8" height="220" fill="#E77E23"/>
+    <text x="300" y="200" fill="#E77E23" font-family="Lato, Arial, sans-serif" font-weight="700" font-size="54" letter-spacing="4">MENGEN-AUFTEILUNG</text>
+  </svg>
+</template>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-bookout" viewBox="0 0 24 24"><path d="M11 5H6v14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 12h11m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z M8 3v6h7 M8 21v-7h8v7" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+
+<script>
+(function(){
+  "use strict";
+  var ORDERS = [
+    {id:'o1042', label:'#1042 Quantanium-Konvoi ARC-L1', short:'#1042'},
+    {id:'o1039', label:'#1039 Laranite-Sammelbestellung', short:'#1039'},
+    {id:'o1051', label:'#1051 Titan-Nachschub Hurston', short:'#1051'},
+    {id:'o1055', label:'#1055 Agricium-Lieferung Area18', short:'#1055'}
+  ];
+  var MISSIONS = [
+    {id:'m1', label:'Operation Nachtfalke · 05.05.', short:'Nachtfalke'},
+    {id:'m2', label:'Bergungslauf Aaron Halo · 12.05.', short:'Aaron Halo'},
+    {id:'m3', label:'Konvoi-Eskorte CRU-L1 · 20.05.', short:'Eskorte'}
+  ];
+  var POOL = { order: ORDERS, mission: MISSIONS };
+  function optOf(f,id){ var a=POOL[f]; for(var i=0;i<a.length;i++){ if(a[i].id===id) return a[i]; } return null; }
+  function fmt(n){ return Number(n||0).toLocaleString('de-DE'); }
+  function el(t,c){ var e=document.createElement(t); if(c) e.className=c; return e; }
+  function esc(s){ return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function parseAmt(v){ var n=parseInt(String(v).replace(/[^\d]/g,''),10); return isNaN(n)?0:n; }
+  function sumOf(rows){ var s=0; rows.forEach(function(r){ s += (r.amount||0); }); return s; }
+  function restChip(total, sum){ var r=total-sum; if(r===0) return {cls:'chip--success',text:'Rest 0'}; if(r>0) return {cls:'chip--muted',text:'Rest '+fmt(r)+' frei'}; return {cls:'chip--danger',text:'−'+fmt(-r)+' zu viel'}; }
+  function clone(st){ return {order:st.order.map(function(r){return {id:r.id,amount:r.amount};}), mission:st.mission.map(function(r){return {id:r.id,amount:r.amount};})}; }
+
+  function makeSelect(field, value, onChange){
+    var s = el('select','alloc-select '+field+(value?'':' empty'));
+    var o0 = el('option'); o0.value=''; o0.textContent = field==='order'?'— Auftrag —':'— Einsatz —'; s.appendChild(o0);
+    POOL[field].forEach(function(o){ var op=el('option'); op.value=o.id; op.textContent=o.label; s.appendChild(op); });
+    s.value = value || '';
+    s.addEventListener('change', function(){ s.classList.toggle('empty', !s.value); s.classList.toggle('order', field==='order' && !!s.value); s.classList.toggle('mission', field==='mission' && !!s.value); onChange(s.value); });
+    return s;
+  }
+  function makeMenge(value, onChange){
+    var w = el('span','menge-wrap');
+    var i = el('input','menge-input'); i.type='text'; i.inputMode='numeric'; i.value = value?fmt(value):''; i.setAttribute('aria-label','Menge (SCU)');
+    var u = el('span','tree-unit'); u.textContent='SCU';
+    i.addEventListener('input', function(){ onChange(parseAmt(i.value)); });
+    i.addEventListener('blur', function(){ var n=parseAmt(i.value); i.value = n?fmt(n):''; });
+    w.appendChild(i); w.appendChild(u); w._input=i; return w;
+  }
+
+  // Two separate split lists (Aufträge | Einsätze). Rebuilds container on structural change.
+  function renderSplitPair(container, st, total, onChange){
+    function draw(){
+      container.innerHTML='';
+      ['order','mission'].forEach(function(field){
+        var rows = st[field];
+        var sec = el('div','split-section');
+        var head = el('div','split-section-head'); var cap=el('span','split-cap '+field); cap.textContent = field==='order'?'Aufträge':'Einsätze'; head.appendChild(cap);
+        var cnt = el('span','chip chip--muted'); cnt.textContent = String(rows.length); head.appendChild(cnt); sec.appendChild(head);
+        if(rows.length===0){ var e=el('div','split-empty'); e.textContent = field==='order'?'Kein Auftrag':'Kein Einsatz'; sec.appendChild(e); }
+        var totEl = el('div','alloc-total');
+        function foot(){ var sum=sumOf(rows); totEl.innerHTML=''; var v=el('span','verteilt'); v.innerHTML='Verteilt <b>'+fmt(sum)+'</b> / '+fmt(total)+' SCU'; var rc=restChip(total,sum); var c=el('span','chip '+rc.cls); c.textContent=rc.text; totEl.appendChild(v); totEl.appendChild(c);
+          sec.querySelectorAll('.menge-input').forEach(function(inp){ inp.classList.toggle('over', sum>total); });
+          if(onChange) onChange();
+        }
+        rows.forEach(function(r,idx){
+          var row = el('div','split-row');
+          row.appendChild(makeSelect(field, r.id, function(v){ r.id=v; }));
+          row.appendChild(makeMenge(r.amount, function(v){ r.amount=v; foot(); }));
+          var del = el('button','rowdel'); del.type='button'; del.setAttribute('aria-label','Entfernen'); del.innerHTML='&times;'; del.addEventListener('click',function(){ rows.splice(idx,1); draw(); }); row.appendChild(del);
+          sec.appendChild(row);
+        });
+        var add = el('button','add-row'); add.type='button'; add.textContent = field==='order'?'+ Auftrag':'+ Einsatz'; add.addEventListener('click',function(){ rows.push({id:'',amount:0}); draw(); }); sec.appendChild(add);
+        sec.appendChild(totEl); foot();
+        container.appendChild(sec);
+      });
+    }
+    draw();
+  }
+
+  function refreshSplitBtn(btn, st, total){
+    btn.innerHTML=''; btn.classList.remove('is-empty');
+    var n = st.order.length + st.mission.length;
+    if(n===0){ btn.classList.add('is-empty'); btn.textContent='Aufteilen +'; return; }
+    var t=el('span','count-txt'); t.textContent = st.order.length+' Auftr. · '+st.mission.length+' Eins.'; btn.appendChild(t);
+    var ro=total-sumOf(st.order), rm=total-sumOf(st.mission); var bad=(ro<0||rm<0), ok=(ro===0&&rm===0);
+    var c=el('span','chip '+(bad?'chip--danger':ok?'chip--success':'chip--muted')); c.textContent = bad?'Über-verteilt':ok?'Verteilt ✓':'Rest frei'; btn.appendChild(c);
+    var caret=el('span','caret'); caret.textContent='▾'; btn.appendChild(caret);
+  }
+
+  function seed(key){
+    return (key.slice(-1)==='1')
+      ? {order:[{id:'o1042',amount:1000},{id:'o1039',amount:1480}], mission:[{id:'m1',amount:2480}]}
+      : {order:[],mission:[]};
+  }
+
+  // ---------- Variante A: inline expand ----------
+  var vA={};
+  function renderA(mount){
+    var key=mount.dataset.key, total=+mount.dataset.total;
+    if(!vA[key]) vA[key]=seed(key);
+    mount.innerHTML=''; var tag=el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    var btn=el('button','alloc-btn'); btn.type='button'; mount.appendChild(btn);
+    function refresh(){ refreshSplitBtn(btn, vA[key], total); }
+    var leafRow=mount.closest('.tree-row'); var panelRow=null;
+    btn.addEventListener('click', function(){
+      if(panelRow){ panelRow.remove(); panelRow=null; return; }
+      panelRow=el('div','tree-row alloc-panel-row'); var panel=el('div','alloc-panel'); panel.style.gridColumn='1 / -1'; var grid=el('div','split-grid'); panel.appendChild(grid); panelRow.appendChild(panel);
+      renderSplitPair(grid, vA[key], total, refresh);
+      leafRow.parentNode.insertBefore(panelRow, leafRow.nextSibling);
+    });
+    refresh();
+  }
+
+  // ---------- Variante B: modal ----------
+  var vB={};
+  var modal=document.getElementById('split-modal'), splitBody=document.getElementById('split-body'), splitTotalEl=document.getElementById('split-total'), saveBtn=document.getElementById('split-save');
+  var ctx=null;
+  function renderB(mount){
+    var key=mount.dataset.key, total=+mount.dataset.total;
+    if(!vB[key]) vB[key]=seed(key);
+    mount.innerHTML=''; var tag=el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    var btn=el('button','alloc-btn'); btn.type='button'; mount.appendChild(btn);
+    function refresh(){ refreshSplitBtn(btn, vB[key], total); }
+    btn.addEventListener('click', function(){ ctx={key:key,total:total,temp:clone(vB[key]),refresh:refresh}; splitTotalEl.textContent=fmt(total); renderSplitPair(splitBody, ctx.temp, total, guard); modal.hidden=false; var f=splitBody.querySelector('select,input'); if(f) f.focus(); });
+    refresh();
+  }
+  function guard(){ if(!ctx) return; var over=(sumOf(ctx.temp.order)>ctx.total)||(sumOf(ctx.temp.mission)>ctx.total); saveBtn.disabled=over; }
+  function closeModal(){ modal.hidden=true; ctx=null; }
+  document.getElementById('split-x').addEventListener('click',closeModal);
+  document.getElementById('split-cancel').addEventListener('click',closeModal);
+  saveBtn.addEventListener('click', function(){ if(ctx){ vB[ctx.key]=ctx.temp; ctx.refresh(); } closeModal(); });
+  modal.addEventListener('mousedown', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeModal(); });
+
+  // ---------- Variante C: inline chips with amount ----------
+  var vC={}, openPop=null;
+  function closePop(){ if(openPop){ var cb=openPop._onClose; openPop.remove(); openPop=null; if(cb) cb(); } }
+  document.addEventListener('click', function(e){ if(openPop && !openPop.contains(e.target) && !e.target.closest('.chip-add') && !e.target.closest('.achip')) closePop(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePop(); });
+  function renderC(mount){
+    var key=mount.dataset.key, total=+mount.dataset.total;
+    if(!vC[key]) vC[key]= key.slice(-1)==='1' ? {order:[{id:'o1042',amount:1000},{id:'o1039',amount:1480}], mission:[{id:'m1',amount:1000}]} : {order:[],mission:[]};
+    mount.innerHTML=''; var tag=el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    var fs=el('div','tree-fieldset'); mount.appendChild(fs);
+    ['order','mission'].forEach(function(field){
+      var st=vC[key], rows=st[field];
+      var fld=el('div','tree-field'); var cap=el('span','tree-field-cap'); cap.textContent=field==='order'?'Auftrag':'Einsatz'; fld.appendChild(cap);
+      var chips=el('div','alloc-chips'); fld.appendChild(chips);
+      function rerender(){
+        chips.innerHTML='';
+        rows.forEach(function(r,idx){
+          var o=optOf(field,r.id); var chip=el('span','achip '+field); chip.title=o.label;
+          chip.innerHTML=esc(o.short)+' · <span class="amt">'+fmt(r.amount)+'</span>';
+          chip.addEventListener('click',function(ev){ ev.stopPropagation(); openMenge(chip, r, rows, idx, rerender); });
+          chips.appendChild(chip);
+        });
+        var wrap=el('span','addwrap'); var add=el('button','chip-add'); add.type='button'; add.textContent=rows.length?'+':'+ Zuordnen';
+        add.addEventListener('click',function(ev){ ev.stopPropagation(); openAdd(field, rows, wrap, rerender); });
+        wrap.appendChild(add); chips.appendChild(wrap);
+        if(rows.length){ var rc=restChip(total,sumOf(rows)); var rcc=el('span','chip '+rc.cls); rcc.style.fontSize='0.58rem'; rcc.textContent=rc.text; chips.appendChild(rcc); }
+      }
+      rerender(); fs.appendChild(fld);
+    });
+  }
+  function openMenge(anchor, r, rows, idx, onDone){
+    closePop(); var pop=el('div','pop menge-pop');
+    var lab=el('label'); lab.textContent='Menge (SCU)'; pop.appendChild(lab);
+    var row=el('div','row');
+    var inp=el('input','menge-input'); inp.type='text'; inp.inputMode='numeric'; inp.value=fmt(r.amount); inp.style.width='110px';
+    inp.addEventListener('input',function(){ r.amount=parseAmt(inp.value); });
+    var del=el('button','btn btn-quiet-danger'); del.type='button'; del.style.fontSize='0.68rem'; del.textContent='Entfernen';
+    del.addEventListener('click',function(){ rows.splice(idx,1); openPop._onClose=null; closePop(); onDone(); });
+    row.appendChild(inp); row.appendChild(del); pop.appendChild(row);
+    var wrap=el('span','addwrap'); wrap.style.position='absolute'; anchor.parentNode.insertBefore(wrap, anchor.nextSibling); wrap.appendChild(pop);
+    openPop=pop; pop._onClose=onDone; pop.addEventListener('mousedown',function(e){ e.stopPropagation(); });
+    inp.focus(); inp.select();
+  }
+  function openAdd(field, rows, wrap, onDone){
+    closePop(); var pop=el('div','pop'); var cb=el('div','krt-combobox');
+    var input=el('input','krt-combobox__input'); input.type='text'; input.placeholder = field==='order'?'Auftrag suchen …':'Einsatz suchen …';
+    var list=el('ul','krt-combobox__listbox');
+    function avail(){ return POOL[field].filter(function(o){ return !rows.some(function(r){return r.id===o.id;}); }); }
+    function render(){ var q=input.value.trim().toLowerCase(); list.innerHTML=''; var items=avail().filter(function(o){ return !q||o.label.toLowerCase().indexOf(q)>=0; });
+      if(avail().length===0){ var n=el('li','krt-combobox__notice'); n.textContent='Alle zugeordnet'; list.appendChild(n); return; }
+      if(items.length===0){ var n2=el('li','krt-combobox__notice'); n2.textContent='Keine Treffer'; list.appendChild(n2); return; }
+      items.forEach(function(o,i){ var li=el('li','krt-combobox__option'+(i===0?' krt-combobox__option--active':'')); var hl=q?o.label.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','i'),'<mark>$1</mark>'):esc(o.label); li.innerHTML='<span class="krt-combobox__label">'+hl+'</span>';
+        li.addEventListener('mousedown',function(ev){ ev.preventDefault(); rows.push({id:o.id,amount:0}); openPop._onClose=null; closePop(); onDone(); }); list.appendChild(li); });
+    }
+    input.addEventListener('input',render); cb.appendChild(input); cb.appendChild(list); pop.appendChild(cb);
+    wrap.appendChild(pop); openPop=pop; render(); input.focus();
+  }
+
+  document.querySelectorAll('.tree-table[data-variant="A"] .alloc-mount').forEach(renderA);
+  document.querySelectorAll('.tree-table[data-variant="B"] .alloc-mount').forEach(renderB);
+  document.querySelectorAll('.tree-table[data-variant="C"] .alloc-mount').forEach(renderC);
+})();
+</script>
+</body>
+</html>

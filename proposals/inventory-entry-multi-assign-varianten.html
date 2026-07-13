@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Lagereintrag — Mehrfach-Zuordnung" subtitle="Auftrag & Einsatz: 3 Varianten (Inline / Modal / Ausklappzeile)" viewport="1240x900" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorschlag — Lagereintrag: mehrere Aufträge &amp; Einsätze zuordnen</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>
+  body { margin: 0; padding: 38px 30px 90px; background: var(--color-bg-black);
+    background-image: url('../assets/honeycomb-bg.svg'); background-size: 46px 26.56px; color: var(--color-gray-1); }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+
+  /* ---- house proposal chrome ---- */
+  .head { margin-bottom: 26px; }
+  .head .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--color-gray-2); display: flex; align-items: center; gap: 10px; font-family: var(--font-body); }
+  .head .eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--color-primary); }
+  .head h1 { font-family: var(--font-headline); color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.04em; font-size: 25px; margin: 13px 0 8px; }
+  .head p { font-weight: 300; max-width: 92ch; margin: 0; line-height: 1.55; }
+  .head p b { color: var(--color-white); font-weight: 700; }
+
+  .block { margin-top: 40px; }
+  .block > h2 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; color: var(--color-white); margin: 0 0 4px; }
+  .block > .lead { font-weight: 300; font-size: 14px; margin: 0 0 16px; max-width: 92ch; line-height: 1.5; color: var(--color-gray-1); }
+  .block > .lead b { color: var(--color-white); font-weight: 700; }
+
+  .tag { display: inline-flex; align-items: center; gap: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; padding: 5px 12px; margin-bottom: 14px; font-family: var(--font-body); }
+  .tag .lbl { font-size: 11px; opacity: 0.85; letter-spacing: 0.16em; }
+  .tag.before { color: var(--color-danger-text); border: 1px solid var(--color-danger); background: rgba(163,0,10,0.12); }
+  .tag.variant { color: var(--color-primary); border: 1px solid var(--color-primary); background: rgba(231,126,35,0.10); }
+  .tag .key { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border: 1px solid currentColor; font-size: 12px; }
+  .tag.locked { color: var(--color-success); border: 1px solid var(--color-success); background: rgba(35,158,51,0.12); margin-left: 8px; }
+  .decision { display: flex; gap: 14px; align-items: flex-start; margin: 22px 0 4px; border: 1px solid var(--color-warning); border-left: 4px solid var(--color-warning); background: rgba(255,210,63,0.08); padding: 14px 16px; }
+  .decision-badge { flex: none; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; color: var(--color-warning); border: 1px solid var(--color-warning); padding: 4px 9px; }
+  .decision p { margin: 0; font-weight: 300; font-size: 13.5px; line-height: 1.55; }
+  .decision p b { color: var(--color-white); font-weight: 700; }
+
+  /* pros / cons annotation */
+  .proscons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 26px; margin: 16px 0 0; }
+  @media (max-width: 820px){ .proscons { grid-template-columns: 1fr; } }
+  .pc-head { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px; margin: 0 0 7px; display: flex; align-items: center; gap: 8px; }
+  .pc-head.pro { color: var(--color-success); }
+  .pc-head.con { color: var(--color-danger-text); }
+  .pc-head::before { content: ''; width: 22px; height: 2px; background: currentColor; }
+  ul.pc { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+  ul.pc li { display: flex; gap: 9px; font-weight: 300; font-size: 13px; align-items: flex-start; line-height: 1.4; }
+  ul.pc li::before { content: ''; width: 6px; height: 6px; margin-top: 6px; flex: none; }
+  ul.pc.pro li::before { background: var(--color-success); }
+  ul.pc.con li::before { background: var(--color-danger); }
+  ul.pc b { color: var(--color-white); font-weight: 700; }
+
+  .foot { margin-top: 46px; color: var(--color-gray-2); font-family: var(--font-mono); font-size: 12px; line-height: 1.7; border-top: 1px solid var(--color-gray-3); padding-top: 18px; }
+  .foot b { color: var(--color-gray-1); }
+  .rec { margin-top: 30px; border: 1px solid var(--color-gray-3); border-left: 4px solid var(--color-primary); background: var(--color-surface-input); padding: 16px 18px; }
+  .rec h3 { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px; color: var(--color-primary); margin: 0 0 8px; }
+  .rec p { margin: 0 0 6px; font-weight: 300; font-size: 13.5px; line-height: 1.55; max-width: 94ch; }
+  .rec p b { color: var(--color-white); font-weight: 700; }
+  .rec p:last-child { margin-bottom: 0; }
+
+  /* ---- tree scaffolding (system .tree-* is used; only local extras below) ---- */
+  .tree-wrap { --tree-cols: minmax(210px,1.5fr) minmax(240px,1.9fr) 120px 116px 150px; }
+  .krt-icon { width: 1.05em; height: 1.05em; fill: none; }
+  .tree-unit { color: var(--color-gray-2); font-size: 0.74rem; }
+  /* faithful "before" select */
+  .mock-select { background: var(--color-surface-input); border: 1px solid var(--color-gray-3); color: var(--color-gray-1);
+    padding: 0.34rem 0.55rem; font-size: 0.82rem; font-family: var(--font-body); width: 100%; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-sizing: border-box; }
+  .mock-select.set { border-color: var(--color-gray-2); color: var(--color-white); }
+
+  /* ---- shared: chip removal + label ellipsis ---- */
+  .chip .chip-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 20ch; }
+  .chip-x { all: unset; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    width: 15px; height: 15px; margin-left: 0.1rem; margin-right: -0.15rem; font-size: 1rem; line-height: 1; opacity: 0.65; }
+  .chip-x:hover, .chip-x:focus-visible { opacity: 1; outline: none; }
+
+  /* ---- Variante A: inline chips + add ---- */
+  .assign-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+  .chip-add-wrap { position: relative; display: inline-flex; }
+  .chip-add { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.12rem 0.5rem; font-family: var(--font-body); font-weight: 700; font-size: var(--fs-2xs, 0.62rem);
+    text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-2);
+    border: 1px dashed var(--color-gray-3); }
+  .chip-add:hover, .chip-add:focus-visible { color: var(--color-primary); border-color: var(--color-primary); outline: none; }
+  .assign-add-pop { position: absolute; top: calc(100% + 5px); left: 0; z-index: 60; width: 280px; }
+
+  /* ---- Variante B & C: summary button ---- */
+  .assign-btn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.28rem 0.55rem; background: var(--color-surface-input); border: 1px solid var(--color-gray-3);
+    color: var(--color-gray-1); font-family: var(--font-body); font-size: 0.8rem; max-width: 100%; box-sizing: border-box; }
+  .assign-btn:hover, .assign-btn:focus-visible { border-color: var(--color-primary); outline: none; }
+  .assign-btn .caret { color: var(--color-primary); font-size: 0.7rem; margin-left: 0.15rem; }
+  .assign-btn.is-empty { color: var(--color-gray-2); border-style: dashed; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; font-weight: 700; }
+  .assign-btn.is-empty:hover { color: var(--color-primary); }
+  .assign-btn .chip { pointer-events: none; }
+
+  /* ---- Variante C: inline expand panel row ---- */
+  .assign-panel-row { background: rgba(0,0,0,0.35); border-bottom: 1px solid var(--color-gray-3); }
+  .assign-panel { margin: 0 0.8rem 0.6rem 3rem; background: var(--color-surface-input);
+    border: 1px solid var(--color-gray-3); border-left: 3px solid var(--color-primary); padding: 0.85rem 1rem; }
+
+  /* ---- shared manager (modal body + inline panel) ---- */
+  .assign-manager { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  @media (max-width: 720px){ .assign-manager { grid-template-columns: 1fr; } }
+  .assign-section { min-width: 0; }
+  .assign-section-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem; }
+  .assign-cap { font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; color: var(--color-gray-1); }
+  .assign-count { font-variant-numeric: tabular-nums; }
+  .assign-current { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; min-height: 1.6rem; align-items: center; }
+  .assign-empty { color: var(--color-gray-2); font-size: 0.78rem; font-style: italic; }
+
+  .modal-manager-note { margin: 0 0 14px; font-size: 0.8rem; font-weight: 300; color: var(--color-gray-2); line-height: 1.45; }
+  .krt-modal-overlay[hidden] { display: none; }
+  .krt-combobox__option .cbx-label { min-width: 0; }
+  .krt-modal.is-wide { max-width: 620px; }
+  .demo-hint { display: inline-flex; align-items: center; gap: 7px; margin: 10px 0 0; font-family: var(--font-mono); font-size: 11px; color: var(--color-gray-2); }
+  .demo-hint::before { content: '▸'; color: var(--color-primary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Vorschlag · Lagerverwaltung · /inventory/my · /inventory/all</div>
+    <h1>Lagereintrag — mehrere Aufträge &amp; Einsätze zuordnen</h1>
+    <p>Heute bindet jeder Eintrag über <b>zwei einfache Dropdowns</b> an genau <b>einen</b> Auftrag und <b>einen</b> Einsatz (<code>jobOrderId</code> / <code>missionId</code>). Beide Selects füllen bereits die volle Breite der ohnehin dichten Eintrags-Zeile. Ziel: eine <b>n‑zu‑m‑Zuordnung</b> (mehrere Aufträge <i>und</i> mehrere Einsätze je Eintrag), ohne die Zeile aufzublähen. Unten drei Umsetzungen — <b>direkt im Eintrag</b>, in einem <b>Modal</b> und in einer <b>Ausklappzeile</b> — jeweils bedienbar. Aufträge = <span class="chip chip--primary" style="vertical-align:middle">orange</span>, Einsätze = <span class="chip chip--info" style="vertical-align:middle">blau</span>.</p>
+  </div>
+
+  <div class="decision">
+    <span class="decision-badge">Zurückgestellt</span>
+    <p><b>Neue Anforderung:</b> je Eintrag muss zusätzlich festgelegt werden, <b>wie viel</b> der Menge zu welchem Auftrag und welchem Einsatz gehört — Mengen-Aufteilung mit Abgleich gegen die Gesamtmenge. Reine Chips tragen keine Menge, daher ist die Festlegung auf Variante A <b>zurückgestellt</b>. Überarbeitete Exploration inkl. Mengen: <code>inventory-entry-multi-assign-quantity-varianten.html</code>. Die Platzierungs-Optionen unten (inline / Modal / Ausklappzeile) bleiben als Referenz gültig.</p>
+  </div>
+
+  <!-- ============================ AUSGANGSLAGE ============================ -->
+  <div class="block">
+    <span class="tag before"><span class="lbl">Ausgangslage</span> · Ist-Zustand</span>
+    <h2>Zwei Einfach-Dropdowns pro Eintrag</h2>
+    <p class="lead">Faithful nachgebaut aus <code>fragments/inventory-stack-entries.html</code>: die Eintrags-Zeile (Ebene 3) trägt in <code>.tree-leaf-main</code> ein <code>Auftrag</code>- und ein <code>Einsatz</code>-Select. Ein Wert je Feld — mehr passt weder ins Datenmodell noch in die Zeile.</p>
+    <div class="tree-table tree-wrap">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div>
+        <div class="tree-cell">Kontext / Zuordnung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div>
+        <div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--group">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">Quantanium</span></div>
+        <div class="tree-cell" style="color:var(--color-gray-2)">2 Nutzer · 3 Stacks</div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">742 <span class="tree-gauge-max">/ 812</span></span><span class="tree-gauge-track"><span style="width:74%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">18,240 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell"></div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">Lenoro</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">CRU-L1 Ambitious Dream Station</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">796</span><span class="tree-gauge-track"><span style="width:80%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">6,120 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <!-- entry 1 (before) -->
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main">
+          <span class="tree-leaf-tag">Eintrag</span>
+          <div class="tree-fieldset">
+            <div class="tree-field"><span class="tree-field-cap">Auftrag</span>
+              <select class="mock-select set"><option>Auftrag #1042</option></select></div>
+            <div class="tree-field"><span class="tree-field-cap">Einsatz</span>
+              <select class="mock-select"><option>-- Kein Einsatz --</option></select></div>
+          </div>
+        </div>
+        <div class="tree-cell tree-cell--num tree-amount">2,480 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <!-- entry 2 (before) -->
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main">
+          <span class="tree-leaf-tag">Eintrag</span>
+          <div class="tree-fieldset">
+            <div class="tree-field"><span class="tree-field-cap">Auftrag</span>
+              <select class="mock-select"><option>-- Kein Auftrag --</option></select></div>
+            <div class="tree-field"><span class="tree-field-cap">Einsatz</span>
+              <select class="mock-select set"><option>Operation Nachtfalke - 05.05.</option></select></div>
+          </div>
+        </div>
+        <div class="tree-cell tree-cell--num tree-amount">3,640 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="proscons">
+      <div><div class="pc-head con">Problem</div>
+        <ul class="pc con">
+          <li><b>1:1 fixiert</b> — ein Auftrag <i>oder</i> ein Einsatz je Feld; eine zweite Zuordnung ist nicht möglich.</li>
+          <li><b>Kein Platz zum Wachsen</b> — zwei Selects füllen die Zeile schon; ein drittes/viertes Feld würde die Zeile vertikal aufblähen.</li>
+          <li>Lange Auftrags-/Einsatznamen werden im schmalen Select abgeschnitten.</li>
+        </ul>
+      </div>
+      <div><div class="pc-head pro">Beibehalten</div>
+        <ul class="pc pro">
+          <li>Tree-Table, Einrückung, Dichte, Mengen-/Qualitätsspalten &amp; Icon-Aktionen bleiben unverändert.</li>
+          <li>Optimistic-Locking (<code>version</code>) und die <code>data-trigger</code>-Delegation bleiben erhalten.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ VARIANTE A ============================ -->
+  <div class="block">
+    <span class="tag variant"><span class="key">A</span><span class="lbl">Direkt im Eintrag</span> · Chips + „+ Zuordnen“</span>
+    <h2>Zuordnungen als entfernbare Chips, inline</h2>
+    <p class="lead">Die beiden Selects werden durch je eine <b>Chip-Gruppe</b> ersetzt. Zugeordnete Aufträge/Einsätze stehen als <b>entfernbare Chips</b> sichtbar in der Zeile; ein dezenter <b>„+ Zuordnen“</b>-Knopf öffnet ein kleines Such-Combobox zum Hinzufügen. Nichts ist versteckt — man liest alle Zuordnungen ohne Klick.</p>
+    <div class="tree-table tree-wrap" data-variant="A">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Zuordnung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">Lenoro</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">CRU-L1 Ambitious Dream Station</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">796</span><span class="tree-gauge-track"><span style="width:80%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">6,120 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="A1" data-orders="o1042,o1039" data-missions="m1"></div>
+        <div class="tree-cell tree-cell--num tree-amount">2,480 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="A2" data-orders="" data-missions=""></div>
+        <div class="tree-cell tree-cell--num tree-amount">3,640 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Chip-× entfernt · „+ Zuordnen“ öffnet die Suche · Eintrag 2 zeigt den Leerzustand</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div>
+        <ul class="pc pro">
+          <li><b>Alles sichtbar</b> — Zuordnungen ohne Klick lesbar &amp; scanbar; kein Kontextwechsel.</li>
+          <li>Entfernen ist ein Klick auf das ×; Hinzufügen ein Klick + Tippen.</li>
+          <li>Nutzt <code>.chip</code> + <code>.krt-combobox</code> unverändert aus dem System.</li>
+        </ul>
+      </div>
+      <div><div class="pc-head con">Nachteile</div>
+        <ul class="pc con">
+          <li><b>Zeilenhöhe wächst</b> bei vielen Zuordnungen (Chips umbrechen) — am ehesten für 0–3 Zuordnungen geeignet.</li>
+          <li>Zwei Chip-Farben in einer engen Zelle brauchen Disziplin, sonst wird es unruhig.</li>
+          <li>Rechte-Gating: Nutzer ohne Zuordnungsrecht sehen die Chips nur lesend (ohne ×).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ VARIANTE B ============================ -->
+  <div class="block">
+    <span class="tag variant"><span class="key">B</span><span class="lbl">Über ein Modal</span> · Button → „Zuordnungen verwalten“</span>
+    <h2>Ein Button je Eintrag, Verwaltung im Modal</h2>
+    <p class="lead">Beide Selects werden durch <b>einen Button</b> ersetzt, der die Zuordnungen zusammenfasst (z.&nbsp;B. „2 Aufträge · 1 Einsatz“, leer: „Zuordnen“). Ein Klick öffnet das <b>KRT-Modal</b> mit je einem Such-Combobox und einer Chip-Liste für Aufträge und Einsätze. Die Zeile bleibt maximal kompakt — egal wie viele Zuordnungen.</p>
+    <div class="tree-table tree-wrap" data-variant="B">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Zuordnung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">P6</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Levski</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">812</span><span class="tree-gauge-track"><span style="width:81%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">9,900 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="B1" data-orders="o1042,o1055" data-missions="m2"></div>
+        <div class="tree-cell tree-cell--num tree-amount">4,120 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="B2" data-orders="" data-missions=""></div>
+        <div class="tree-cell tree-cell--num tree-amount">5,780 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Button öffnet das Modal · dort suchen, Chips hinzufügen/entfernen · „Speichern“ übernimmt, „Abbrechen“ verwirft</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div>
+        <ul class="pc pro">
+          <li><b>Zeile bleibt kompakt</b> — genau ein Steuerelement, unabhängig von der Anzahl der Zuordnungen.</li>
+          <li>Platz für <b>Suche, viele Einträge</b> und künftige Felder (z.&nbsp;B. Teilmenge je Zuordnung).</li>
+          <li>Nutzt das etablierte <code>.krt-modal</code>-Idiom (Speichern = eine CTA, Abbrechen = Ghost, Esc/Fokus-Trap).</li>
+        </ul>
+      </div>
+      <div><div class="pc-head con">Nachteile</div>
+        <ul class="pc con">
+          <li><b>Namen erst nach Klick</b> sichtbar — der Button zeigt nur Zähler, nicht welche Aufträge/Einsätze.</li>
+          <li>Ein Modal je Eintrag wirkt für eine schnelle 1-Klick-Änderung schwer.</li>
+          <li>Änderungen sind erst nach „Speichern“ wirksam (bewusster Schritt, aber ein Schritt mehr).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ VARIANTE C ============================ -->
+  <div class="block">
+    <span class="tag variant"><span class="key">C</span><span class="lbl">Weitere Ansicht</span> · Button → Inline-Ausklappzeile</span>
+    <h2>Ein Button, der eine Ausklappzeile in der Tabelle öffnet</h2>
+    <p class="lead">Der Mittelweg: derselbe kompakte Zusammenfassungs-Button wie in B, aber statt eines Modals klappt <b>unter dem Eintrag eine Zeile auf</b> (wie die Notiz-Zeile) — mit denselben zwei verwalteten Listen. Kein Overlay, kein Kontextwechsel; mehrere Einträge lassen sich zum Vergleich gleichzeitig öffnen. Änderungen wirken sofort.</p>
+    <div class="tree-table tree-wrap" data-variant="C">
+      <div class="tree-row tree-head">
+        <div class="tree-cell">Bestand</div><div class="tree-cell">Kontext / Zuordnung</div>
+        <div class="tree-cell tree-cell--num">Qualität</div><div class="tree-cell tree-cell--num">Menge</div>
+        <div class="tree-cell" style="text-align:right">Aktion</div>
+      </div>
+      <div class="tree-row tree-row--mid">
+        <div class="tree-cell tree-name"><span class="tree-chevron is-open">▶</span><span class="tree-label">weedyhimself</span></div>
+        <div class="tree-cell" style="display:flex;align-items:center;gap:.5rem;min-width:0"><span class="squadron-badge">IRI</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">ARC-L1 Wide Forest Station</span></div>
+        <div class="tree-cell tree-cell--num"><span class="tree-gauge"><span class="tree-gauge-val">705</span><span class="tree-gauge-track"><span style="width:70%"></span></span></span></div>
+        <div class="tree-cell tree-cell--num">2,220 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--num" style="color:var(--color-gray-2);font-size:.78rem">2 Einträge</div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="C1" data-orders="o1051" data-missions="m3,m1"></div>
+        <div class="tree-cell tree-cell--num tree-amount">1,000 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+      <div class="tree-row tree-row--leaf">
+        <div class="tree-leaf-main assign-mount" data-key="C2" data-orders="" data-missions=""></div>
+        <div class="tree-cell tree-cell--num tree-amount">1,220 <span class="tree-unit">SCU</span></div>
+        <div class="tree-cell tree-cell--actions">
+          <button class="btn btn-outline btn-xs btn-icon" title="Ausbuchen" aria-label="Ausbuchen"><svg class="krt-icon"><use href="#i-bookout"/></svg></button>
+          <button class="btn btn-ghost btn-xs btn-icon" title="Notiz hinzufügen" aria-label="Notiz hinzufügen"><svg class="krt-icon"><use href="#i-edit"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">Button klappt die Zeile auf/zu · Änderungen sofort wirksam · mehrere Einträge gleichzeitig offen möglich</p>
+    <div class="proscons">
+      <div><div class="pc-head pro">Vorteile</div>
+        <ul class="pc pro">
+          <li><b>Kein Overlay</b> — bleibt im Tabellenfluss; mehrere Einträge zum Vergleich gleichzeitig offen.</li>
+          <li>Kompakt im geschlossenen Zustand (ein Button), voll beim Öffnen.</li>
+          <li>Sofort wirksam — kein extra „Speichern“.</li>
+        </ul>
+      </div>
+      <div><div class="pc-head con">Nachteile</div>
+        <ul class="pc con">
+          <li><b>Offene Panels erhöhen die Höhe</b> (wie offene Notizen) — bei vielen offenen Panels wird die Tabelle lang.</li>
+          <li>Konkurriert räumlich mit der Notiz-Zeile um denselben eingerückten Bereich.</li>
+          <li>Kein Abbrechen — jede Änderung ist sofort live.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ STATUS ============================ -->
+  <div class="rec" style="border-left-color:var(--color-warning)">
+    <h3 style="color:var(--color-warning)">Status: offen — neue Anforderung (Mengen-Aufteilung)</h3>
+    <p>Diese Datei vergleicht die drei <b>Platzierungen</b> (inline / Modal / Ausklappzeile) für die reine Mehrfach-Zuordnung. Inzwischen kam die Vorgabe hinzu, dass je Eintrag auch die <b>Menge je Auftrag/Einsatz</b> aufgeteilt und gegen die Gesamtmenge abgeglichen werden muss. Die überarbeiteten Varianten stehen in <code>inventory-entry-multi-assign-quantity-varianten.html</code>.</p>
+    <p>Die Erkenntnis hier bleibt gültig: die dichte Eintrags-Zeile darf nicht wachsen — daher Auslöser-Button statt Dropdown; die Wahl inline/Modal/Ausklappzeile wird in v2 mit der Mengen-Dimension neu bewertet.</p>
+  </div>
+
+  <p class="foot">
+    Gilt für <b>/inventory/my</b> (ohne Staffel-Spalte) und <b>/inventory/all</b> (mit) sowie das Einbuchen-Formular <b>inventory-input.html</b>.<br>
+    Rechte: Nutzer ohne <code>LOGISTICIAN/OFFICER/ADMIN</code> sehen Zuordnungen <b>lesend</b> (Chips ohne × / Button ohne Öffnen), analog zum heutigen <code>sec:authorize</code>-Gating.<br>
+    Bedienbares Mock auf Basis von <code>colors_and_type.css</code> + <code>krt-components.css</code> — Systemklassen <code>.tree-*</code>, <code>.chip*</code>, <code>.krt-modal*</code>, <code>.krt-combobox*</code>, <code>.btn*</code>.
+  </p>
+</div>
+
+<!-- shared modal (Variante B) -->
+<div class="krt-modal-overlay" id="assign-modal" hidden>
+  <div class="krt-modal is-wide" role="dialog" aria-modal="true" aria-labelledby="assign-modal-title">
+    <div class="krt-modal-head">
+      <h2 id="assign-modal-title">Zuordnungen verwalten</h2>
+      <button class="btn btn-ghost btn-icon" id="assign-modal-x" aria-label="Schließen" title="Schließen"><svg class="krt-icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="krt-modal-body">
+      <p class="modal-manager-note">Aufträge und Einsätze für diesen Lagereintrag. Suchen und hinzufügen, per × entfernen.</p>
+      <div class="assign-manager" id="assign-modal-manager"></div>
+    </div>
+    <div class="krt-modal-foot">
+      <button class="btn btn-ghost" id="assign-modal-cancel">Abbrechen</button>
+      <button class="btn btn--cta" id="assign-modal-save"><svg class="krt-icon"><use href="#i-save"/></svg> <span>Speichern</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- icon sprite (house line style: 24×24, 2px stroke, round caps, currentColor) -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-bookout" viewBox="0 0 24 24"><path d="M11 5H6v14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 12h11m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 4l6 6-11 11H3v-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z M8 3v6h7 M8 21v-7h8v7" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></symbol>
+</svg>
+
+<script>
+(function(){
+  "use strict";
+  // ---- sample data ----
+  var ORDERS = [
+    {id:'o1042', short:'#1042', name:'Quantanium-Konvoi ARC-L1'},
+    {id:'o1039', short:'#1039', name:'Laranite-Sammelbestellung'},
+    {id:'o1051', short:'#1051', name:'Titan-Nachschub Hurston'},
+    {id:'o1055', short:'#1055', name:'Agricium-Lieferung Area18'},
+    {id:'o1060', short:'#1060', name:'Quantanium-Reserve microTech'}
+  ];
+  var MISSIONS = [
+    {id:'m1', name:'Operation Nachtfalke', date:'05.05.'},
+    {id:'m2', name:'Bergungslauf Aaron Halo', date:'12.05.'},
+    {id:'m3', name:'Konvoi-Eskorte CRU-L1', date:'20.05.'},
+    {id:'m4', name:'Raffinerie-Run ARC-L2', date:'27.05.'}
+  ];
+  var POOL = { order: ORDERS, mission: MISSIONS };
+  function optOf(field, id){ var a = POOL[field]; for (var i=0;i<a.length;i++){ if(a[i].id===id) return a[i]; } return null; }
+  function tone(field){ return field==='order' ? 'chip--primary' : 'chip--info'; }
+  function labelOf(field, o){ return field==='order' ? (o.short+' '+o.name) : (o.name+' · '+o.date); }
+  function noun(field, n){ if(field==='order'){ return n===1?'Auftrag':'Aufträge'; } return n===1?'Einsatz':'Einsätze'; }
+
+  // ---- state ----
+  var state = {}; // key -> {order:Set, mission:Set}
+  function stateFor(key){ if(!state[key]) state[key] = {order:new Set(), mission:new Set()}; return state[key]; }
+  function cloneState(st){ return {order:new Set(st.order), mission:new Set(st.mission)}; }
+
+  // ---- dom helpers ----
+  function el(tag, cls){ var e=document.createElement(tag); if(cls) e.className=cls; return e; }
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function highlight(text, q){
+    if(!q) return esc(text);
+    var i = text.toLowerCase().indexOf(q.toLowerCase());
+    if(i<0) return esc(text);
+    return esc(text.slice(0,i)) + '<mark>' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
+  }
+
+  function makeChip(field, id, opts){
+    opts = opts || {};
+    var o = optOf(field, id);
+    var c = el('span', 'chip ' + tone(field));
+    c.title = labelOf(field, o);
+    var lbl = el('span', 'chip-label'); lbl.textContent = labelOf(field, o); c.appendChild(lbl);
+    if(opts.removable){
+      var x = el('button', 'chip-x'); x.type='button'; x.setAttribute('aria-label','Entfernen'); x.innerHTML='&times;';
+      x.addEventListener('click', function(ev){ ev.stopPropagation(); opts.onRemove && opts.onRemove(); });
+      c.appendChild(x);
+    }
+    return c;
+  }
+
+  // ---- combobox (persistent, used in manager) ----
+  function buildCombobox(field, st, onPick){
+    var wrap = el('div', 'krt-combobox');
+    var input = el('input', 'krt-combobox__input'); input.type='text'; input.autocomplete='off';
+    input.placeholder = field==='order' ? 'Auftrag suchen & hinzufügen …' : 'Einsatz suchen & hinzufügen …';
+    input.setAttribute('aria-label', input.placeholder);
+    var list = el('ul', 'krt-combobox__listbox'); list.setAttribute('role','listbox'); list.hidden = true;
+    function avail(){ return POOL[field].filter(function(o){ return !st[field].has(o.id); }); }
+    function render(){
+      var q = input.value.trim();
+      list.innerHTML = '';
+      var av = avail();
+      var items = q ? av.filter(function(o){ return labelOf(field,o).toLowerCase().indexOf(q.toLowerCase())>=0; }) : av;
+      if(av.length===0){ var n1=el('li','krt-combobox__notice'); n1.textContent='Alle verfügbaren zugeordnet'; list.appendChild(n1); return; }
+      if(items.length===0){ var n2=el('li','krt-combobox__notice'); n2.textContent='Keine Treffer'; list.appendChild(n2); return; }
+      items.forEach(function(o, i){
+        var li = el('li', 'krt-combobox__option' + (i===0?' krt-combobox__option--active':''));
+        li.setAttribute('role','option');
+        li.innerHTML = '<span class="cbx-label">' + highlight(labelOf(field,o), q) + '</span>';
+        li.addEventListener('mousedown', function(ev){ ev.preventDefault(); pick(o.id); });
+        list.appendChild(li);
+      });
+    }
+    function pick(id){ st[field].add(id); input.value=''; onPick(); render(); input.focus(); }
+    input.addEventListener('focus', function(){ list.hidden=false; render(); });
+    input.addEventListener('input', function(){ list.hidden=false; render(); });
+    input.addEventListener('keydown', function(ev){
+      if(ev.key==='Enter'){ ev.preventDefault(); var first=list.querySelector('.krt-combobox__option'); if(first) first.dispatchEvent(new MouseEvent('mousedown')); }
+      else if(ev.key==='Escape'){ list.hidden=true; input.blur(); }
+    });
+    input.addEventListener('blur', function(){ setTimeout(function(){ list.hidden=true; }, 130); });
+    wrap.appendChild(input); wrap.appendChild(list);
+    wrap._render = render;
+    return wrap;
+  }
+
+  // ---- manager (two sections: Aufträge / Einsätze) shared by modal + inline panel ----
+  function renderManager(container, st, opts){
+    opts = opts || {};
+    container.innerHTML = '';
+    ['order','mission'].forEach(function(field){
+      var sec = el('div','assign-section'); sec.dataset.field = field;
+      var head = el('div','assign-section-head');
+      var cap = el('span','assign-cap'); cap.textContent = field==='order' ? 'Aufträge' : 'Einsätze';
+      var cnt = el('span','chip chip--muted assign-count');
+      head.appendChild(cap); head.appendChild(cnt);
+      var current = el('div','assign-current');
+      var cb = buildCombobox(field, st, function(){ refresh(); if(opts.onLiveChange) opts.onLiveChange(); });
+      sec.appendChild(head); sec.appendChild(current); sec.appendChild(cb);
+      container.appendChild(sec);
+      function refresh(){
+        cnt.textContent = st[field].size;
+        current.innerHTML = '';
+        if(st[field].size===0){
+          var e = el('span','assign-empty'); e.textContent = field==='order' ? 'Kein Auftrag zugeordnet' : 'Kein Einsatz zugeordnet';
+          current.appendChild(e);
+        } else {
+          Array.from(st[field]).forEach(function(id){
+            current.appendChild(makeChip(field, id, { removable:true, onRemove:function(){
+              st[field].delete(id); refresh(); if(opts.onLiveChange) opts.onLiveChange();
+            }}));
+          });
+        }
+        cb._render();
+      }
+      refresh();
+    });
+  }
+
+  // ---- summary button (Variante B & C) ----
+  function buildSummaryButton(key, onOpen){
+    var st = stateFor(key);
+    var btn = el('button','assign-btn'); btn.type='button'; btn.dataset.summaryKey = key;
+    function refresh(){
+      btn.innerHTML=''; btn.classList.remove('is-empty');
+      var total = st.order.size + st.mission.size;
+      if(total===0){
+        btn.classList.add('is-empty'); btn.textContent = 'Zuordnen +';
+      } else {
+        ['order','mission'].forEach(function(field){
+          if(st[field].size>0){
+            var c = el('span','chip '+tone(field));
+            c.textContent = st[field].size + ' ' + noun(field, st[field].size);
+            btn.appendChild(c);
+          }
+        });
+        var caret = el('span','caret'); caret.textContent='▾'; btn.appendChild(caret);
+      }
+      btn.setAttribute('aria-label','Zuordnungen verwalten — ' + st.order.size + ' Aufträge, ' + st.mission.size + ' Einsätze');
+    }
+    btn.addEventListener('click', function(){ onOpen(btn, refresh); });
+    btn._refresh = refresh;
+    refresh();
+    return btn;
+  }
+  function refreshSummary(key){
+    var btns = document.querySelectorAll('[data-summary-key="'+key+'"]');
+    btns.forEach(function(b){ if(b._refresh) b._refresh(); });
+  }
+
+  // ---- Variante A: inline chips + add popover ----
+  var openPop = null;
+  function closePop(){ if(openPop){ openPop.remove(); openPop=null; } }
+  document.addEventListener('click', function(e){ if(openPop && !openPop.contains(e.target) && !e.target.closest('.chip-add')) closePop(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePop(); });
+
+  function openAddPopover(field, key, anchorWrap, onDone){
+    closePop();
+    var st = stateFor(key);
+    var pop = el('div','krt-combobox assign-add-pop');
+    var input = el('input','krt-combobox__input'); input.type='text'; input.autocomplete='off';
+    input.placeholder = field==='order' ? 'Auftrag suchen …' : 'Einsatz suchen …';
+    var list = el('ul','krt-combobox__listbox'); list.setAttribute('role','listbox');
+    function avail(){ return POOL[field].filter(function(o){ return !st[field].has(o.id); }); }
+    function render(){
+      var q = input.value.trim(); list.innerHTML='';
+      var av = avail();
+      var items = q ? av.filter(function(o){ return labelOf(field,o).toLowerCase().indexOf(q.toLowerCase())>=0; }) : av;
+      if(av.length===0){ var n=el('li','krt-combobox__notice'); n.textContent='Alle zugeordnet'; list.appendChild(n); return; }
+      if(items.length===0){ var n2=el('li','krt-combobox__notice'); n2.textContent='Keine Treffer'; list.appendChild(n2); return; }
+      items.forEach(function(o,i){
+        var li=el('li','krt-combobox__option'+(i===0?' krt-combobox__option--active':'')); li.setAttribute('role','option');
+        li.innerHTML='<span class="cbx-label">'+highlight(labelOf(field,o), q)+'</span>';
+        li.addEventListener('mousedown', function(ev){ ev.preventDefault(); st[field].add(o.id); closePop(); onDone(); });
+        list.appendChild(li);
+      });
+    }
+    input.addEventListener('input', render);
+    input.addEventListener('keydown', function(ev){
+      if(ev.key==='Enter'){ ev.preventDefault(); var f=list.querySelector('.krt-combobox__option'); if(f) f.dispatchEvent(new MouseEvent('mousedown')); }
+    });
+    pop.appendChild(input); pop.appendChild(list);
+    anchorWrap.appendChild(pop); openPop = pop;
+    render(); input.focus();
+  }
+
+  function renderInlineMount(mount){
+    var key = mount.dataset.key;
+    mount.innerHTML='';
+    var tag = el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    var fs = el('div','tree-fieldset'); mount.appendChild(fs);
+    ['order','mission'].forEach(function(field){
+      var st = stateFor(key);
+      var fld = el('div','tree-field');
+      var cap = el('span','tree-field-cap'); cap.textContent = field==='order'?'Auftrag':'Einsatz'; fld.appendChild(cap);
+      var chips = el('div','assign-chips'); fld.appendChild(chips);
+      function rerender(){
+        chips.innerHTML='';
+        Array.from(st[field]).forEach(function(id){
+          chips.appendChild(makeChip(field, id, { removable:true, onRemove:function(){ st[field].delete(id); rerender(); }}));
+        });
+        var wrap = el('span','chip-add-wrap');
+        var add = el('button','chip-add'); add.type='button'; add.textContent = (st[field].size?'+':'+ Zuordnen');
+        if(st[field].size) add.setAttribute('aria-label', (field==='order'?'Auftrag':'Einsatz')+' hinzufügen');
+        add.addEventListener('click', function(ev){ ev.stopPropagation(); openAddPopover(field, key, wrap, rerender); });
+        wrap.appendChild(add); chips.appendChild(wrap);
+      }
+      rerender();
+      fs.appendChild(fld);
+    });
+  }
+
+  // ---- Variante B: modal wiring ----
+  var modal = document.getElementById('assign-modal');
+  var modalManager = document.getElementById('assign-modal-manager');
+  var modalCtx = null; // {key, temp}
+  function openModal(key){
+    var temp = cloneState(stateFor(key));
+    modalCtx = { key:key, temp:temp };
+    renderManager(modalManager, temp, {});
+    modal.hidden = false;
+    var first = modalManager.querySelector('input'); if(first) first.focus();
+  }
+  function closeModal(){ modal.hidden = true; modalCtx = null; }
+  document.getElementById('assign-modal-x').addEventListener('click', closeModal);
+  document.getElementById('assign-modal-cancel').addEventListener('click', closeModal);
+  document.getElementById('assign-modal-save').addEventListener('click', function(){
+    if(modalCtx){ state[modalCtx.key] = modalCtx.temp; refreshSummary(modalCtx.key); }
+    closeModal();
+  });
+  modal.addEventListener('mousedown', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeModal(); });
+
+  function renderModalMount(mount){
+    var key = mount.dataset.key;
+    mount.innerHTML='';
+    var tag = el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    mount.appendChild(buildSummaryButton(key, function(){ openModal(key); }));
+  }
+
+  // ---- Variante C: inline expand panel ----
+  function renderPanelMount(mount){
+    var key = mount.dataset.key;
+    var leafRow = mount.closest('.tree-row');
+    mount.innerHTML='';
+    var tag = el('span','tree-leaf-tag'); tag.textContent='Eintrag'; mount.appendChild(tag);
+    var btn = buildSummaryButton(key, function(b){ toggle(b); });
+    mount.appendChild(btn);
+    var panelRow = null;
+    function toggle(b){
+      if(panelRow){ panelRow.remove(); panelRow=null; return; }
+      panelRow = el('div','tree-row assign-panel-row');
+      var panel = el('div','assign-panel'); panel.style.gridColumn='1 / -1';
+      var mgr = el('div','assign-manager'); panel.appendChild(mgr); panelRow.appendChild(panel);
+      renderManager(mgr, stateFor(key), { onLiveChange:function(){ refreshSummary(key); } });
+      leafRow.parentNode.insertBefore(panelRow, leafRow.nextSibling);
+    }
+  }
+
+  // ---- init ----
+  function initMount(mount){
+    var st = stateFor(mount.dataset.key);
+    (mount.dataset.orders||'').split(',').filter(Boolean).forEach(function(id){ st.order.add(id); });
+    (mount.dataset.missions||'').split(',').filter(Boolean).forEach(function(id){ st.mission.add(id); });
+    var variant = mount.closest('[data-variant]').dataset.variant;
+    if(variant==='A') renderInlineMount(mount);
+    else if(variant==='B') renderModalMount(mount);
+    else if(variant==='C') renderPanelMount(mount);
+  }
+  document.querySelectorAll('.assign-mount').forEach(initMount);
+})();
+</script>
+</body>
+</html>

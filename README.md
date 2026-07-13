@@ -59,6 +59,19 @@ Specimens: `preview/components-presence.html`, `preview/components-filters.html`
 `preview/components-markdown.html`. Class names match the product 1:1 so markup
 stays portable in both directions.
 
+**Sync log — 2026-07 (b).** Added the **entry-association split-with-amounts**
+pattern for the Lager-Eintrag (locked design: Variante C of a 3-variant
+exploration). One entry can be tied to **several** Aufträge *and* several Einsätze,
+and — per the product requirement — the entry's quantity is **split, captured
+separately per Auftrag and per Einsatz** (Modell G), reconciled against the entry
+total (Rest > 0 allowed, over-allocation rejected). New classes: `.assoc-split`,
+`.assoc-chip` (`--order` / `--mission`) + `.assoc-chip__amt`, `.assoc-add(-wrap)`,
+`.assoc-pop` (+ `.assoc-pop__menge`), plus `.krt-combobox__label` (wrap a
+`<mark>`-highlighted option so the flex option keeps it as one item). Specimen
+`preview/components-entry-assign.html`; exploration + decision
+`proposals/inventory-entry-multi-assign-quantity-varianten.html`; implementation
+order (DS repo + submodule + product) `proposals/inventory-entry-multi-assign-claude-code-auftrag.md`.
+
 ---
 
 ## What the product is
@@ -185,6 +198,34 @@ nesting `<table>`s that each repeat their own `<thead>`. Rules:
 
 Live before/after: [`proposals/inventory-table-readability.html`](proposals/inventory-table-readability.html);
 specimen: `preview/components-tree-table.html`; audit: `proposals/inventory-table-audit.md`.
+
+### Entry associations (split quantities)
+
+The leaf-level **Auftrag/Einsatz** control on a Lager-Eintrag. One entry can carry
+**several** Aufträge *and* several Einsätze, and the entry's quantity is **split** —
+captured **separately** per Auftrag and per Einsatz (two independent splits, „Modell
+G“). The single-select is replaced — per `.tree-field` — by an **`.assoc-split`**
+group: clickable **`.assoc-chip`** tokens (**`--order`** orange, **`--mission`**
+blue) each showing label + **`.assoc-chip__amt`** (the SCU/Stück amount, bright), a
+dashed **`.assoc-add`** („+ Zuordnen“; just „+“ once populated, wrapped in
+`.assoc-add-wrap`) opening an **`.assoc-pop`** popover — a `.krt-combobox` to add, or
+`.assoc-pop__menge` (amount field + „Entfernen“) when a chip is clicked — and a
+trailing **`.chip`** rest indicator per group. Rules:
+
+- **Reconciliation:** each group's amounts sum against the entry total. **Rest 0** =
+  `.chip--success`; **Rest > 0** = `.chip--muted` („… frei“ — an unallocated
+  remainder is allowed); **over-allocation** = `.chip--danger` and is rejected.
+- **Auftrag suggestions** stay filtered as today — only orders whose
+  `requiredMaterialIds` contain the material, plus any already assigned.
+- **Read-only** (no `LOGISTICIAN/OFFICER/ADMIN`): chips render non-clickable, no add
+  button, mirroring the current `sec:authorize` gating.
+- **Personal entries** carry no association (`error.inventory.personal.assignment`).
+- **Data:** two separate join tables per entry — `{ jobOrderId, amount }` and
+  `{ missionId, amount }`; add/update/remove carry `version` (optimistic lock).
+
+Locked design (Variante C): [`proposals/inventory-entry-multi-assign-quantity-varianten.html`](proposals/inventory-entry-multi-assign-quantity-varianten.html);
+specimen: `preview/components-entry-assign.html`; implementation order:
+`proposals/inventory-entry-multi-assign-claude-code-auftrag.md`.
 
 ### Card & chip
 
