@@ -3,7 +3,7 @@
 Repo: `krt-iri/basetool`. Ziel: Das vorhandene Keycloak-Theme
 `keycloak-theme/krt-theme/` (Login + Account) auf den **aktuellen** Stand des
 KRT-Design-Systems bringen — Lato-only (Audiowide + Ethnocentric raus), semantische Fehlerfarbe
-(rot statt orange), einheitlicher Primär-Hover, CTA-Bloom, optional Wabenmuster,
+(rot statt orange), einheitlicher Primär-Hover, CTA-Bloom,
 sichtbarer Tastatur-Fokus. Das Theme ist bereits sehr gut; dies sind gezielte
 Angleichungen, **keine Neugestaltung**.
 
@@ -15,7 +15,7 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
   (ersetzt die entsprechenden Blöcke in beiden Theme-CSS-Dateien 1:1).
 - `keycloak/keycloak-login-target.html` — Ziel-Optik (Soll).
 - `colors_and_type.css` / `krt-components.css` / README → „Action hierarchy".
-- Fonts: `fonts/Lato-*.woff2`; Muster: `assets/honeycomb-bg.svg`.
+- Fonts: `fonts/Lato-*.woff2`.
 
 Betroffene Dateien:
 - `keycloak-theme/krt-theme/login/resources/css/krt-login-v3.css`
@@ -58,12 +58,10 @@ Betroffene Dateien:
   genau **ein** gefüllter Primär-Button existiert; Sekundär/Cancel = Outline
   (`.krt-button-secondary` / `.pf-m-secondary` ist vorhanden).
 
-## SCHRITT 3 🟡 — Honigwaben-Hintergrund (optional, reines Upgrade)
-- `assets/honeycomb-bg.svg` als `honeycomb-bg.svg` in `login/resources/img/`
-  **und** `account/resources/img/` legen.
+## SCHRITT 3 🟡 — Seiten-Hintergrund (flaches Schwarz + Bloom)
+- Kein Wabenmuster mehr (aus dem Design-System entfernt).
 - `body`-Hintergrund aus `krt-keycloak-tokens.css` übernehmen (flaches Schwarz +
-  Waben ~46px + Top-Bloom). Den bestehenden Hard-Reset des PF-Grids/-Bilds
-  **beibehalten** — nur der `<body>` bekommt das Muster.
+  Top-Bloom). Den bestehenden Hard-Reset des PF-Grids/-Bilds **beibehalten**.
 
 ## SCHRITT 4 🟡 — Tastatur-Fokus sichtbar (A11y)
 - Befund B7: `:focus-visible { outline: 2px solid var(--color-primary);
@@ -97,7 +95,7 @@ durchschlagen.
 2. Validierungsfehler erscheinen **rot** (`--color-danger`), Felder mit rotem Rand.
 3. Primär-Hover hellt überall auf; Primär-Button trägt den Orange-Bloom; pro Screen
    genau eine gefüllte CTA.
-4. (falls umgesetzt) Honigwaben-Hintergrund sichtbar, PF-Grid bleibt entfernt.
+4. Seiten-Hintergrund = flaches Schwarz + Top-Bloom (kein Wabenmuster), PF-Grid bleibt entfernt.
 5. Tastatur-Fokus auf allen Controls sichtbar.
 6. Login- und Account-Tokens identisch; Optik deckt sich mit
    `keycloak/keycloak-login-target.html`. Build/Theme lädt fehlerfrei (de + en).

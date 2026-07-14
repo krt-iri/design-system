@@ -82,12 +82,10 @@ Primär-Button hat keinen `--glow-primary`-Bloom; auf Mehr-Button-Flows (z. B.
 → **Fix:** `box-shadow: var(--glow-primary)` auf den Primär-Button; in Flows mit
 mehreren Aktionen Sekundär konsequent als Outline (ist als Klasse vorhanden).
 
-### 🟡 6 — Kein Honigwaben-Hintergrund
+### 🟢 6 — Seiten-Hintergrund: flaches Schwarz + Bloom
 Das Theme setzt den Grund bewusst auf flaches Schwarz (entfernt das alte PF-Grid).
-Das System hat inzwischen das Wabenmuster; die App-Login nutzt es.
-→ **Optional:** `honeycomb-bg.svg` in `login/.../img/` + `account/.../img/` legen
-und als dezenten `body`-Hintergrund (~46px) + Top-Bloom einsetzen (siehe
-`krt-keycloak-tokens.css`). Flaches Schwarz bleibt markenkonform — reines Upgrade.
+Das Wabenmuster wurde aus dem Design-System entfernt; der Grund bleibt flaches
+Schwarz + dezenter Top-Bloom (siehe `krt-keycloak-tokens.css`) — markenkonform.
 
 ### 🟡 7 — Tastatur-Fokus nur auf Inputs klar
 Inputs haben einen Orange-Fokus-Glow ✅; Buttons/Links/Checkbox verlassen sich auf
@@ -122,7 +120,7 @@ dokumentiert — auf Account übertragen).
 1. 🔴 **1 (Lato-only)** + 🔴 **2/🟠 4 (Semantik-Tokens + rote Fehler)** — gemeinsam,
    gleiche `:root`-Stelle, größte Marken-/UX-Wirkung.
 2. 🟠 **3 (Hover vereinheitlichen)** + 🟠 **5 (CTA-Bloom)**.
-3. 🟡 **6 (Honigwaben)**, **7 (Fokus)**, **8 (mono)**, **9 (Token-Sync)** als Politur.
+3. 🟡 **7 (Fokus)**, **8 (mono)**, **9 (Token-Sync)** als Politur.
 
 Drop-in für 1+2+4(+6): `krt-keycloak-tokens.css` ersetzt die `:root`/`@font-face`/
 `body`-Blöcke beider Dateien 1:1.

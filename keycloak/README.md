@@ -75,8 +75,8 @@ glyph. Success/info alerts use `--color-success` / `--color-info` left-border ti
 **Locale selector** — top-right; surface fill + hairline + orange bottom-border;
 dropdown is a dark hairline menu, items hover to orange fill / black text.
 
-**Page background** — flat black + faint honeycomb (`honeycomb-bg.svg`, ~46px) +
-soft top bloom. Still hard-reset the PF background grid/image everywhere else.
+**Page background** — flat black + soft top bloom. Still hard-reset the PF
+background grid/image everywhere else.
 
 ---
 

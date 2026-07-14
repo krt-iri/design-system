@@ -20,7 +20,7 @@ Das `das-kartell-design`-Skill (`.claude/skills/das-kartell-design/`):
   `keycloak/conformity-audit.md`, `keycloak/krt-keycloak-tokens.css`,
   `keycloak/keycloak-login-target.html`.
 - Referenz-Optik gesamt: `ui_kits/basetool/` (interaktiv).
-- Assets: `fonts/Lato-*.woff2`, `assets/honeycomb-bg.svg`.
+- Assets: `fonts/Lato-*.woff2`.
 
 > Die beiden Detail-Aufträge sind verbindlich und enthalten die genauen
 > Klassen-/Selektor-Mappings. Dieser Master-Auftrag gibt nur Reihenfolge,
@@ -109,7 +109,7 @@ Vollständig nach `keycloak/claude-code-auftrag.md`:
    `keycloak/krt-keycloak-tokens.css` ersetzt `:root`/`@font-face`/`body` in
    Login **und** Account; Audiowide- **und** Ethnocentric-Dateien raus).
 2. Primär-Hover vereinheitlichen (`--color-accent-light`) + CTA-Bloom.
-3. (optional) Honigwaben-Hintergrund; PF-Grid-Reset behalten.
+3. Seiten-Hintergrund = flaches Schwarz + Bloom (kein Wabenmuster); PF-Grid-Reset behalten.
 4. Tastatur-Fokus sichtbar (`:focus-visible`).
 5. Login- und Account-Tokens byte-identisch + Sync-Kommentar.
 - FTL-Langliste gegensichten (login/otp/reset/verify/totp(QR weiß)/consent/error/

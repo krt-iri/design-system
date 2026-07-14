@@ -4,7 +4,7 @@
    Drop-in replacement for the :root + @font-face blocks at the top of
    krt-login-v3.css and krt-account-v3.css. Mirrors the CURRENT KRT design
    system (das-kartell-design): single typeface Lato, full semantic color
-   set, honeycomb page background. Keep this block byte-identical between the
+   set, flat black page background + top bloom. Keep this block byte-identical between the
    login and account themes; only the component selectors below it differ.
 
    Why a copy and not an @import: Keycloak serves theme resources from an
@@ -68,18 +68,15 @@
 }
 
 /* ----- PAGE BACKGROUND -------------------------------------------------- */
-/* Flat black + faint honeycomb wash + a soft top bloom, matching the app
-   login. Ship honeycomb-bg.svg in resources/img/. Still hard-reset the
-   PatternFly grid/white elsewhere — only the <body> gets this. */
+/* Flat black + a soft top bloom, matching the app login. Still hard-reset
+   the PatternFly grid/white elsewhere — only the <body> gets this. */
 body {
     color: var(--color-gray-1);
     font-family: var(--font-body);
     font-weight: 300;
     background-color: var(--color-bg-black);
     background-image:
-        radial-gradient(circle at 50% -10%, rgba(231,126,35,0.10), transparent 55%),
-        url('../img/honeycomb-bg.svg');
-    background-repeat: no-repeat, repeat;
-    background-size: auto, 46px 26.56px;
+        radial-gradient(circle at 50% -10%, rgba(231,126,35,0.10), transparent 55%);
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
