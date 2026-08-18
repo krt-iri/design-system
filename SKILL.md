@@ -33,6 +33,10 @@ artifacts _or_ production code, depending on the need.
 Key brand rules (see `README.md` for the full content + visual foundations):
 - Color is functional and sparing — one hero orange; department/semantic hues only as
   small tags, row tints and status.
+- Semantic colour used AS TEXT takes the accessible tints: `--color-danger-text`
+  `#F2564B`, `--color-info-text` `#6C93EF`, `--color-success-text` `#2EBC3D`,
+  muted grey `--color-gray-2-text` `#8A8A8A` — canonical hues stay for
+  fills/borders (they fail WCAG AA as small text on black).
 - **Action hierarchy:** the filled orange CTA marks the ONE primary action per context
   (`.btn--cta`); demote routine actions to `.btn-ghost`/`.btn-outline` and destructive
   ones to `.btn-quiet-danger`. Orange is for action + identity, never for plain data

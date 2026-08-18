@@ -29,6 +29,15 @@ manual. If you have access, explore these to go deeper:
   Brand assets live in `design/` (logos, fonts) and the custom Keycloak theme in
   `keycloak-theme/krt-theme/`.
   *(The org was renamed `krt-iri` → `krt-profit`; older links may still read `krt-iri`.)*
+- **GitHub — `krt-profit/basetool-android`** · <https://github.com/krt-profit/basetool-android>
+  Native Android-Client (Jetpack Compose). Eigene DS-Implementierung unter
+  `core/designsystem/` — Tokens in `theme/Color.kt` / `Type.kt` / `Shape.kt` /
+  `KrtSpacing.kt`, Komponenten `KrtButtons/Containers/Fields/Rows/Status/…`,
+  63 `ic_krt_*`-Icons. Die DC-basierte Design-Spec liegt im Repo unter
+  `docs/design/android/` (aus diesem System heraus entworfen).
+- **GitHub — `krt-profit/basetool-sc-extractor`** · <https://github.com/krt-profit/basetool-sc-extractor>
+  Desktop-Extractor (Compose Desktop). KRT-Theme in `src/main/kotlin/.../ui/Theme.kt`
+  (Palette-Subset; siehe *Plattform-Implementierungen*).
 - **GitHub — `krt-profit/design-system`** · a mirror of this project. Product and
   design system cross-pollinate: patterns proven in `proposals/` land in the
   product, and shared components that grew up in the product are ported back here
@@ -72,6 +81,29 @@ total (Rest > 0 allowed, over-allocation rejected). New classes: `.assoc-split`,
 `proposals/inventory-entry-multi-assign-quantity-varianten.html`; implementation
 order (DS repo + submodule + product) `proposals/inventory-entry-multi-assign-claude-code-auftrag.md`.
 
+**Sync log — 2026-08.** Voller Abgleich gegen `basetool`, `basetool-android` und
+`basetool-sc-extractor` (jeweils `main`):
+
+- **Neues Token** `--color-gray-2-text` `#8A8A8A` — barrierefreier Muted-Text-Tint
+  (Grau 2 fällt auf flachem Schwarz durch AA; im Baum/Footer etc. umgestellt).
+  Android-Spiegel: `KrtPalette.TextMuted`.
+- **Wabenmuster-Entfernung bestätigt**: in `basetool` als REQ-UI-003 gelandet
+  (CHANGELOG), Android nennt den Canvas "flat, untextured black".
+- **`.assoc-pop`** auf `position: fixed` (Scroll-Container-Clipping) + Mengen-
+  Editor-Zeilenumbruch; **Herkunft-Picker** `.herkunft-*` (REQ-INV-027) neu.
+- **`.btn.btn-xs`** (Spezifitäts-Qualifier, sonst inert) + **`.btn-icon`**
+  (32×32 Icon-only) + `pointer-events: none` für Button-Glyphen.
+- **JobOrder-Status** `.status-open/-in_progress/-rejected` + `.status-canceled`-Alias.
+- **`.krt-confirm-*`** (showKrtConfirm-Dialog), **`.krt-modal--wide`**,
+  **`.krt-combobox__option--clear`**.
+- **Filterleiste** `.search-form*` + `.datetime-split-*` + `select.association-select`.
+- **App-Chrome**: fixer `.krt-footer` (+ `-meta/-github/-version`),
+  `.krt-fankit-band` (Fan-Kit-Compliance, REQ-UI-018), `.admin-mode-chip` +
+  `body.admin-mode`-Header-Tint.
+- Neue Specimens: `components-herkunft`, `components-confirm-dialog`,
+  `components-filterbar`, `components-app-chrome`; Asset
+  `assets/made-by-the-community.png`.
+
 ---
 
 ## What the product is
@@ -109,6 +141,7 @@ Full tokens in [`colors_and_type.css`](colors_and_type.css). Highlights:
 | Grau 3 (hairlines) | `--color-gray-3` | `#282828` |
 | Grau 2 (muted) | `--color-gray-2` | `#646464` |
 | Grau 1 (body text) | `--color-gray-1` | `#D2D2D2` |
+| Grau 2 als **Text** (a11y) | `--color-gray-2-text` | `#8A8A8A` |
 
 **Bereichsfarben (departments)** — each Kartell department owns one fixed hue; the
 values must never be altered, and never used for the logo:
@@ -124,6 +157,11 @@ values must never be altered, and never used for the logo:
 
 **Semantic status** colors reuse those values by appearance: danger `#A3000A`,
 success `#239E33`, warning `#FFD23F`, info `#355DDC`.
+
+**Farbe als TEXT nimmt die Text-Tints:** `--color-danger-text` `#F2564B`,
+`--color-info-text` `#6C93EF`, `--color-success-text` `#2EBC3D`,
+`--color-gray-2-text` `#8A8A8A` — die kanonischen Werte sind Füllungen/Rahmen
+vorbehalten (sie fallen als Kleintext auf Schwarz durch WCAG AA).
 
 > **Note on department names.** The shipped `styles.css` mislabels three of the six
 > Bereichsfarben (it calls `#A3000A` "combat", `#355DDC` "sub-radar", `#37BBC0`
@@ -319,6 +357,48 @@ Full set + guidance: specimen `preview/components-icon-set.html` and
 before/after `proposals/button-icons-readability.html`; repo handoff
 `proposals/button-icons-claude-code-auftrag.md`.
 
+### Herkunft-Picker (Ausbuchen/Umbuchen)
+
+Gegenstück zur Mengen-Aufteilung: beim **Ausbuchen/Umbuchen** bestimmt pro
+Earmark-Tag und Dimension (Auftrag/Einsatz) ein Mengen-Input, aus welcher
+Zuordnung der Abzug kommt; der Rest kommt aus dem unverteilten Anteil
+(REQ-INV-027, Variante C). Rest-Chip in den `.chip`-Tönen, Danger-Warnung wenn
+der freie Rest nicht reicht, Erlös-Kopplung (nur SELL) als Info-Box. Klassen:
+`.herkunft-help/-body/-dim(-cap)/-tag(-name/-max)/-input(--auto)/-auto/
+-restline/-warn/-proceeds(*)`. Specimen: `preview/components-herkunft.html`.
+
+### Confirm-Dialog
+
+`showKrtConfirm` ersetzt `window.confirm()` vollständig: JS-generiertes,
+ephemeres Overlay (`.krt-confirm-overlay/-dialog/-title/-message/-actions`,
+z-index 10000, mobil column-reverse). Für Form-/Detail-Modals bleibt
+`.krt-modal` (+ neue Breiten-Variante `.krt-modal--wide`, 600px).
+Specimen: `preview/components-confirm-dialog.html`.
+
+### Filterleiste (search-form)
+
+Die Listenseiten-Filterzeile: `.search-form` richtet alle Spalten via
+`align-items: flex-end` bündig aus; Label-tragende Spalten (`:has(> label)`)
+bekommen deterministische Höhe, `.datetime-split-inputs` paart Datum + Zeit mit
+festen Breiten, `.search-form-flex-1` lässt die Textsuche dominieren.
+Dazu `select.association-select` (Lager-Zuordnungs-Dropdown, oranger Rahmen).
+Specimen: `preview/components-filterbar.html`.
+
+### App-Chrome (Footer · Fan-Kit-Band · Admin-Modus)
+
+- **Fixer Footer** `.krt-footer` (+ `-links/-meta/-github/-version`): Impressum/
+  Datenschutz + Handbuch, GitHub-Mark, Build-Version (Version in gray-1 — gray-2
+  fällt auf `#141414` durch AA). `<main>` reserviert Platz über
+  `--krt-footer-height`.
+- **Fan-Kit-Band** `.krt-fankit-band/-logo/-trademark`: Star-Citizen-Fan-Kit-
+  Compliance am Ende des Home-`<main>` (REQ-UI-018) — Logo unverändert,
+  Trademark-Notice ≥ 10pt. Asset: `assets/made-by-the-community.png`.
+  (Android-Pendant: `KrtFanKitBand`.)
+- **Admin-Modus**: `body.admin-mode` färbt die Header-Unterkante Zierfarbe
+  dunkel; `.admin-mode-chip` benennt den privilegierten Kontext.
+
+Specimen: `preview/components-app-chrome.html`.
+
 ---
 
 ## Files
@@ -484,6 +564,22 @@ From the project's own engineering guide (`CLAUDE.md` → *Frontend / UI rules*)
 
 ---
 
+## Plattform-Implementierungen
+
+Das System ist auf drei Plattformen implementiert; **dieses Repo ist die
+Vorgabe**, die Plattformen spiegeln es in ihrer Technologie:
+
+| Plattform | Repo · Pfad | Stand |
+| :-- | :-- | :-- |
+| **Web** (Thymeleaf/CSS) | `krt-profit/basetool` · `frontend/.../static/css/styles.css` + per-Feature-CSS | Referenz-Implementierung; Klassennamen 1:1 mit diesem System. |
+| **Android** (Compose M3) | `krt-profit/basetool-android` · `core/designsystem/` | Voll gespiegelt: `KrtPalette` (inkl. `TextMuted`, `*Text`-Tints), `KrtTypography` (Lato 300/400/700/900, `tnum`), `KrtShapes` (alles eckig, Pill nur Squadron-Badge + Drag-Handle), `KrtSpacing` (Touch-Target **48dp** statt 44px — Plattformkorrektur), genau EINE Motion: 200 ms Farbe/Fade. DC-Spec: `docs/design/android/`. |
+| **Desktop** (Compose Desktop) | `krt-profit/basetool-sc-extractor` · `src/main/kotlin/.../ui/Theme.kt` | Palette-Subset (`Krt.*`). **Konformitätslücke:** nutzt noch `Gray2`/`Danger` als Text statt der a11y-Text-Tints (`TextMuted`/`DangerText` fehlen dort) — siehe `proposals/bp-extractor-audit.md`. |
+
+Plattform-Abweichungen sind nur erlaubt, wo die Plattform es erzwingt
+(48dp-Touch-Targets, Ripple statt Hover) — nie bei Farbe, Form oder Type.
+
+---
+
 ## Index
 
 Root manifest:
@@ -496,8 +592,8 @@ Root manifest:
 | `krt-components.css` | Component CSS layer built on the tokens. |
 | `fonts/` | Lato (Thin→Black, each + italic) — self-hosted WOFF2 with TTF fallback. The only typeface; headlines are Lato bold + uppercase. |
 | `assets/` | `krt.webp` (mark), `krt-favicon.webp`, `Kartelllogo.jpg` (lockup). |
-| `preview/` | 22 Design System specimen cards (type, color, spacing, components, brand — incl. the rank ladder, scrollbars and background/texture treatments). |
-| `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full template audits (`template-audit.md`, `template-audit-full.md`), the UX/usability review, and the MASTER + per-topic `claude-code-auftrag.md` unification orders for the real repo. |de-code-auftrag.md` (project-wide unification order for the real repo). |
+| `preview/` | Design System specimen cards (type, color, spacing, components, brand — incl. the rank ladder, scrollbars and background/texture treatments). |
+| `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full template audits (`template-audit.md`, `template-audit-full.md`), the UX/usability review, and the MASTER + per-topic `claude-code-auftrag.md` unification orders for the real repo. |
 | `slides/` | HUD slide template (deck-stage) — title, section, content, stats, comparison, quote, closing. |
 | `ui_kits/basetool/` | Interactive recreation of the Profit Basetool app — see its own README. |
 

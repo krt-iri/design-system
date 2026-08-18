@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Filterleiste" subtitle=".search-form — Spalten bündig via flex-end, Datum+Zeit-Paar" viewport="700x290" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>body{padding:18px 20px}.search-form input:not([type='checkbox']),.search-form select{background-color:var(--color-surface-input);color:var(--color-gray-1);border:var(--border-hairline);padding:0.5rem 0.75rem;font-family:var(--font-body);height:2.75rem;box-sizing:border-box}.search-form input[type='checkbox']{width:1rem;height:1rem;accent-color:var(--color-primary)}.search-form label{color:var(--color-gray-1);font-weight:var(--fw-bold);font-size:var(--fs-sm)}.assoc-demo{max-width:280px;margin-top:16px}</style>
+</head>
+<body>
+<p class="pv-label">Filterleiste (.search-form)</p>
+<form class="search-form" onsubmit="return false">
+<div class="search-form-flex-1"><label>Suche</label><input type="search" value="Quant"></div>
+<div class="datetime-split-group"><label>Von</label><div class="datetime-split-inputs"><input type="date" value="2026-08-18"><input type="time" value="19:00"></div></div>
+<div class="search-form-checkbox-col"><span class="search-form-checkbox-spacer"></span><label class="search-form-checkbox-label"><input type="checkbox" checked> Nur offene</label></div>
+<div class="search-form-actions"><button class="btn btn-ghost" type="button">Zurücksetzen</button><button class="btn btn--cta" type="submit">Filtern</button></div>
+</form>
+<div class="assoc-demo">
+<label style="display:block;color:var(--color-gray-1);font-weight:700;font-size:var(--fs-sm);margin-bottom:6px;">Auftrag zuordnen</label>
+<select class="association-select"><option>SK-Auftrag #341 · Quantanium</option><option>Auftrag #358 · Laranite</option></select>
+</div>
+<p class="pv-mono" style="margin-top:14px;">.search-form(-flex-1/-actions/-checkbox-*) · .datetime-split-group/-inputs · select.association-select</p>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Herkunft-Picker" subtitle="Ausbuchen/Umbuchen: Abzug je Zuordnung (REQ-INV-027)" viewport="700x500" -->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../krt-components.css">
+<style>body{padding:18px 20px}.wrap{max-width:440px}input.herkunft-input{background-color:var(--color-surface-input);color:var(--color-gray-1);border:var(--border-hairline);padding:0.35rem 0.5rem;font-family:var(--font-body)}</style>
+</head>
+<body>
+<p class="pv-label">Herkunft des Abzugs — Ausbuchen 40 SCU</p>
+<div class="wrap">
+<p class="herkunft-help">Wähle, wie viel aus welcher Zuordnung ausgebucht wird. Nicht verteilter Abzug kommt aus dem freien Rest.</p>
+<div class="herkunft-body">
+<div class="herkunft-dim">
+<span class="herkunft-dim-cap">Aufträge</span>
+<div class="herkunft-tag"><span class="herkunft-tag-name">SK-Auftrag #341 · Quantanium</span><input class="herkunft-input" type="number" value="25"><span class="herkunft-tag-max">max 30</span></div>
+<div class="herkunft-tag"><span class="herkunft-tag-name">Auftrag #358 · Laranite</span><input class="herkunft-input" type="number" value="0"><span class="herkunft-tag-max">max 10</span></div>
+<div class="herkunft-restline"><span class="chip chip--muted">Rest übernimmt 15 SCU</span></div>
+</div>
+<div class="herkunft-dim">
+<span class="herkunft-dim-cap">Einsätze</span>
+<div class="herkunft-tag"><span class="herkunft-tag-name">Einsatz „Pyro Convoy"</span><input class="herkunft-input herkunft-input--auto" type="number" value="40" disabled><span class="herkunft-tag-max">max 60</span></div>
+<span class="herkunft-auto">Einzige Zuordnung ohne freien Rest — Verteilung steht fest.</span>
+<div class="herkunft-restline"><span class="chip chip--danger">Mind. 40 aus Zuordnungen</span><span class="herkunft-warn">Freier Rest (0) deckt den Abzug nicht.</span></div>
+</div>
+<div class="herkunft-proceeds"><span class="herkunft-proceeds-title">Erlös-Kopplung (Verkauf)</span><span class="herkunft-proceeds-line">Einsatz „Pyro Convoy" · ≈ 96.000 aUEC</span><span class="herkunft-proceeds-line herkunft-proceeds-personal">Persönlich · ≈ 0 aUEC</span></div>
+</div>
+</div>
+<p class="pv-mono" style="margin-top:14px;">.herkunft-help/-body/-dim(-cap) · .herkunft-tag(-name/-max) · .herkunft-input(--auto) · .herkunft-restline/-warn · .herkunft-proceeds*</p>
+</body>
+</html>
