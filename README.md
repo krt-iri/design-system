@@ -410,7 +410,9 @@ See the [**index**](#index) at the bottom for the full manifest.
   tables, forms, alerts, badges, toasts).
 - [`preview/`](preview/) — Design System tab specimen cards.
 - [`ui_kits/basetool/`](ui_kits/basetool/) — interactive recreation of the app.
-- [`assets/`](assets/) — logos & favicon.
+- [`assets/`](assets/) — logos & favicon: Kartell-Marke (`krt.webp`, `Kartelllogo.jpg`),
+  **Basetool-Logofamilie** (`basetool-logo*.svg`, `basetool-extractor-logo*.svg`,
+  `basetool-favicon.svg` + PNG-Rasters 16/32/64/512) und Fan-Kit-Logo.
 - [`fonts/`](fonts/) — Lato (self-hosted).
 
 ---
@@ -591,7 +593,7 @@ Root manifest:
 | `colors_and_type.css` | `@font-face` declarations + all color/type/shape tokens. |
 | `krt-components.css` | Component CSS layer built on the tokens. |
 | `fonts/` | Lato (Thin→Black, each + italic) — self-hosted WOFF2 with TTF fallback. The only typeface; headlines are Lato bold + uppercase. |
-| `assets/` | `krt.webp` (mark), `krt-favicon.webp`, `Kartelllogo.jpg` (lockup). |
+| `assets/` | `krt.webp` (mark), `krt-favicon.webp`, `Kartelllogo.jpg` (lockup), `basetool-*.svg/png` (App-Logofamilie: Zeichen, Extractor, Favicon), `made-by-the-community.png` (Fan-Kit). |
 | `preview/` | Design System specimen cards (type, color, spacing, components, brand — incl. the rank ladder, scrollbars and background/texture treatments). |
 | `proposals/` | Design proposals + handoff: action-hierarchy before/after mocks (`mission-detail-…`, `list-page-…`, `inventory-…`, `refinery-order-…`), `scrollbar-mockups.html`, the bp-extractor audit, the full template audits (`template-audit.md`, `template-audit-full.md`), the UX/usability review, and the MASTER + per-topic `claude-code-auftrag.md` unification orders for the real repo. |
 | `slides/` | HUD slide template (deck-stage) — title, section, content, stats, comparison, quote, closing. |

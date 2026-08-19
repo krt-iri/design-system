@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="design_doc_mode" content="canvas">
+<title>Profit Basetool — Logo-Entwurf</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; font-family: var(--font-body); }
+a { color: var(--color-primary); } a:hover { color: var(--color-accent-light); }
+.frame { position: absolute; background: var(--color-bg-black); border: 1px solid var(--color-gray-3); padding: 26px 30px; box-sizing: border-box; }
+.f-cap { margin: 0 0 18px; font-size: 0.62rem; font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.22em; color: var(--color-gray-2-text); }
+.note { margin: 14px 0 0; font-size: 0.72rem; font-weight: var(--fw-thin); line-height: 1.5; color: var(--color-gray-1); max-width: 640px; }
+.note b { color: var(--color-primary); font-weight: var(--fw-bold); }
+.mark { color: var(--color-primary); }
+.row { display: flex; gap: 28px; align-items: center; }
+.cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cell-cap { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-gray-2-text); text-align: center; }
+.op { font-family: var(--font-headline); font-weight: var(--fw-black); font-size: 2rem; color: var(--color-gray-2-text); }
+.lockup { display: flex; align-items: center; gap: 26px; }
+.lu-text { display: flex; flex-direction: column; gap: 4px; }
+.lu-over { font-size: 0.78rem; font-weight: var(--fw-bold); letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-gray-1); }
+.lu-main { font-family: var(--font-headline); font-weight: var(--fw-black); font-size: 3rem; line-height: 1; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-primary); }
+.lu-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.tile { background: var(--color-bg-black); border: 1px solid var(--color-gray-3); display: flex; align-items: center; justify-content: center; position: relative; }
+.brk::before, .brk::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid var(--color-primary); }
+.brk::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.brk::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+.round { border-radius: 50%; overflow: hidden; }
+.chipband { display: flex; gap: 18px; align-items: flex-end; }
+.fchip { background: var(--color-bg-dark-gray); border: 1px solid var(--color-gray-3); padding: 10px; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="m-bt" viewBox="0 0 240 240">
+<circle cx="110" cy="130" r="76" fill="none" stroke="currentColor" stroke-width="7"></circle>
+<polygon points="0,-22 0,22 210,0" transform="translate(34,196) rotate(-38)" fill="currentColor"></polygon>
+<rect x="96" y="166" width="13" height="16" fill="currentColor"></rect><rect x="115" y="152" width="13" height="30" fill="currentColor"></rect><rect x="134" y="138" width="13" height="44" fill="currentColor"></rect><rect x="153" y="124" width="13" height="58" fill="currentColor"></rect>
+<polygon points="46,45 49,53 57,56 49,59 46,67 43,59 35,56 43,53" fill="currentColor"></polygon>
+</symbol>
+<symbol id="m-ex" viewBox="0 0 240 240">
+<circle cx="110" cy="104" r="76" fill="none" stroke="currentColor" stroke-width="7"></circle>
+<polygon points="0,-22 0,22 210,0" transform="translate(34,38) rotate(38)" fill="currentColor"></polygon>
+<polygon points="176,17 179,25 187,28 179,31 176,39 173,31 165,28 173,25" fill="currentColor"></polygon>
+<path d="M168,192 v18 h48 v-18" fill="none" stroke="currentColor" stroke-width="7"></path>
+</symbol>
+<symbol id="m-fav" viewBox="0 0 32 32">
+<polygon points="2,20 2,8 30,3" fill="currentColor"></polygon>
+<rect x="8" y="23" width="6" height="7" fill="currentColor"></rect><rect x="16" y="19" width="6" height="11" fill="currentColor"></rect><rect x="24" y="15" width="6" height="15" fill="currentColor"></rect>
+</symbol>
+<symbol id="m-krt" viewBox="0 0 240 240">
+<circle cx="118" cy="128" r="72" fill="none" stroke="currentColor" stroke-width="7"></circle>
+<polygon points="30,128 210,76 210,180" fill="currentColor"></polygon>
+<polygon points="92,34 95,42 103,45 95,48 92,56 89,48 81,45 89,42" fill="currentColor"></polygon>
+</symbol>
+<symbol id="m-profit" viewBox="0 0 240 240">
+<rect x="34" y="150" width="24" height="50" fill="currentColor"></rect><rect x="68" y="128" width="24" height="72" fill="currentColor"></rect><rect x="102" y="106" width="24" height="94" fill="currentColor"></rect><rect x="136" y="84" width="24" height="116" fill="currentColor"></rect>
+<path d="M40,132 Q110,110 164,58" fill="none" stroke="currentColor" stroke-width="11"></path>
+<polygon points="148,44 196,28 172,72" fill="currentColor"></polygon>
+</symbol>
+</defs>
+</svg>
+
+<section class="frame" style="left:40px; top:40px; width:800px; height:440px;" data-screen-label="Herleitung">
+<p class="f-cap">Herleitung — beide Mutterzeichen in einem Zeichen</p>
+<div class="row">
+<div class="cell"><span class="mark" style="color:var(--color-gray-1)"><svg width="130" height="130"><use href="#m-krt"></use></svg></span><span class="cell-cap">Das Kartell<br>Kreis · Keil · Stern</span></div>
+<span class="op">+</span>
+<div class="cell"><span class="mark" style="color:var(--color-gray-1)"><svg width="130" height="130"><use href="#m-profit"></use></svg></span><span class="cell-cap">Profit-Emblem<br>Kurve · Ertragsbalken</span></div>
+<span class="op">=</span>
+<div class="cell"><span class="mark"><svg width="170" height="170"><use href="#m-bt"></use></svg></span><span class="cell-cap">Basetool<br>Keil wird Kurs</span></div>
+</div>
+<p class="note">Der Kartell-Keil bleibt das tragende Element, kippt aber um <b>−38°</b> und wird so zum <b>steigenden Kurs</b> aus dem Profit-Emblem; er durchstößt den Orbit-Kreis wie im Mutterlogo an beiden Enden. Die <b>Ertragsbalken</b> wachsen ihm im Kreis entgegen (Industrie: Mining, Salvage, Hauling, Trading). Stern bleibt als Kartell-Zitat. Eine Farbe — die Hausfarbe ist laut CD-Manual die einzige Logofarbe neben Weiß/Schwarz; das Silber des Divisions-Emblems wird als Grau-1-Monovariante zitiert, nicht metallisch.</p>
+</section>
+
+<section class="frame" style="left:40px; top:520px; width:800px; height:610px;" data-screen-label="Logo und Lockups">
+<p class="f-cap">Primär-Lockup · Stacked · Monovarianten</p>
+<div class="lockup" style="margin-bottom:34px;">
+<span class="mark"><svg width="120" height="120"><use href="#m-bt"></use></svg></span>
+<div class="lu-text"><span class="lu-over">Das Kartell · Profit</span><span class="lu-main">Basetool</span></div>
+</div>
+<div class="row" style="align-items:flex-start;">
+<div class="lu-stack" style="padding:20px 34px; border:1px solid var(--color-gray-3);">
+<span class="mark"><svg width="120" height="120"><use href="#m-bt"></use></svg></span>
+<span class="lu-over" style="font-size:0.62rem;">Das Kartell · Profit</span>
+<span class="lu-main" style="font-size:1.6rem;">Basetool</span>
+</div>
+<div class="cell"><span style="color:var(--color-white)"><svg width="96" height="96"><use href="#m-bt"></use></svg></span><span class="cell-cap">Weiß — Druck/Overlay</span></div>
+<div class="cell"><span style="color:var(--color-gray-1)"><svg width="96" height="96"><use href="#m-bt"></use></svg></span><span class="cell-cap">Grau 1 — „Silber"-Zitat<br>(Divisions-Emblem)</span></div>
+<div class="cell"><span class="tile" style="width:96px;height:96px;background:var(--color-primary);color:var(--color-bg-black);border:0;"><svg width="76" height="76"><use href="#m-bt"></use></svg></span><span class="cell-cap">Invers auf Hausfarbe</span></div>
+</div>
+<p class="note">Wortmarke in Lato Black Versalien (Type-System: keine eigene Display-Schrift), Overline „Das Kartell · Profit" stellt die Hierarchie her: Org → Division → Tool.</p>
+</section>
+
+<section class="frame" style="left:880px; top:40px; width:760px; height:610px;" data-screen-label="App-Icon und Favicon">
+<p class="f-cap">Web-App · Android — Icon &amp; Favicon</p>
+<div class="row" style="margin-bottom:30px;">
+<div class="cell"><span class="tile brk mark" style="width:200px;height:200px;"><svg width="132" height="132"><use href="#m-bt"></use></svg></span><span class="cell-cap">App-Icon 512 — HUD-Klammern</span></div>
+<div class="cell"><span class="tile round mark" style="width:104px;height:104px;background:var(--color-bg-dark-gray);"><svg width="76" height="76"><use href="#m-bt"></use></svg></span><span class="cell-cap">Android adaptive<br>(runde Maske)</span></div>
+<div class="cell"><span class="tile round" style="width:104px;height:104px;background:var(--color-primary);color:var(--color-bg-black);"><svg width="76" height="76"><use href="#m-bt"></use></svg></span><span class="cell-cap">Alternativ invers</span></div>
+</div>
+<p class="f-cap" style="margin-top:8px;">Favicon — reduzierte Glyphe (Keil + Balken, ohne Kreis/Stern)</p>
+<div class="chipband mark">
+<div class="fchip"><svg width="64" height="64"><use href="#m-fav"></use></svg></div>
+<div class="fchip"><svg width="32" height="32"><use href="#m-fav"></use></svg></div>
+<div class="fchip"><svg width="16" height="16"><use href="#m-fav"></use></svg></div>
+<span class="cell-cap" style="align-self:center;">64 · 32 · 16 px — echte Größe</span>
+</div>
+<p class="note">Unter 32 px trägt der Vollkreis nicht mehr; das Favicon reduziert auf <b>Keil + drei Balken</b>. Ersetzt <code>krt-favicon.webp</code> auf der Website.</p>
+</section>
+
+<section class="frame" style="left:880px; top:690px; width:760px; height:440px;" data-screen-label="Extractor-Variante">
+<p class="f-cap">Desktop-App „SC Extractor" — Familienvariante</p>
+<div class="row">
+<div class="cell"><span class="mark"><svg width="150" height="150"><use href="#m-ex"></use></svg></span><span class="cell-cap">Extractor-Zeichen</span></div>
+<div class="cell"><span class="tile brk mark" style="width:150px;height:150px;"><svg width="100" height="100"><use href="#m-ex"></use></svg></span><span class="cell-cap">Desktop-Icon</span></div>
+<div class="cell"><span style="color:var(--color-gray-1)"><svg width="96" height="96"><use href="#m-ex"></use></svg></span><span class="cell-cap">Mono</span></div>
+</div>
+<p class="note">Gleiche DNA, gespiegelte Aussage: der Keil taucht <b>abwärts</b> und liefert in die <b>Auffangklammer</b> — Daten werden aus dem Verse extrahiert. Kreis + Stern bleiben unverändert, damit beide Icons nebeneinander als Familie lesbar sind.</p>
+</section>
+</body>
+</html>
